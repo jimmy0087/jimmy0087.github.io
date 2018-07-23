@@ -122,14 +122,14 @@
 <p>其中，m,n分别表示源域和目标域训练集个数，k表示核函数，在实验中，用的是rbf核函数。</p>
 <p>但是单核的MMD距离表征能力有限，我们采用了MK-MMD方式去表征域之间的距离【】。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">\mathcal&#123;K&#125; := \&#123; k:k=\sum_&#123;u=1&#125;^&#123;d&#125; \beta_u k_u,\sum_&#123;u=1&#125;^&#123;d&#125; \beta_u =D,\beta_u \geq0 ,\forall u \in \&#123;1,...,d\&#125;\&#125;</span><br></pre></td></tr></table></figure>
-<p>其中 $D&gt;0$ ，每一个 $k \in \mathcal{K}$ 代表了一个特殊的 $RKHS$ 空间 $\mathcal{F}_k$ ,并假定 $ |k_u| \leq K$, $\forall u \in {1,…,d}$。所以 $MMD$ 的表达形式为：</p>
+<p>其中 $D&gt;0$ ，每一个 $k \in \mathcal{K}$ 代表了一个特殊的 $RKHS$ 空间 $\mathcal{F}_k$ ,并假定 $ |k_u| \leq K$, $\forall u \in \{1,…,d\}$。所以 $MMD$ 的表达形式为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">MMD^2[X,Y] = \sum_&#123;u=1&#125;^d \beta_u *MMD^2[\mathcal&#123;k_u&#125;,X,Y]</span><br></pre></td></tr></table></figure>
 <p>之前有提到1/2为源域的训练集数据，1/2为目标域训练集数据，是因为我们想要在不改变源域分布特点的情况下，将目标域的分布特点向源域分布的特点靠拢。为了实现这个目标，我提出了一个新的loss函数，增加了一些监督信号：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">\mathcal&#123;L&#125;= \mathcal&#123;L&#125;_&#123;label&#125; + \alpha \mathcal&#123;D&#125;(X_&#123;G&#125;^s,X_&#123;D&#125;^s) + \beta \mathcal&#123;D&#125;(X_&#123;G&#125;^s,X_&#123;D&#125;^t)</span><br></pre></td></tr></table></figure>
-<p>其中 $\mathcal{L}<em>{label}$ 就是上文提到的FOCALLOSS，$\alpha ,\beta$是一个调整参数，$\mathcal{D}(X</em>{G}^s,X<em>{D}^s)$表示的是生成器源域和判别器源域之间空间误差，$\mathcal{D}(X</em>{G}^s,X_{D}^t)$表示的是生成器源域和判别器目标域之间空间误差。两者的表示分别如下：</p>
+<p>其中 $\mathcal{L}_{label}$ 就是上文提到的FOCALLOSS，$\alpha ,\beta$是一个调整参数，$\mathcal{D}(X_{G}^s,X_{D}^s)$表示的是生成器源域和判别器源域之间空间误差，$\mathcal{D}(X_{G}^s,X_{D}^t)$表示的是生成器源域和判别器目标域之间空间误差。两者的表示分别如下：</p>
 <script type="math/tex; mode=display">
 \mathcal{D}(X_{G}^s,X_{D}^s) = MMD^2(X_{G}^{s+},X_{D}^{s+}) + MMD^2(X_{G}^{s-},X_{D}^{s-})</script><script type="math/tex; mode=display">
-\mathcal{D}(X_{G}^s,X_{D}^t) = MMD^2(X_{G}^{s+},X_{D}^{t+}) + MMD^2(X_{G}^{s-},X_{D}^{t-})</script><p>其中$X<em>{G}^{+}$、$X</em>{G}^{+}$表示的是相同数据集下的正负样本，因为网络是一个二分类，所以需要将正负样本之间的距离单独计算，已达到源域正负分布的分布像磁铁一样将目标域正负样本的分布拉向目标域。通过这样一个目标loss函数的训练，效果如下图：</p>
+\mathcal{D}(X_{G}^s,X_{D}^t) = MMD^2(X_{G}^{s+},X_{D}^{t+}) + MMD^2(X_{G}^{s-},X_{D}^{t-})</script><p>其中$X_{G}^{+}$、$X_{G}^{+}$表示的是相同数据集下的正负样本，因为网络是一个二分类，所以需要将正负样本之间的距离单独计算，已达到源域正负分布的分布像磁铁一样将目标域正负样本的分布拉向目标域。通过这样一个目标loss函数的训练，效果如下图：</p>
 <p><img src="http://ww1.sinaimg.cn/large/0061KkpRly1frfbdwy316j31hc0q8dm7.jpg"></p>
 <p>黑色和绿色仍然是源域的正负样本分布，相对于没有经过buffer层的分布，黄色红色已经能够明显看出再向源域靠拢，且可分性明显变好。再来看看加入buffer层之后，源域的分布情况：</p>
 <p><img src="http://ww1.sinaimg.cn/large/0061KkpRly1frfbjpiu5qj31hc0q8wl8.jpg"></p>
@@ -490,7 +490,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/07/23/he/" data-id="cjjycr5ua0000w4ud80ivlr39" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/07/23/he/" data-id="cjjyd1b9l0001rkud3nuvfvkf" class="article-share-link">Share</a>
       
       
     </footer>
@@ -597,21 +597,6 @@
 
 
 
-  </div>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
 </html>
