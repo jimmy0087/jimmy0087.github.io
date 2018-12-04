@@ -19,37 +19,37 @@
 <meta property="og:site_name" content="JimmyYoung&#39;s Blog">
 <meta property="og:description" content="1.0 Base KnowledgeCNN（Convolution Neural Network，卷积神经网络）作为一种经典的 DNN 结构，上世纪90年代就已经被提出了，却沉寂近20年。有趣的是，在2012年 AlexNet 大放异彩后，CNN 在随后几年近乎卷席了整个图像处理领域，很有点戏剧性。近些年，CNN 在语音处理、NLP 领域也发展迅速。随着时间的推移，CNN的架构不断更新迭代，本文将">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://pic4.zhimg.com/v2-d2b2c461b55e439e3d0ee0dc974e963f_b.png">
-<meta property="og:image" content="https://pic3.zhimg.com/v2-90aa7dc35c5385b928a14ee8a464fa1a_b.png">
-<meta property="og:image" content="https://pic3.zhimg.com/v2-90aa7dc35c5385b928a14ee8a464fa1a_b.png">
-<meta property="og:image" content="https://pic2.zhimg.com/v2-bbcea7d03f0ebd97c7d07c5d133fab5d_b.png">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1fxurm1toouj302v02wa9w.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1fxurmd3819j307f065gn0.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1fxurmd3819j307f065gn0.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1fxurn01aonj30a405pq4t.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1fu8gqkc5vtj30nu0hg75f.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1fu8gs9hj52j30xf0hjwg8.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fxoxpqlmq4j30dp09zjsh.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fxoy2ppvh7j30ds0fc75v.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fxoyw7wdqtg30az0al0vu.gif">
-<meta property="og:image" content="https://pic1.zhimg.com/v2-1430e3c733985b462e29c096fc940924_b.png">
-<meta property="og:image" content="https://pic2.zhimg.com/50/v2-055134085d672623d844ab6fe04a17f1_hd.png">
-<meta property="og:image" content="https://pic1.zhimg.com/v2-fcb9e82c6b63d99406a17cbe56b4a5ac_b.png">
-<meta property="og:image" content="https://pic1.zhimg.com/v2-6e1dd62f1da1ebe4dc35926910b730e0_b.png">
-<meta property="og:image" content="https://pic3.zhimg.com/v2-0d995bd71fa2444d1e6fe06b939a9e7e_b.png">
-<meta property="og:image" content="https://pic3.zhimg.com/v2-7251b92e3c595f5b23eece64219af826_b.png">
-<meta property="og:image" content="https://pic1.zhimg.com/v2-0ef5f48a29b07c13b0c6ddaaeeb5e69c_b.png">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1fxurpj5umpj30ee05t75k.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1fxurpruf6wj30h70b975x.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1fxurq8apbgj30bq06fmxn.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1fxurqlq3j8j30go05rq4m.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1fxurrejjqzj30es0bbacw.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1fxurrww83ij30gk056q4j.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1fxurs5kucbj30ek06jt9v.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fnzkkygc2rj30l30ajdg5.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fnzkk7xvibj30io0jlacc.jpg">
-<meta property="og:image" content="https://pic1.zhimg.com/v2-198002bfcb050a189f539eda9ce61614_b.png">
-<meta property="og:image" content="https://pic4.zhimg.com/v2-007939f0debad3e42fb4c256cdccc14b_b.png">
-<meta property="og:image" content="https://pic4.zhimg.com/v2-a113379ff748f67256f38451ab185d5f_b.png">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1fxurvgji28j30by066gm1.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1fxurvyza1jj30dp07f74q.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1fxurwciu38j30go1omnam.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fv0t941p8pj30ia0gz756.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fv0t8j4ijtj30h10m8my8.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fv4jvid43dj31hc0olhdr.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fv4kcpe9x9j31hc0u07wh.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fv4kasc9daj31hc0u04qp.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fv4kbqjr27j31hc0u0b29.jpg">
-<meta property="og:image" content="https://pic3.zhimg.com/v2-4ca1ac15c0ab7ab200f9eab40f4e2f7a_b.png">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fxury6wo4qj308y04zq3a.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fxp192ylswj30890a2mxa.jpg">
-<meta property="og:image" content="https://pic2.zhimg.com/v2-6ead97856abca2a68cf52c468c1f5c59_b.png">
-<meta property="og:image" content="https://pic3.zhimg.com/v2-994c82b189027d61707b69e9caed6d92_b.png">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fxuryokeyoj30de048wey.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fxurz0vlmlj30fe0wc105.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1fv1za3jkxej30cc079q3q.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1fv1zl9wl15j30c107zmxz.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1fv1zmusw5qj30d908o3zd.jpg">
@@ -63,11 +63,11 @@
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fxq0jycyp1j30rz0f0wgx.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fxq0vtojuqj30dx0bw0ta.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fxq1euuyedj30t00edmzm.jpg">
-<meta property="og:updated_time" content="2018-12-04T07:44:37.977Z">
+<meta property="og:updated_time" content="2018-12-04T08:08:22.733Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CNN-Architecture">
 <meta name="twitter:description" content="1.0 Base KnowledgeCNN（Convolution Neural Network，卷积神经网络）作为一种经典的 DNN 结构，上世纪90年代就已经被提出了，却沉寂近20年。有趣的是，在2012年 AlexNet 大放异彩后，CNN 在随后几年近乎卷席了整个图像处理领域，很有点戏剧性。近些年，CNN 在语音处理、NLP 领域也发展迅速。随着时间的推移，CNN的架构不断更新迭代，本文将">
-<meta name="twitter:image" content="https://pic4.zhimg.com/v2-d2b2c461b55e439e3d0ee0dc974e963f_b.png">
+<meta name="twitter:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1fxurm1toouj302v02wa9w.jpg">
   
     <link rel="alternate" href="/atom.xml" title="JimmyYoung&#39;s Blog" type="application/atom+xml">
   
@@ -242,20 +242,18 @@
 <p>CNN其实可以看作DNN的一种特殊形式。它跟传统DNN标志性的区别在于两点，卷积核（Convolution Kernel） 以及 池化层（Pooling）。</p>
 <h3 id="1-1-Convolution-Kernel"><a href="#1-1-Convolution-Kernel" class="headerlink" title="1.1 Convolution Kernel"></a>1.1 Convolution Kernel</h3><p>说起 Convolution Kernel，首先要解释一下 Convolution（卷积）,可以参考<a href="https://arxiv.org/pdf/1603.07285v1.pdf" target="_blank" rel="noopener">guide</a>。一般我们接触过的都是一维信号的卷积，也就是</p>
 <script type="math/tex; mode=display">
-y[n]=x[n]*h[n]=\sum_{k}x[k]h[n-k]</script><p>在信号处理中，<script type="math/tex">x[n]</script>是输入信号，<script type="math/tex">h[n]</script>是单位响应，于是信号<script type="math/tex">y[n]</script>就是输入信号<script type="math/tex">x[n]</script>响应的延迟叠加。这也就是一维卷积本质：加权叠加/积分。</p>
+y[n]=x[n]*h[n]=\sum_{k}x[k]h[n-k]</script><p>在信号处理中，$x[n]$是输入信号，$h[n]$是单位响应，于是信号$y[n]$就是输入信号$x[n]$响应的延迟叠加。这也就是一维卷积本质：加权叠加/积分。</p>
 <p>那么对于二维信号，比如图像，卷积公式就成了如下公式：</p>
 <script type="math/tex; mode=display">
 y[m,n]=x[m,n]*h[m,n]=\sum_{j}\sum_{i}x[i,j]h[m-i,n-j]</script><p>假设现在 Convolution Kernel 大小是<script type="math/tex">3\times 3</script>，我们就可以化简上式为:</p>
 <script type="math/tex; mode=display">
 y[1,1]=x[0,0]*h[1,1]+x[1,0]*h[0,1]+x[2,0]*h[-1,1]
-
 +x[0,1]*h[1,0]+x[1,1]*h[0,0]+x[2,1]*h[-1,0]  
-
 +x[0,2]*h[1,-1]+x[1,2]*h[0,-1]+x[2,2]*h[-1,-1]</script><p>公式看起来很复杂，用图来解释就很简单了，假如 Convolution Kernel 如下图：</p>
-<center> <img src="https://pic4.zhimg.com/v2-d2b2c461b55e439e3d0ee0dc974e963f_b.png"> </center>
+<center> <img src="http://ww1.sinaimg.cn/large/0061KkpRgy1fxurm1toouj302v02wa9w.jpg"></center>
 
 <p>那么，从 Input Image 到 Output Image 的变化如下：</p>
-<center> <img src="https://pic3.zhimg.com/v2-90aa7dc35c5385b928a14ee8a464fa1a_b.png"> </center>
+<center> <img src="http://ww1.sinaimg.cn/large/0061KkpRgy1fxurmd3819j307f065gn0.jpg"></center>
 
 <p>可以看出，其实二维卷积一样也是加权叠加/积分。需要注意的是，其中 Convolution Kernel 进行了水平和竖直方向的翻转。</p>
 <ul>
@@ -266,7 +264,7 @@ y[1,1]=x[0,0]*h[1,1]+x[1,0]*h[0,1]+x[2,0]*h[-1,1]
 </li>
 <li><p><strong>CNN 的 Convolution Kernel</strong></p>
 <p>CNN 中的 Convolution Kernel 跟传统的 Convolution Kernel 本质没有什么不同。仍然以图像为例，Convolution Kernel 依次与 Input 不同位置的图像块做卷积，得到 Output，如下图。</p>
-<center> <img src="https://pic3.zhimg.com/v2-90aa7dc35c5385b928a14ee8a464fa1a_b.png"> </center>
+<center> <img src="http://ww1.sinaimg.cn/large/0061KkpRgy1fxurmd3819j307f065gn0.jpg"></center>
 
 <p>同时，CNN 有一些它独特的地方，比如各种定义，以及它属于 DNN 的那些属性：</p>
 <ol>
@@ -281,7 +279,7 @@ y[1,1]=x[0,0]*h[1,1]+x[1,0]*h[0,1]+x[2,0]*h[-1,1]
 <li><p><strong>CNN 的 Pooling</strong></p>
 <p>Pooling 的本质，其实是采样。Pooling 对于输入的 Feature Map，选择某种方式对其进行压缩。如下图，表示的就是对 Feature Map 2 * 2邻域内的值，选择最大值输出到下一层，这叫做 Max-Pooling。于是一个<script type="math/tex">2N \times 2N</script>的 Feature Map 被压缩到了<script type="math/tex">N \times N</script>。</p>
 <p>除此之外，还有Mean-Pooling，Stochastic-Pooling 等。它们的具体实现如名称所示，具体选择哪一个则取决于具体的任务。</p>
-<center> <img src="https://pic2.zhimg.com/v2-bbcea7d03f0ebd97c7d07c5d133fab5d_b.png"> </center>
+<center> <img src="http://ww1.sinaimg.cn/large/0061KkpRgy1fxurn01aonj30a405pq4t.jpg"></center>
 
 <p><strong>Pooling 的意义，主要有两点：</strong></p>
 <p>第一个显而易见，就是减少参数。通过对 Feature Map 降维，有效减少后续层需要的参数</p>
@@ -341,21 +339,21 @@ y[1,1]=x[0,0]*h[1,1]+x[1,0]*h[0,1]+x[2,0]*h[-1,1]
 </ul>
 <h3 id="1-4-Conclusion"><a href="#1-4-Conclusion" class="headerlink" title="1.4 Conclusion"></a>1.4 Conclusion</h3><p>卷积方式是构成卷机网络的基石。随着研究的推进，已经不是简单的卷积结构堆叠能够完成所有的任务了。不同卷积方式构成的CNN网络有着不同的作用，所以在面对不同的任务是，选择合适的卷积方式就显得十分重要了。</p>
 <h2 id="2-0-The-Development-of-Architecture"><a href="#2-0-The-Development-of-Architecture" class="headerlink" title="2.0 The Development of Architecture"></a>2.0 The Development of Architecture</h2><h3 id="2-1-Summarize"><a href="#2-1-Summarize" class="headerlink" title="2.1 Summarize"></a>2.1 Summarize</h3><p>CNN 的架构发展可以参考刘昕博士总结的图</p>
-<center> <img src="https://pic1.zhimg.com/v2-1430e3c733985b462e29c096fc940924_b.png"> </center>
+<center> <img src="http://ww1.sinaimg.cn/large/0061KkpRgy1fxurpj5umpj30ee05t75k.jpg"></center>
 
 <p>下图中的坐标轴我们可以看出横坐标是操作的复杂度，纵坐标是精度</p>
-<center> <img src="https://pic2.zhimg.com/50/v2-055134085d672623d844ab6fe04a17f1_hd.png"> </center>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRgy1fxurpruf6wj30h70b975x.jpg"></center>
 
 <p>LeNet-5 是最经典的 CNN 架构，上面介绍的 Convolutional Kernel 和 Pooling 它都有了。它在1998年由 LeCun 提出，用于对“Mnist手写数字数据集”进行分类。不过效果并不比当时手工设计的特征有明显提升，因此并没有太大反响。</p>
 <p>十来年后，Alex Krizhevsky 在2012年提出 AlexNet，凭借它在 ILSVRC2012 的 ImageNet 图像分类项目中获得冠军，且错误率比上一年冠军下降十多个百分点。举圈震惊。</p>
 <p>随后几年，CNN 卷席整个图像处理领域，ILSVRC 每年被刷榜，也就出现了我们常见的这张错误率下降趋势的图。当然，也伴随着如图所示的 Layer 数的激增。</p>
-<center> <img src="https://pic1.zhimg.com/v2-fcb9e82c6b63d99406a17cbe56b4a5ac_b.png"> </center>
+<center> <img src="http://ww1.sinaimg.cn/large/0061KkpRgy1fxurq8apbgj30bq06fmxn.jpg"></center>
 
 <h3 id="2-2-LeNet"><a href="#2-2-LeNet" class="headerlink" title="2.2 LeNet"></a>2.2 LeNet</h3><p>LeNet5 是 LeCun 在1998年“Gradient-Based Learning Applied to Document. Recognition”中提出的网络架构。用于对“Mnist手写数字数据集”进行分类。其具体的结构如下图：</p>
-<center> <img src="https://pic1.zhimg.com/v2-6e1dd62f1da1ebe4dc35926910b730e0_b.png"> </center>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRgy1fxurqlq3j8j30go05rq4m.jpg"></center>
 
 <ul>
-<li><p>nput 是一个手写图像。</p>
+<li><p>input 是一个手写图像。</p>
 </li>
 <li><p>C1 层由6个 Feature Map 组成，其中每个神经元与 Input 的<script type="math/tex">5\times 5</script>的邻域相连。这些连接对应的w就是上面所说的 Convolution Kernel。当然，与 DNN 一样，这里还有一个参数 Bias b。所以，此层有(5<em>5+1)</em>6=156个参数。而如果不使用共享权重，则会需要(5x5+1)x(28x28)x6 = 122304个参数。</p>
 </li>
@@ -373,12 +371,12 @@ y[1,1]=x[0,0]*h[1,1]+x[1,0]*h[0,1]+x[2,0]*h[-1,1]
 </li>
 </ul>
 <p>网络结构设计好之后，选择 Loss Function，并利用 GD 学习网络参数，这些都是套路了。最后，LeNet-5 每一层的输出可以用以下这张图来辅助理解。</p>
-<center> <img src="https://pic3.zhimg.com/v2-0d995bd71fa2444d1e6fe06b939a9e7e_b.png"> </center>
+<center> <img src="http://ww1.sinaimg.cn/large/0061KkpRgy1fxurrejjqzj30es0bbacw.jpg"></center>
 
 <h3 id="2-3-AlexNet"><a href="#2-3-AlexNet" class="headerlink" title="2.3 AlexNet"></a>2.3 AlexNet</h3><p>AlexNet 是 Alex Krizhevsky 于2012年在“ImageNet Classification with Deep Convolutional Neural Networks”中提出的网络架构。Alex Krizhevsky 凭借它在 ILSVRC2012 的 ImageNet 图像分类项目中获得冠军，错误率比上一年冠军下降十多个百分点。其具体的结构如下图，第一个图为作者论文中的辅助理解的图示，第二个图为将 AlexNet 每一层的细节进行总结的图。</p>
-<center> <img src="https://pic3.zhimg.com/v2-7251b92e3c595f5b23eece64219af826_b.png"> </center>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRgy1fxurrww83ij30gk056q4j.jpg"></center>
 
-<center> <img src="https://pic1.zhimg.com/v2-0ef5f48a29b07c13b0c6ddaaeeb5e69c_b.png"> </center>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRgy1fxurs5kucbj30ek06jt9v.jpg"></center>
 
 <p>从上图可以看出，AlexNet 在结构上没有大改变。它真正区别于传统 CNN 的，在于对网络参数的选择上，而其中很多方法如今依然在用：</p>
 <ol>
@@ -394,13 +392,13 @@ y[1,1]=x[0,0]*h[1,1]+x[1,0]*h[0,1]+x[2,0]*h[-1,1]
 
 <p>VGG与Alex很相似，都是卷积池化-卷积池化-…-全连接的套路，不同的是kernel大小，卷积stride，网络深度。</p>
 <p>VGGNet将小卷积核带入人们的视线，分析一下卷积核的区别和优势：</p>
-<p>在上面提到的第一个卷积层使用的kernrl大小为11<script type="math/tex">\times</script>11，stride为4，中间一些层用的都是5<script type="math/tex">\times</script>5卷积核，而现在VGGNet中卷积核大小为3<script type="math/tex">\times</script>3，stride为1。</p>
+<p>在上面提到的第一个卷积层使用的kernrl大小为11$\times$11，stride为4，中间一些层用的都是5$\times$5卷积核，而现在VGGNet中卷积核大小为3$\times$3，stride为1。</p>
 <p>直观上我们会觉得大的卷积核更好，因为它可以提取更大区域的信息，但是实际上，大的卷积核可以用多个卷积核叠加代替。这样的替代方式可以有两点好处：</p>
 <ul>
 <li><strong>减少了参数的个数</strong></li>
 </ul>
-<p>两个串联的小卷积核需要3<script type="math/tex">\times</script>3<script type="math/tex">\times</script>2=18个参数，一个5<script type="math/tex">\times</script>5=25的卷积核则有25个参数。</p>
-<p>三个串联的小卷积核需要3<script type="math/tex">\times</script>3<script type="math/tex">\times</script>3=27个参数，一个7<script type="math/tex">\times</script>7=49的卷积核则有25个参数。</p>
+<p>两个串联的小卷积核需要3$\times$3$\times$2=18个参数，一个5$\times$5=25的卷积核则有25个参数。</p>
+<p>三个串联的小卷积核需要3$\times$3$\times$3=27个参数，一个7$\times$7=49的卷积核则有25个参数。</p>
 <p>大大减少了参数</p>
 <ul>
 <li><strong>引入了更多的非线性</strong></li>
@@ -414,7 +412,7 @@ y[1,1]=x[0,0]*h[1,1]+x[1,0]*h[0,1]+x[2,0]*h[-1,1]
 </ul>
 <p>&#8195;&#8195;NIN 出自文章“<a href="http://xueshu.baidu.com/s?wd=paperuri%3A%28b141af8f73398aaf072b958f50807e1b%29&amp;filter=sc_long_sign&amp;tn=SE_xueshusource_2kduw22v&amp;sc_vurl=http%3A%2F%2Farxiv.org%2Fpdf%2F1312.4400&amp;ie=utf-8&amp;sc_us=13783729042765531986" target="_blank" rel="noopener">Network in Network</a>”，主要是提出了两点新的构想，以下简单描述：</p>
 <ol>
-<li>使用多层<script type="math/tex">1\times 1</script>的 Convolution Kernel，来代替传统 CNN 一层的若干个<script type="math/tex">N \times N</script>的 Convolution Kernel。原因在于，单层的 Convolution Kernel + Activation 只是扩展的线性变换，表达能力有限；但是多层 Convolution Kernel + Activation 的堆叠，后面几层的抽象能力会大大增强，所以表达能力比以前强，而参数可能还比以前少</li>
+<li>使用多层$1\times 1$的 Convolution Kernel，来代替传统 CNN 一层的若干个$N \times N$的 Convolution Kernel。原因在于，单层的 Convolution Kernel + Activation 只是扩展的线性变换，表达能力有限；但是多层 Convolution Kernel + Activation 的堆叠，后面几层的抽象能力会大大增强，所以表达能力比以前强，而参数可能还比以前少</li>
 <li>使用 Global Average Pooling 代替传统 CNN 中最后一层的 Fully Connected 层，其中 Global Average Pooling 表示取每个 Feature Map 的均值。因此，对多类分类，最后一层的每个 Feature Map 即对应一个类别，在大大减少了 CNN 参数的同时，强制 Feature Map 学习不同类别的特征</li>
 </ol>
 <hr>
@@ -433,13 +431,13 @@ y[1,1]=x[0,0]*h[1,1]+x[1,0]*h[0,1]+x[2,0]*h[-1,1]
 </ul>
 <p>来自于文章《<em>Going deeper with convolutions</em>》</p>
 <p>GoogLeNet 最大的特点就是下面这种结构，暂且称之为原始的 Inception。</p>
-<center> <img src="https://pic1.zhimg.com/v2-198002bfcb050a189f539eda9ce61614_b.png"> </center>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRgy1fxurvgji28j30by066gm1.jpg"> </center>
 
-<p>可以看出它本质跟 NIN 一样，使用 Network 来代替原来的一个 Convolution Kernel。但跟 NIN 只使用<script type="math/tex">1\times 1</script>不同，这里使用了更大的 Convolution Kernel，以及 Pooling Layer，原因在于提取视野更大、或者提取类型不同的特征。但是由于这种 Network 的参数会非常大，所以作者先进行了降维，就得到了真正的 Inception 结构，如下图：</p>
-<center> <img src="https://pic4.zhimg.com/v2-007939f0debad3e42fb4c256cdccc14b_b.png"> </center>
+<p>可以看出它本质跟 NIN 一样，使用 Network 来代替原来的一个 Convolution Kernel。但跟 NIN 只使用$1\times 1$不同，这里使用了更大的 Convolution Kernel，以及 Pooling Layer，原因在于提取视野更大、或者提取类型不同的特征。但是由于这种 Network 的参数会非常大，所以作者先进行了降维，就得到了真正的 Inception 结构，如下图：</p>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRgy1fxurvyza1jj30dp07f74q.jpg"></center>
 
-<p><script type="math/tex">1\times 1</script>Kernel 在这里的作用就是为了在叠加 Inception 模块时，不至于让网络参数数量爆炸，所做的降维。在理解了 Inception 模块后，整个 GoogLeNet 的结构上就很容易看懂了，基本就是 Inception 模块、Pooling Layer 的不停叠加而已。其结构如下图（大图预警）：</p>
-<center> <img src="https://pic4.zhimg.com/v2-a113379ff748f67256f38451ab185d5f_b.png"> </center>
+<p>$1\times 1$Kernel 在这里的作用就是为了在叠加 Inception 模块时，不至于让网络参数数量爆炸，所做的降维。在理解了 Inception 模块后，整个 GoogLeNet 的结构上就很容易看懂了，基本就是 Inception 模块、Pooling Layer 的不停叠加而已。其结构如下图（大图预警）：</p>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRgy1fxurwciu38j30go1omnam.jpg"></center>
 
 <p>上图中我们能看到有一点比较特殊，就是除了最上层的 softmax2 分类器外，中间还有一些层连接了分类器（softmax0、softmax1）。</p>
 <p>按照作者初期的说法，这是因为网络太深，Gradient Vanish 导致无法高效的更新参数，所以加了两个较浅的分类器辅助 BP 以加快网络收敛速度。可是在 Inception V3 中，作者发现其实它们对网络收敛速度并没什么帮助，更多的是起到了 Regularizer 的作用。</p>
@@ -477,14 +475,14 @@ y[1,1]=x[0,0]*h[1,1]+x[1,0]*h[0,1]+x[2,0]*h[-1,1]
 <p><img src="http://ww1.sinaimg.cn/large/0061KkpRly1fv4kbqjr27j31hc0u0b29.jpg"></p>
 <p>上图具体提到的Inception结构请在论文中查看。</p>
 <p>个人觉得到V4这个结构，越来越复杂，其实也很难从理论上解释哪个结构好，哪个结构差，都是以结果论英雄。那么，对于那些没钱买机器的小团队就只能跟着大佬走了。</p>
-<h3 id="2-6-ResNet"><a href="#2-6-ResNet" class="headerlink" title="2.6 ResNet"></a>2.6 ResNet</h3><p>ResNet 出自“<a href="http://xueshu.baidu.com/s?wd=paperuri%3A%280bbb6ce3c1665e19ef5043a5aad7cdc4%29&amp;filter=sc_long_sign&amp;tn=SE_xueshusource_2kduw22v&amp;sc_vurl=http%3A%2F%2Fwww.arxiv.org%2Fpdf%2F1512.03385.pdf&amp;ie=utf-8&amp;sc_us=743976093157514672" target="_blank" rel="noopener">Deep Residual Learning for Image Recognition，2016</a>”。它源于作者一些实验：在 Relu、BN 已经缓解了深层的网络无法收敛的问题后，随着网络层数的增加，训练和测试错误率仍然呈现先减后增的趋势。这时，就不再是过拟合的问题，而表明太深的网络其参数难以优化。比如对于恒等变换<script type="math/tex">H(x)=x</script>，更深的网络其对此函数的拟合效果甚至不如较浅的网路。</p>
-<p>为了解决上述<script type="math/tex">H(x)=x</script>难以拟合的问题，作者提出了一种设想：我们不去拟合<script type="math/tex">H(x)</script>，改之去拟合<script type="math/tex">F(x)=H(x)-x</script>。而最终网络输出的是<script type="math/tex">F(x)=H(x)+x</script>，如下图:</p>
-<center> <img src="https://pic3.zhimg.com/v2-4ca1ac15c0ab7ab200f9eab40f4e2f7a_b.png"> </center>
+<h3 id="2-6-ResNet"><a href="#2-6-ResNet" class="headerlink" title="2.6 ResNet"></a>2.6 ResNet</h3><p>ResNet 出自“<a href="http://xueshu.baidu.com/s?wd=paperuri%3A%280bbb6ce3c1665e19ef5043a5aad7cdc4%29&amp;filter=sc_long_sign&amp;tn=SE_xueshusource_2kduw22v&amp;sc_vurl=http%3A%2F%2Fwww.arxiv.org%2Fpdf%2F1512.03385.pdf&amp;ie=utf-8&amp;sc_us=743976093157514672" target="_blank" rel="noopener">Deep Residual Learning for Image Recognition，2016</a>”。它源于作者一些实验：在 Relu、BN 已经缓解了深层的网络无法收敛的问题后，随着网络层数的增加，训练和测试错误率仍然呈现先减后增的趋势。这时，就不再是过拟合的问题，而表明太深的网络其参数难以优化。比如对于恒等变换$H(x)=x$，更深的网络其对此函数的拟合效果甚至不如较浅的网路。</p>
+<p>为了解决上述$H(x)=x$难以拟合的问题，作者提出了一种设想：我们不去拟合$H(x)$，改之去拟合$F(x)=H(x)-x$。而最终网络输出的是$F(x)=H(x)+x$，如下图:</p>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRly1fxury6wo4qj308y04zq3a.jpg"></center>
 
 <p>这种做法会涉及到两个问题：</p>
 <ol>
 <li>在恒等变换中我们拟合的函数变成了F(x)=0，它为什么比原始的H(x)=x更容易拟合呢？作者表示，此时参数们只需要逼近0即可，这看起来比优化到其他值简单（这个虽然抽象，但似乎还有点道理）</li>
-<li>实际情况中<script type="math/tex">H(x)</script>不太可能都是恒等变换，这种拟合残差的做法为何有好处呢？作者表示，首先我们要假设它更好优化，其次我们的实验证明了它确实效果更好。</li>
+<li>实际情况中$H(x)$不太可能都是恒等变换，这种拟合残差的做法为何有好处呢？作者表示，首先我们要假设它更好优化，其次我们的实验证明了它确实效果更好。</li>
 </ol>
 <p>RessNet 在起初时的理论匮乏。其实在后续，分析其理论依据的文章也相继有提出，如:</p>
 <ol>
@@ -495,10 +493,10 @@ y[1,1]=x[0,0]*h[1,1]+x[1,0]*h[0,1]+x[2,0]*h[-1,1]
 <ol>
 <li>在”<a href="http://papers.nips.cc/paper/6556-residual-networks-behave-like-ensembles-of-relatively-shallow-networks.pdf" target="_blank" rel="noopener">Residual Networks Behave Like Ensembles of Relatively Shallow Networks，2016</a>“中，作者则用实验表明 ResNet 可能效果显著的原因在于其 Ensemble 的性质，即它的 Shortcut 层可以看作多种不同的路径的 Ensemble，如下图。同时作者也表示 ResNet 真实选择路径时其实选的都是较短的路径，因此本质上并不算解决了深层网络 Gradient Vanish 的问题</li>
 </ol>
-<center> <img src="https://pic2.zhimg.com/v2-6ead97856abca2a68cf52c468c1f5c59_b.png"> </center>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRly1fxuryokeyoj30de048wey.jpg"></center>
 
 <p>无论如何，ResNet 虽然理论不足，却被大量检验证明能有效改善网络参数的优化，一方面是即使网络深度剧增依然能够很好的学习参数，保持较好的网络分类效果；另一方面，参数收敛速度也更快。最终的 ResNet 架构如下，可以看出层数已经超深了（大图预警）</p>
-<center> <img src="https://pic3.zhimg.com/v2-994c82b189027d61707b69e9caed6d92_b.png"> </center>
+<center> <img src="http://ww1.sinaimg.cn/large/0061KkpRly1fxurz0vlmlj30fe0wc105.jpg"></center>
 
 
 <h3 id="2-7-Xception"><a href="#2-7-Xception" class="headerlink" title="2.7 Xception"></a>2.7 Xception</h3><p>总的来说，Xception网络基于Inception系列网络结构的基础上，结合depthwise separable convolution。</p>
@@ -535,9 +533,9 @@ y[1,1]=x[0,0]*h[1,1]+x[1,0]*h[0,1]+x[2,0]*h[-1,1]
 </ul>
 <center> <img src="http://ww1.sinaimg.cn/large/0061KkpRly1fnzm5wj56dj30m70jnjsc.jpg"> </center>
 
-<p>如图所示就是Dense Block，它包括输入层在内共有5层，H是BN+ReLU+3<script type="math/tex">\times</script>3Conv的操作，并不改变feature map的大小。对于每一层来说前面所有层的feature map都直接被拿来当做这一层的输入。grouth rate就是除了输入层之外，每一层feature map的个数。它的目的是，使得block中任意两层能够直接沟通。</p>
-<p>在Dense Block输出的地方还有一个bottleneck layer中的操作是一个1<script type="math/tex">\times</script>1的卷积，卷积核共有4K个，降低channel维度，也减少了模型参数。</p>
-<p>在transition layer中进一步压缩的操作称为compression，减少<script type="math/tex">\theta</script>%的feature map数量，论文中使用的是<script type="math/tex">\theta</script>=0.5</p>
+<p>如图所示就是Dense Block，它包括输入层在内共有5层，H是BN+ReLU+3$\times$3Conv的操作，并不改变feature map的大小。对于每一层来说前面所有层的feature map都直接被拿来当做这一层的输入。grouth rate就是除了输入层之外，每一层feature map的个数。它的目的是，使得block中任意两层能够直接沟通。</p>
+<p>在Dense Block输出的地方还有一个bottleneck layer中的操作是一个1$\times$1的卷积，卷积核共有4K个，降低channel维度，也减少了模型参数。</p>
+<p>在transition layer中进一步压缩的操作称为compression，减少$\theta$%的feature map数量，论文中使用的是$\theta$=0.5</p>
 <ul>
 <li><strong>DenseNet</strong></li>
 </ul>
@@ -561,8 +559,8 @@ y[1,1]=x[0,0]*h[1,1]+x[1,0]*h[0,1]+x[2,0]*h[-1,1]
 <li><p>$F_{sq}(\cdot)$的实现方式有很多，论文利用如下公式：</p>
 </li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">z_&#123;c&#125; = \rm&#123;F&#125;_&#123;sq&#125;(u_c) = \frac&#123;1&#125;&#123;W \times H&#125; \sum_&#123;i=1&#125;^W \sum_&#123;j=1&#125;^&#123;H&#125; u_c(i,j)</span><br></pre></td></tr></table></figure>
-<ul>
+<script type="math/tex; mode=display">
+z_{c} = \rm{F}_{sq}(u_c) = \frac{1}{W \times H} \sum_{i=1}^W \sum_{j=1}^{H} u_c(i,j)</script><ul>
 <li>将SE-block加到inception结构和resnet结构中组成SE-Net，如下图：</li>
 </ul>
 <center><img src="http://ww1.sinaimg.cn/mw690/0061KkpRly1fx7yiv1316j30ee0o9t9r.jpg"></center>
@@ -845,7 +843,22 @@ y[1,1]=x[0,0]*h[1,1]+x[1,0]*h[0,1]+x[2,0]*h[-1,1]
   <a id="rocket" href="#top" class=""></a>
   <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
   
-    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
   
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
 </html>
