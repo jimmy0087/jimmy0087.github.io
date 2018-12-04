@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>cnn-architecture | JimmyYoung&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="DL" />
+  
+  
+  
+  
+  <meta name="description" content="1.0 Base KnowledgeCNN（Convolution Neural Network，卷积神经网络）作为一种经典的 DNN 结构，上世纪90年代就已经被提出了，却沉寂近20年。有趣的是，在2012年 AlexNet 大放异彩后，CNN 在随后几年近乎卷席了整个图像处理领域，很有点戏剧性。近些年，CNN 在语音处理、NLP 领域也发展迅速。随着时间的推移，CNN的架构不断更新迭代，本文将">
+<meta name="keywords" content="DL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CNN-Architecture">
+<meta property="og:url" content="http://yoursite.com/2018/11/30/DL-Architecture/index.html">
+<meta property="og:site_name" content="JimmyYoung&#39;s Blog">
+<meta property="og:description" content="1.0 Base KnowledgeCNN（Convolution Neural Network，卷积神经网络）作为一种经典的 DNN 结构，上世纪90年代就已经被提出了，却沉寂近20年。有趣的是，在2012年 AlexNet 大放异彩后，CNN 在随后几年近乎卷席了整个图像处理领域，很有点戏剧性。近些年，CNN 在语音处理、NLP 领域也发展迅速。随着时间的推移，CNN的架构不断更新迭代，本文将">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://pic4.zhimg.com/v2-d2b2c461b55e439e3d0ee0dc974e963f_b.png">
+<meta property="og:image" content="https://pic3.zhimg.com/v2-90aa7dc35c5385b928a14ee8a464fa1a_b.png">
+<meta property="og:image" content="https://pic3.zhimg.com/v2-90aa7dc35c5385b928a14ee8a464fa1a_b.png">
+<meta property="og:image" content="https://pic2.zhimg.com/v2-bbcea7d03f0ebd97c7d07c5d133fab5d_b.png">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1fu8gqkc5vtj30nu0hg75f.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1fu8gs9hj52j30xf0hjwg8.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fxoxpqlmq4j30dp09zjsh.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fxoy2ppvh7j30ds0fc75v.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fxoyw7wdqtg30az0al0vu.gif">
+<meta property="og:image" content="https://pic1.zhimg.com/v2-1430e3c733985b462e29c096fc940924_b.png">
+<meta property="og:image" content="https://pic2.zhimg.com/50/v2-055134085d672623d844ab6fe04a17f1_hd.png">
+<meta property="og:image" content="https://pic1.zhimg.com/v2-fcb9e82c6b63d99406a17cbe56b4a5ac_b.png">
+<meta property="og:image" content="https://pic1.zhimg.com/v2-6e1dd62f1da1ebe4dc35926910b730e0_b.png">
+<meta property="og:image" content="https://pic3.zhimg.com/v2-0d995bd71fa2444d1e6fe06b939a9e7e_b.png">
+<meta property="og:image" content="https://pic3.zhimg.com/v2-7251b92e3c595f5b23eece64219af826_b.png">
+<meta property="og:image" content="https://pic1.zhimg.com/v2-0ef5f48a29b07c13b0c6ddaaeeb5e69c_b.png">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fnzkkygc2rj30l30ajdg5.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fnzkk7xvibj30io0jlacc.jpg">
+<meta property="og:image" content="https://pic1.zhimg.com/v2-198002bfcb050a189f539eda9ce61614_b.png">
+<meta property="og:image" content="https://pic4.zhimg.com/v2-007939f0debad3e42fb4c256cdccc14b_b.png">
+<meta property="og:image" content="https://pic4.zhimg.com/v2-a113379ff748f67256f38451ab185d5f_b.png">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fv0t941p8pj30ia0gz756.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fv0t8j4ijtj30h10m8my8.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fv4jvid43dj31hc0olhdr.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fv4kcpe9x9j31hc0u07wh.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fv4kasc9daj31hc0u04qp.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fv4kbqjr27j31hc0u0b29.jpg">
+<meta property="og:image" content="https://pic3.zhimg.com/v2-4ca1ac15c0ab7ab200f9eab40f4e2f7a_b.png">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fxp192ylswj30890a2mxa.jpg">
+<meta property="og:image" content="https://pic2.zhimg.com/v2-6ead97856abca2a68cf52c468c1f5c59_b.png">
+<meta property="og:image" content="https://pic3.zhimg.com/v2-994c82b189027d61707b69e9caed6d92_b.png">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1fv1za3jkxej30cc079q3q.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1fv1zl9wl15j30c107zmxz.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1fv1zmusw5qj30d908o3zd.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1fv1znzqkbpj30cp0830tw.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1fv207bnzyoj30q40jnq8j.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fnzm5wj56dj30m70jnjsc.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fnzm6vg5p0j30n905ndg7.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fx7upv1mekj30m505paa7.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/mw690/0061KkpRly1fx7yiv1316j30ee0o9t9r.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/mw690/0061KkpRly1fx7ywlumq2j30tw08qjry.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fxq0jycyp1j30rz0f0wgx.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fxq0vtojuqj30dx0bw0ta.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fxq1euuyedj30t00edmzm.jpg">
+<meta property="og:updated_time" content="2018-11-30T06:31:46.152Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CNN-Architecture">
+<meta name="twitter:description" content="1.0 Base KnowledgeCNN（Convolution Neural Network，卷积神经网络）作为一种经典的 DNN 结构，上世纪90年代就已经被提出了，却沉寂近20年。有趣的是，在2012年 AlexNet 大放异彩后，CNN 在随后几年近乎卷席了整个图像处理领域，很有点戏剧性。近些年，CNN 在语音处理、NLP 领域也发展迅速。随着时间的推移，CNN的架构不断更新迭代，本文将">
+<meta name="twitter:image" content="https://pic4.zhimg.com/v2-d2b2c461b55e439e3d0ee0dc974e963f_b.png">
+  
+    <link rel="alternate" href="/atom.xml" title="JimmyYoung&#39;s Blog" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo3.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo3.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css" ><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+  
+  
+  
+
+</head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo3.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">Home</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives/">Archives</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories/">Categories</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags/">Tags</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about/">About</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-DL-Architecture" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      CNN-Architecture
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/11/30/DL-Architecture/" class="article-date">
+	  <time datetime="2018-11-30T06:20:00.000Z" itemprop="datePublished">2018-11-30</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/DL/">DL</a>
+
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		PV:<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-0-Base-Knowledge"><a href="#1-0-Base-Knowledge" class="headerlink" title="1.0 Base Knowledge"></a>1.0 Base Knowledge</h2><p>CNN（Convolution Neural Network，卷积神经网络）作为一种经典的 DNN 结构，上世纪90年代就已经被提出了，却沉寂近20年。有趣的是，在2012年 AlexNet 大放异彩后，CNN 在随后几年近乎卷席了整个图像处理领域，很有点戏剧性。近些年，CNN 在语音处理、NLP 领域也发展迅速。随着时间的推移，CNN的架构不断更新迭代，本文将详细介绍CNN相关发展历程。</p>
+<p>CNN其实可以看作DNN的一种特殊形式。它跟传统DNN标志性的区别在于两点，卷积核（Convolution Kernel） 以及 池化层（Pooling）。</p>
+<h3 id="1-1-Convolution-Kernel"><a href="#1-1-Convolution-Kernel" class="headerlink" title="1.1 Convolution Kernel"></a>1.1 Convolution Kernel</h3><p>说起 Convolution Kernel，首先要解释一下 Convolution（卷积）,可以参考<a href="https://arxiv.org/pdf/1603.07285v1.pdf" target="_blank" rel="noopener">guide</a>。一般我们接触过的都是一维信号的卷积，也就是</p>
+<script type="math/tex; mode=display">
+y[n]=x[n]*h[n]=\sum_{k}x[k]h[n-k]</script><p>在信号处理中，<script type="math/tex">x[n]</script>是输入信号，<script type="math/tex">h[n]</script>是单位响应，于是信号<script type="math/tex">y[n]</script>就是输入信号<script type="math/tex">x[n]</script>响应的延迟叠加。这也就是一维卷积本质：加权叠加/积分。</p>
+<p>那么对于二维信号，比如图像，卷积公式就成了如下公式：</p>
+<script type="math/tex; mode=display">
+y[m,n]=x[m,n]*h[m,n]=\sum_{j}\sum_{i}x[i,j]h[m-i,n-j]</script><p>假设现在 Convolution Kernel 大小是<script type="math/tex">3\times 3</script>，我们就可以化简上式为:</p>
+<script type="math/tex; mode=display">
+y[1,1]=x[0,0]*h[1,1]+x[1,0]*h[0,1]+x[2,0]*h[-1,1]
+
++x[0,1]*h[1,0]+x[1,1]*h[0,0]+x[2,1]*h[-1,0]  
+
++x[0,2]*h[1,-1]+x[1,2]*h[0,-1]+x[2,2]*h[-1,-1]</script><p>公式看起来很复杂，用图来解释就很简单了，假如 Convolution Kernel 如下图：</p>
+<center> <img src="https://pic4.zhimg.com/v2-d2b2c461b55e439e3d0ee0dc974e963f_b.png"> </center>
+
+<p>那么，从 Input Image 到 Output Image 的变化如下：</p>
+<center> <img src="https://pic3.zhimg.com/v2-90aa7dc35c5385b928a14ee8a464fa1a_b.png"> </center>
+
+<p>可以看出，其实二维卷积一样也是加权叠加/积分。需要注意的是，其中 Convolution Kernel 进行了水平和竖直方向的翻转。</p>
+<ul>
+<li><p><strong>卷积核的意义</strong></p>
+<p>Convolution Kernel 其实在图像处理中并不是新事物，Sobel 算子等滤波算子，一直都在被用于边缘检测等工作中，只是以前被称为 Filter。图像处理的同学应该有印象。</p>
+<p>Convolution Kernel 的一个属性就是局部性。即它只关注局部特征，局部的程度取决于 Convolution Kernel 的大小。比如用 Sobel 算子进行边缘检测，本质就是比较图像邻近像素的相似性。</p>
+<p>也可以从另外一个角度理解 Convolution Kernel 的意义。学过信号处理的同学应该记得，时域卷积对应频域相乘。所以原图像与 Convolution Kernel 的卷积，其实对应频域中对图像频段进行选择。比如，图像中的边缘和轮廓属于是高频信息，图像中区域强度的综合考量属于低频信息。在传统图像处理里，这些物理意义是指导设计 Convolution Kernel 的一个重要方面。</p>
+</li>
+<li><p><strong>CNN 的 Convolution Kernel</strong></p>
+<p>CNN 中的 Convolution Kernel 跟传统的 Convolution Kernel 本质没有什么不同。仍然以图像为例，Convolution Kernel 依次与 Input 不同位置的图像块做卷积，得到 Output，如下图。</p>
+<center> <img src="https://pic3.zhimg.com/v2-90aa7dc35c5385b928a14ee8a464fa1a_b.png"> </center>
+
+<p>同时，CNN 有一些它独特的地方，比如各种定义，以及它属于 DNN 的那些属性：</p>
+<ol>
+<li>CNN 可以看作是 DNN 的一种简化形式，Input 和 Output 是 DNN 中的 Layer，Convolution Kernel 则是这两层连线对应的w，且与 DNN 一样，会加一个参数 Bias</li>
+<li>一个 Convolution Kernel 在与 Input 不同区域做卷积时，它的参数是固定不变的。放在 DNN 的框架中理解，就是对 Output Layer 中的神经元而言，它们的w和b是相同的，只是与 Input Layer 中连接的节点在改变。在 CNN 里，这叫做 Shared Weights and Biases</li>
+<li>在 CNN 中，Convolution Kernel 可能是高维的。假如输入是m <em> n </em> k维的，那么一般 Convolution Kernel 就会选择为d <em> d </em> k维，也就是与输入的 Depth 一致</li>
+<li>最重要的一点，在 CNN 中，Convolution Kernel 的权值其实就是w，因此不需要提前设计，而是跟 DNN 一样利用 GD 来优化</li>
+<li>如上面所说，Convolution Kernel 卷积后得到的会是原图的某些特征（如边缘信息），所以在 CNN 中，Convolution Kernel 卷积得到的 Layer 称作 Feature Map</li>
+<li>一般 CNN 中一层会含有多个 Convolution Kernel，目的是学习出 Input 的不同特征，对应得到多个 Feature Map。又由于 Convolution Kernel 中的参数是通过 GD 优化得到而非设定的，于是w的初始化就显得格外重要了</li>
+</ol>
+</li>
+<li><p><strong>CNN 的 Pooling</strong></p>
+<p>Pooling 的本质，其实是采样。Pooling 对于输入的 Feature Map，选择某种方式对其进行压缩。如下图，表示的就是对 Feature Map 2 * 2邻域内的值，选择最大值输出到下一层，这叫做 Max-Pooling。于是一个<script type="math/tex">2N \times 2N</script>的 Feature Map 被压缩到了<script type="math/tex">N \times N</script>。</p>
+<p>除此之外，还有Mean-Pooling，Stochastic-Pooling 等。它们的具体实现如名称所示，具体选择哪一个则取决于具体的任务。</p>
+<center> <img src="https://pic2.zhimg.com/v2-bbcea7d03f0ebd97c7d07c5d133fab5d_b.png"> </center>
+
+<p><strong>Pooling 的意义，主要有两点：</strong></p>
+<p>第一个显而易见，就是减少参数。通过对 Feature Map 降维，有效减少后续层需要的参数</p>
+<p>另一个则是 Translation Invariance，也就是增大感受野。它表示对于 Input，当其中像素在邻域发生微小位移时，Pooling Layer 的输出是不变的。这就增强了网络的鲁棒性，有一定抗扰动的作用。</p>
+</li>
+</ul>
+<h3 id="1-2-The-way-of-convolution"><a href="#1-2-The-way-of-convolution" class="headerlink" title="1.2 The way of convolution"></a>1.2 The way of convolution</h3><ul>
+<li><p><strong>Convolution</strong>：</p>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRgy1fu8gqkc5vtj30nu0hg75f.jpg"></center>
+
+</li>
+</ul>
+<hr>
+<ul>
+<li><p><strong>DepthWise Convolution</strong>：</p>
+<p>DepthWise卷积主要还是为了减少网络的参数，使网络能够更好地部署到移动端。</p>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRgy1fu8gs9hj52j30xf0hjwg8.jpg"></center>
+
+</li>
+</ul>
+<hr>
+<ul>
+<li><p><strong>Deformable Convolutional</strong>：</p>
+<p>再接着，为了解决图像中可能呈现的不同大小、姿态、视角变化甚至费缸体变形，微软亚洲研究院（MSRA）提出了可变性卷积网络（<a href="https://arxiv.org/abs/1703.06211" target="_blank" rel="noopener">Deformable Convolutional Networks</a>）。</p>
+<p>标准的卷积中一般都是正方形，这种规则的采样是网络难以适应几何形变的主要原因。为了削弱这个限制，对每个点的位置都增加一个偏移变量，通过这个变量，卷积核可以在当前位置附近随意采样，不再受限于之前的规则格点。如下图：</p>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRly1fxoxpqlmq4j30dp09zjsh.jpg"></center>
+
+<p>DCN中增加的偏移量是网络结构的一部分，通过另一个平行的标准卷积单元计算得到，进而也可以通过梯度反向传播进行端到端的训练。从下图更加直观的看到加入偏移后，卷积位置的变化特点：</p>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRly1fxoy2ppvh7j30ds0fc75v.jpg"></center>
+
+<p>这种卷积结构在分割以及检测任务上都非常有效。笔者认为这种思想和Attention的思想（下面网络结构会介绍）有异曲同工之妙，都是想要在图像中找到关键信息，然后抑制无效信息。</p>
+</li>
+</ul>
+<hr>
+<ul>
+<li><p><strong>Dilated Convolution</strong></p>
+<p> <a href="https://arxiv.org/pdf/1511.07122.pdf" target="_blank" rel="noopener">Dilated Convolution</a>（空洞卷积）设计之初最主要用于分割任务。传统的分割任务都会有pooling操作，这样是为了降低尺寸同时增大感受野，然后进行反卷积将feature map 还原到原尺寸，但是这个过程有一定的信息损失，所以空洞卷积应运而生。空洞卷积示意图如下：</p>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRly1fxoyw7wdqtg30az0al0vu.gif"></center>
+
+<p>间隔大小取决于空洞率。DC最大的优势就是在不进行pooling操作的同时，扩感受野，相当于获得了多尺度的特征，因此在分割任务中很有效。</p>
+<p>但是最初的网络设计会导致The Gridding Effect。后面也有对此进行优化的文章<a href="https://arxiv.org/abs/1702.08502" target="_blank" rel="noopener">Understanding Convolution for Semantic Segmentation</a>，<a href="https://arxiv.org/abs/1706.05587" target="_blank" rel="noopener">Rethinking Atrous Convolution for Semantic Image Segmentation</a></p>
+</li>
+</ul>
+<h3 id="1-3-Upsampling"><a href="#1-3-Upsampling" class="headerlink" title="1.3 Upsampling"></a>1.3 Upsampling</h3><p>这里指的上采样（upsampling）是指为了让经过pooling操作的feature map恢复原有尺寸的operation。我总结是有两种方式，一种是untrainable的方式，如插值，还有一种是trainable方式，transposed convolution（转置卷积），也有人称作deconvolution，但是<a href="http://cs231n.stanford.edu/slides/2017/cs231n_2017_lecture11.pdf" target="_blank" rel="noopener">stanford class</a>称不太准确。个人理解deconvolution是用已经训练好的kernel将output恢复到input的过程，常用于CNN可视化；而网络中常用到的这种operation只是为了恢复尺寸，用的仍然是普通的conv，只不过有一定的策略，下面会解释。</p>
+<ul>
+<li><p><strong>插值</strong></p>
+<p>插值操作不需要训练，权重由认为预先定义。常用的方式有nearest interpolation、bilinear interpolation、bicubic interpolation。</p>
+<ol>
+<li>nearest interpolation ：将离待插值最近的已知值赋值给待插值。</li>
+<li>bilinear interpolation ：根据离待插值最近的 2*2 个已知值来计算待插值，每个已知值的权重由距离待插值距离决定，距离越近权重越大。</li>
+<li>bicubic interpolation ：根据离待插值最近的 4*4 个已知值来计算待插值，每个已知值的权重由距离待插值距离决定，距离越近权重越大。</li>
+</ol>
+</li>
+<li><p><strong>Transpose</strong></p>
+<p>Transpose是卷积操作的逆操作。策略有很多，具体参考<a href="https://github.com/vdumoulin/conv_arithmetic" target="_blank" rel="noopener">动图</a>。</p>
+</li>
+</ul>
+<h3 id="1-4-Conclusion"><a href="#1-4-Conclusion" class="headerlink" title="1.4 Conclusion"></a>1.4 Conclusion</h3><p>卷积方式是构成卷机网络的基石。随着研究的推进，已经不是简单的卷积结构堆叠能够完成所有的任务了。不同卷积方式构成的CNN网络有着不同的作用，所以在面对不同的任务是，选择合适的卷积方式就显得十分重要了。</p>
+<h2 id="2-0-The-Development-of-Architecture"><a href="#2-0-The-Development-of-Architecture" class="headerlink" title="2.0 The Development of Architecture"></a>2.0 The Development of Architecture</h2><h3 id="2-1-Summarize"><a href="#2-1-Summarize" class="headerlink" title="2.1 Summarize"></a>2.1 Summarize</h3><p>CNN 的架构发展可以参考刘昕博士总结的图</p>
+<center> <img src="https://pic1.zhimg.com/v2-1430e3c733985b462e29c096fc940924_b.png"> </center>
+
+<p>下图中的坐标轴我们可以看出横坐标是操作的复杂度，纵坐标是精度</p>
+<center> <img src="https://pic2.zhimg.com/50/v2-055134085d672623d844ab6fe04a17f1_hd.png"> </center>
+
+<p>LeNet-5 是最经典的 CNN 架构，上面介绍的 Convolutional Kernel 和 Pooling 它都有了。它在1998年由 LeCun 提出，用于对“Mnist手写数字数据集”进行分类。不过效果并不比当时手工设计的特征有明显提升，因此并没有太大反响。</p>
+<p>十来年后，Alex Krizhevsky 在2012年提出 AlexNet，凭借它在 ILSVRC2012 的 ImageNet 图像分类项目中获得冠军，且错误率比上一年冠军下降十多个百分点。举圈震惊。</p>
+<p>随后几年，CNN 卷席整个图像处理领域，ILSVRC 每年被刷榜，也就出现了我们常见的这张错误率下降趋势的图。当然，也伴随着如图所示的 Layer 数的激增。</p>
+<center> <img src="https://pic1.zhimg.com/v2-fcb9e82c6b63d99406a17cbe56b4a5ac_b.png"> </center>
+
+<h3 id="2-2-LeNet"><a href="#2-2-LeNet" class="headerlink" title="2.2 LeNet"></a>2.2 LeNet</h3><p>LeNet5 是 LeCun 在1998年“Gradient-Based Learning Applied to Document. Recognition”中提出的网络架构。用于对“Mnist手写数字数据集”进行分类。其具体的结构如下图：</p>
+<center> <img src="https://pic1.zhimg.com/v2-6e1dd62f1da1ebe4dc35926910b730e0_b.png"> </center>
+
+<ul>
+<li><p>nput 是一个手写图像。</p>
+</li>
+<li><p>C1 层由6个 Feature Map 组成，其中每个神经元与 Input 的<script type="math/tex">5\times 5</script>的邻域相连。这些连接对应的w就是上面所说的 Convolution Kernel。当然，与 DNN 一样，这里还有一个参数 Bias b。所以，此层有(5<em>5+1)</em>6=156个参数。而如果不使用共享权重，则会需要(5x5+1)x(28x28)x6 = 122304个参数。</p>
+</li>
+<li><p>S2 层即下采样层，对应着现在的 Pooling 操作后的层。其依然是6个 Channel，每个神经元与上一层2 \times 2的邻域相连。作者在此层进行的操作是加权平均，再加上 bias，并将结果输入到激活函数 Sigmoid 函数中。因此，此层共有2*6=12个参数。</p>
+</li>
+<li><p>C3 层由16个 Feature Map 组成，其中每个神经元与 S2 的5*5的邻域相连。不过，当时作者对连接进行了一些设计，让每个 Feature Map 仅与上一层部分 Channel 相连。只是这种 trick 现在也很少用到，这里就不细讲了。</p>
+</li>
+<li><p>S4 层也是下采样层，与 S2 是意义一样。由于有16个 Channel，因此共2*16=32个参数。</p>
+</li>
+<li><p>C5 层由120个 Feature Map 组成，其中每个神经元与 S4 每个 Channel 的<script type="math/tex">5\times 5</script>的邻域相连。恰巧，这里 C3 的每一个 Feature Map 都是1*1，显得好像跟 S4 是全连接，不过这仅仅是恰巧罢了。</p>
+</li>
+<li><p>F6 由84个神经元组成，与 C5 全连接。并将结果输入到激活函数，得到每个神经元的状态。这里激活函数使用的是双曲正切函数（tanh）。此层共(120+1)<em>84=10164个参数。而之所以使用84个神经元，是因为有人曾将 ASCII 码绘制于12 </em> 7的 bit-map 上，如下图，作者希望此层的输出有类似的效果。</p>
+</li>
+<li><p>Output 是10个神经元，分别代表十个数字。作者还使用欧式径向基函数（Euclidean Radial Basis Function）对数据进行了一些变换，有兴趣的同学可以自行参考原文。</p>
+</li>
+</ul>
+<p>网络结构设计好之后，选择 Loss Function，并利用 GD 学习网络参数，这些都是套路了。最后，LeNet-5 每一层的输出可以用以下这张图来辅助理解。</p>
+<center> <img src="https://pic3.zhimg.com/v2-0d995bd71fa2444d1e6fe06b939a9e7e_b.png"> </center>
+
+<h3 id="2-3-AlexNet"><a href="#2-3-AlexNet" class="headerlink" title="2.3 AlexNet"></a>2.3 AlexNet</h3><p>AlexNet 是 Alex Krizhevsky 于2012年在“ImageNet Classification with Deep Convolutional Neural Networks”中提出的网络架构。Alex Krizhevsky 凭借它在 ILSVRC2012 的 ImageNet 图像分类项目中获得冠军，错误率比上一年冠军下降十多个百分点。其具体的结构如下图，第一个图为作者论文中的辅助理解的图示，第二个图为将 AlexNet 每一层的细节进行总结的图。</p>
+<center> <img src="https://pic3.zhimg.com/v2-7251b92e3c595f5b23eece64219af826_b.png"> </center>
+
+<center> <img src="https://pic1.zhimg.com/v2-0ef5f48a29b07c13b0c6ddaaeeb5e69c_b.png"> </center>
+
+<p>从上图可以看出，AlexNet 在结构上没有大改变。它真正区别于传统 CNN 的，在于对网络参数的选择上，而其中很多方法如今依然在用：</p>
+<ol>
+<li>不同于传统 CNN 使用 Sigmoid 或者 Tanh 作为激活函数，AlexNet 使用的是 Relu。Relu 能有效抑制 Gradient Vanish 以及 Gradient Explode 的问题，现在仍然是最常用的激活函数。</li>
+<li>AlexNet 开始使用了 Droupout 来防止过拟合，这是一种简单且有效减少过拟合的方法，如今依然是手常用方法之一。</li>
+<li>AlexNet 使用 LRN（Local Response Normalization）对网络中的数据进行归一化。当然现在 LRN 已经不太使用，使用的较多的是效果好得多的 Batch Normalization。但是 AlexNet 当时已经开始注意对数据进行归一化，这一点还是很厉害的。</li>
+<li>AlexNet 使用了 GPU 来加速网络中的运算，现在 GPU 来加速计算已经是标配了</li>
+</ol>
+<p>AlexNet 中这些技巧，很多已经成了现在的标准方法，足见其影响力之大。</p>
+<h3 id="2-4-VGGNet"><a href="#2-4-VGGNet" class="headerlink" title="2.4 VGGNet"></a>2.4 VGGNet</h3><center><img src="http://ww1.sinaimg.cn/large/0061KkpRly1fnzkkygc2rj30l30ajdg5.jpg"> </center>
+
+<center> <img src="http://ww1.sinaimg.cn/large/0061KkpRly1fnzkk7xvibj30io0jlacc.jpg"> </center>
+
+<p>VGG与Alex很相似，都是卷积池化-卷积池化-…-全连接的套路，不同的是kernel大小，卷积stride，网络深度。</p>
+<p>VGGNet将小卷积核带入人们的视线，分析一下卷积核的区别和优势：</p>
+<p>在上面提到的第一个卷积层使用的kernrl大小为11<script type="math/tex">\times</script>11，stride为4，中间一些层用的都是5<script type="math/tex">\times</script>5卷积核，而现在VGGNet中卷积核大小为3<script type="math/tex">\times</script>3，stride为1。</p>
+<p>直观上我们会觉得大的卷积核更好，因为它可以提取更大区域的信息，但是实际上，大的卷积核可以用多个卷积核叠加代替。这样的替代方式可以有两点好处：</p>
+<ul>
+<li><strong>减少了参数的个数</strong></li>
+</ul>
+<p>两个串联的小卷积核需要3<script type="math/tex">\times</script>3<script type="math/tex">\times</script>2=18个参数，一个5<script type="math/tex">\times</script>5=25的卷积核则有25个参数。</p>
+<p>三个串联的小卷积核需要3<script type="math/tex">\times</script>3<script type="math/tex">\times</script>3=27个参数，一个7<script type="math/tex">\times</script>7=49的卷积核则有25个参数。</p>
+<p>大大减少了参数</p>
+<ul>
+<li><strong>引入了更多的非线性</strong></li>
+</ul>
+<p>多少个串联的小卷积核就对应着多少次激活的过程，而一个大的卷积核就只有一个一次激活的过程。引入了更多的非线性变换，也就意味着模型的表达能力会更强，可以去模拟更高维的分布。</p>
+<p>VGGNet相比于AlexNet层数更深，参数更多，但是却可以更快的收敛。</p>
+<h3 id="2-5-GoogLeNet"><a href="#2-5-GoogLeNet" class="headerlink" title="2.5 GoogLeNet"></a>2.5 GoogLeNet</h3><p>GoogLeNet 其实属于 Inception 网络结构系列，其启发是 NIN（Network In Network），而后整个 Inception 系列共发展出四个版本。这里，先简单介绍这几种结构。</p>
+<hr>
+<ul>
+<li><strong>NIN</strong></li>
+</ul>
+<p>&#8195;&#8195;NIN 出自文章“<a href="http://xueshu.baidu.com/s?wd=paperuri%3A%28b141af8f73398aaf072b958f50807e1b%29&amp;filter=sc_long_sign&amp;tn=SE_xueshusource_2kduw22v&amp;sc_vurl=http%3A%2F%2Farxiv.org%2Fpdf%2F1312.4400&amp;ie=utf-8&amp;sc_us=13783729042765531986" target="_blank" rel="noopener">Network in Network</a>”，主要是提出了两点新的构想，以下简单描述：</p>
+<ol>
+<li>使用多层<script type="math/tex">1\times 1</script>的 Convolution Kernel，来代替传统 CNN 一层的若干个<script type="math/tex">N \times N</script>的 Convolution Kernel。原因在于，单层的 Convolution Kernel + Activation 只是扩展的线性变换，表达能力有限；但是多层 Convolution Kernel + Activation 的堆叠，后面几层的抽象能力会大大增强，所以表达能力比以前强，而参数可能还比以前少</li>
+<li>使用 Global Average Pooling 代替传统 CNN 中最后一层的 Fully Connected 层，其中 Global Average Pooling 表示取每个 Feature Map 的均值。因此，对多类分类，最后一层的每个 Feature Map 即对应一个类别，在大大减少了 CNN 参数的同时，强制 Feature Map 学习不同类别的特征</li>
+</ol>
+<hr>
+<ul>
+<li><strong>Inception V1,BN,V3,V4</strong></li>
+</ul>
+<ol>
+<li>GoogLeNet 就是 Inception V1，出自2015年的“Going Deeper with Convolutions”。它继承并扩展了 NIN 中使用小 Convolution Kernel 来代替或者表示大 Convolution Kernel 的思想，在网络能力不减的情况下大大降低参数量</li>
+<li>Inception BN 出自2015年的“Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift”。在本文中，作者提出了大名鼎鼎的 Batch Normalization，现在是 DNN 调参的一个重要手段，提高了 DNN 对参数的稳定性。</li>
+<li>Inception V3 出自2016年的“Rethinking the Inception Architecture for Computer Vision”。其在 Inception V1 的基础上，利用 Factorization 进一步降低 Convolution Kernel 中的参数数量</li>
+<li>Inception V4 出自2016年的“Inception-v4, Inception-ResNet and the Impact of Residual Connections on Learning”。如其名所说，它就是结合了 Inception 和 ResNet 的思想。</li>
+</ol>
+<p>可以看出，除了 Inception BN 主题有点跑偏，其他的 Inception 都是在 GoogLeNet 的基础上的改进。所以，以下我会详细介绍 GoogLeNet。</p>
+<ul>
+<li><strong>InceptionV1(GoogLeNet)</strong></li>
+</ul>
+<p>来自于文章《<em>Going deeper with convolutions</em>》</p>
+<p>GoogLeNet 最大的特点就是下面这种结构，暂且称之为原始的 Inception。</p>
+<center> <img src="https://pic1.zhimg.com/v2-198002bfcb050a189f539eda9ce61614_b.png"> </center>
+
+<p>可以看出它本质跟 NIN 一样，使用 Network 来代替原来的一个 Convolution Kernel。但跟 NIN 只使用<script type="math/tex">1\times 1</script>不同，这里使用了更大的 Convolution Kernel，以及 Pooling Layer，原因在于提取视野更大、或者提取类型不同的特征。但是由于这种 Network 的参数会非常大，所以作者先进行了降维，就得到了真正的 Inception 结构，如下图：</p>
+<center> <img src="https://pic4.zhimg.com/v2-007939f0debad3e42fb4c256cdccc14b_b.png"> </center>
+
+<p><script type="math/tex">1\times 1</script>Kernel 在这里的作用就是为了在叠加 Inception 模块时，不至于让网络参数数量爆炸，所做的降维。在理解了 Inception 模块后，整个 GoogLeNet 的结构上就很容易看懂了，基本就是 Inception 模块、Pooling Layer 的不停叠加而已。其结构如下图（大图预警）：</p>
+<center> <img src="https://pic4.zhimg.com/v2-a113379ff748f67256f38451ab185d5f_b.png"> </center>
+
+<p>上图中我们能看到有一点比较特殊，就是除了最上层的 softmax2 分类器外，中间还有一些层连接了分类器（softmax0、softmax1）。</p>
+<p>按照作者初期的说法，这是因为网络太深，Gradient Vanish 导致无法高效的更新参数，所以加了两个较浅的分类器辅助 BP 以加快网络收敛速度。可是在 Inception V3 中，作者发现其实它们对网络收敛速度并没什么帮助，更多的是起到了 Regularizer 的作用。</p>
+<p>Inception 提出了新的 CNN 结构，并在 ILSVRC2014 使错误率再创新低。可它在深层网络 Gradient Vanish 的问题上并未找到好的解决办法，这就制约了网络进一步的加深。就在大家看似都一筹莫展时，另一个大佬微软笑着掏出了 ResNet。在介绍完所有inception网络之后会介绍ResNet。</p>
+<hr>
+<ul>
+<li><strong>InceptionV2(BN) and InceptionV3</strong></li>
+</ul>
+<p>来自于文章《<em>Rethinking the Inception Architecture for Computer Vision</em>》和《<em>Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift</em>》</p>
+<p>V2和V3都出自于同一篇文章，只是里面的Inception架构有所不同，思路大致相同，在这里就不严格区分。</p>
+<p>在V2模型中，主要针对V1进行了两点改进：</p>
+<ol>
+<li>加入了Batch Normalization层，减少了Internal Covariate Shift（内部数据分布发生变化），使每一层的输出都规范化到一个N(0, 1)的高斯分布； </li>
+<li>用多个更小的3*3的kenel代替较大的kernel，即降低了参数数量，也加速了运算。</li>
+</ol>
+<p>值得注意到的是，在加入BN层之后，网络在做卷积运算时可以不用添加bias参数。原因会在另一篇介绍BN的文章中做具体证明。</p>
+<p>具体的inception结构如下：</p>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRly1fv0t941p8pj30ia0gz756.jpg"></center>
+
+<p>在v3模型中，一个重要的改进是分解操作（Factorization），即将n*n的卷积操作分解为1*n和n*1的卷积。如下图：</p>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRly1fv0t8j4ijtj30h10m8my8.jpg"></center>
+
+<p>结构图如下：</p>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRly1fv4jvid43dj31hc0olhdr.jpg"></center>
+
+
+<hr>
+<ul>
+<li><strong>InceptionV4</strong></li>
+</ul>
+<p>InceptionV4结构是吸纳ResNet精华，结合之前构建Inception的思想，开发出了InceptionV4网络，同时还设计了更深更优化的Inception-ResNet-V2模型。</p>
+<p><img src="http://ww1.sinaimg.cn/large/0061KkpRly1fv4kcpe9x9j31hc0u07wh.jpg"></p>
+<p>Inception-resnet-v1 and Inception-ResNetv2都是用的这个结构图，区别在于下图的注释中，</p>
+<p><img src="http://ww1.sinaimg.cn/large/0061KkpRly1fv4kasc9daj31hc0u04qp.jpg"></p>
+<p><img src="http://ww1.sinaimg.cn/large/0061KkpRly1fv4kbqjr27j31hc0u0b29.jpg"></p>
+<p>上图具体提到的Inception结构请在论文中查看。</p>
+<p>个人觉得到V4这个结构，越来越复杂，其实也很难从理论上解释哪个结构好，哪个结构差，都是以结果论英雄。那么，对于那些没钱买机器的小团队就只能跟着大佬走了。</p>
+<h3 id="2-6-ResNet"><a href="#2-6-ResNet" class="headerlink" title="2.6 ResNet"></a>2.6 ResNet</h3><p>ResNet 出自“<a href="http://xueshu.baidu.com/s?wd=paperuri%3A%280bbb6ce3c1665e19ef5043a5aad7cdc4%29&amp;filter=sc_long_sign&amp;tn=SE_xueshusource_2kduw22v&amp;sc_vurl=http%3A%2F%2Fwww.arxiv.org%2Fpdf%2F1512.03385.pdf&amp;ie=utf-8&amp;sc_us=743976093157514672" target="_blank" rel="noopener">Deep Residual Learning for Image Recognition，2016</a>”。它源于作者一些实验：在 Relu、BN 已经缓解了深层的网络无法收敛的问题后，随着网络层数的增加，训练和测试错误率仍然呈现先减后增的趋势。这时，就不再是过拟合的问题，而表明太深的网络其参数难以优化。比如对于恒等变换<script type="math/tex">H(x)=x</script>，更深的网络其对此函数的拟合效果甚至不如较浅的网路。</p>
+<p>为了解决上述<script type="math/tex">H(x)=x</script>难以拟合的问题，作者提出了一种设想：我们不去拟合<script type="math/tex">H(x)</script>，改之去拟合<script type="math/tex">F(x)=H(x)-x</script>。而最终网络输出的是<script type="math/tex">F(x)=H(x)+x</script>，如下图:</p>
+<center> <img src="https://pic3.zhimg.com/v2-4ca1ac15c0ab7ab200f9eab40f4e2f7a_b.png"> </center>
+
+<p>这种做法会涉及到两个问题：</p>
+<ol>
+<li>在恒等变换中我们拟合的函数变成了F(x)=0，它为什么比原始的H(x)=x更容易拟合呢？作者表示，此时参数们只需要逼近0即可，这看起来比优化到其他值简单（这个虽然抽象，但似乎还有点道理）</li>
+<li>实际情况中<script type="math/tex">H(x)</script>不太可能都是恒等变换，这种拟合残差的做法为何有好处呢？作者表示，首先我们要假设它更好优化，其次我们的实验证明了它确实效果更好。</li>
+</ol>
+<p>RessNet 在起初时的理论匮乏。其实在后续，分析其理论依据的文章也相继有提出，如:</p>
+<ol>
+<li>在“<a href="https://arxiv.org/pdf/1603.05027v3.pdf" target="_blank" rel="noopener">Identity Mappings in Deep Residual Networks,2016</a>”中，作者从实验和理论两方面来说明为什么 ResNet 使用 Identity Mappping 来计算残差是合理的，且稳定性更强,如下图。</li>
+</ol>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRly1fxp192ylswj30890a2mxa.jpg"></center>
+
+<ol>
+<li>在”<a href="http://papers.nips.cc/paper/6556-residual-networks-behave-like-ensembles-of-relatively-shallow-networks.pdf" target="_blank" rel="noopener">Residual Networks Behave Like Ensembles of Relatively Shallow Networks，2016</a>“中，作者则用实验表明 ResNet 可能效果显著的原因在于其 Ensemble 的性质，即它的 Shortcut 层可以看作多种不同的路径的 Ensemble，如下图。同时作者也表示 ResNet 真实选择路径时其实选的都是较短的路径，因此本质上并不算解决了深层网络 Gradient Vanish 的问题</li>
+</ol>
+<center> <img src="https://pic2.zhimg.com/v2-6ead97856abca2a68cf52c468c1f5c59_b.png"> </center>
+
+<p>无论如何，ResNet 虽然理论不足，却被大量检验证明能有效改善网络参数的优化，一方面是即使网络深度剧增依然能够很好的学习参数，保持较好的网络分类效果；另一方面，参数收敛速度也更快。最终的 ResNet 架构如下，可以看出层数已经超深了（大图预警）</p>
+<center> <img src="https://pic3.zhimg.com/v2-994c82b189027d61707b69e9caed6d92_b.png"> </center>
+
+
+<h3 id="2-7-Xception"><a href="#2-7-Xception" class="headerlink" title="2.7 Xception"></a>2.7 Xception</h3><p>总的来说，Xception网络基于Inception系列网络结构的基础上，结合depthwise separable convolution。</p>
+<p>首先对于原始的inception模块，可以表示成如下：</p>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRgy1fv1za3jkxej30cc079q3q.jpg"></center>
+
+<p>模块中，基本上先通过一系列1x1卷积降维，然后再通过3x3卷积提取特征。如果我们将上述结构再进行简化，可以得到如下简化结构：</p>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRgy1fv1zl9wl15j30c107zmxz.jpg"></center>
+
+<p>从上图中我们可以看出，1x1卷积将输入数据的channel维度上进行了拆解，再输送到空间卷积3x3，改写成下图：</p>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRgy1fv1zmusw5qj30d908o3zd.jpg"></center>
+
+<p>可以考虑一种更加极端的情况：3x3卷积在1x1卷积后的每一个通道上运行，则有：</p>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRgy1fv1znzqkbpj30cp0830tw.jpg"></center>
+
+<p>其实这个思想跟depth wise非常相似，只是顺序不同</p>
+<ul>
+<li><p>depth wise separable convolutions：先进行channel-wise 空间卷积，然后1x1卷积进行融合</p>
+</li>
+<li><p>Inception：先进行1x1卷积，然后进行channel-wise空间卷积</p>
+</li>
+<li><p>depthwise separable convolution：两个操作之间没有激励函数</p>
+</li>
+<li><p>Inception：两个操作之间，添加了ReLU非线性激励</p>
+</li>
+</ul>
+<p>作者提到，前两个区别影响不大，因为模块是堆叠起来的，多层堆叠后顺序的影响不大了。但后两个影响还是比较明显的，</p>
+<p>整体模型如下：</p>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRgy1fv207bnzyoj30q40jnq8j.jpg"></center>
+
+<p>整体效果比inceptionV3略胜一筹。具体实验验证参考原文吧。</p>
+<h3 id="2-8-DenseNet"><a href="#2-8-DenseNet" class="headerlink" title="2.8 DenseNet"></a>2.8 DenseNet</h3><ul>
+<li><strong>Dense Block</strong></li>
+</ul>
+<center> <img src="http://ww1.sinaimg.cn/large/0061KkpRly1fnzm5wj56dj30m70jnjsc.jpg"> </center>
+
+<p>如图所示就是Dense Block，它包括输入层在内共有5层，H是BN+ReLU+3<script type="math/tex">\times</script>3Conv的操作，并不改变feature map的大小。对于每一层来说前面所有层的feature map都直接被拿来当做这一层的输入。grouth rate就是除了输入层之外，每一层feature map的个数。它的目的是，使得block中任意两层能够直接沟通。</p>
+<p>在Dense Block输出的地方还有一个bottleneck layer中的操作是一个1<script type="math/tex">\times</script>1的卷积，卷积核共有4K个，降低channel维度，也减少了模型参数。</p>
+<p>在transition layer中进一步压缩的操作称为compression，减少<script type="math/tex">\theta</script>%的feature map数量，论文中使用的是<script type="math/tex">\theta</script>=0.5</p>
+<ul>
+<li><strong>DenseNet</strong></li>
+</ul>
+<center> <img src="http://ww1.sinaimg.cn/large/0061KkpRly1fnzm6vg5p0j30n905ndg7.jpg"> </center>
+
+<p>DenseNet其实就是若干个DenseBlock串联起来而得到的，在每个DenseBlock之间有一个Conv+Pooling的操作，也就是上面所说的是transition layer。transition layer存在的意义就是实现池化层。</p>
+<ul>
+<li><strong>为什么ResNet到DenseNet</strong></li>
+</ul>
+<p>ResNet直接通过“summation”操作将特征加起来，一定程度阻碍了网络的信息流。DenseNet通过连接操作来结合feature map，并且每一层都与其他层有关系，都有“沟通”，这种方式使得信息流最大化。</p>
+<h3 id="2-9-SENet"><a href="#2-9-SENet" class="headerlink" title="2.9 SENet"></a>2.9 SENet</h3><ul>
+<li><strong>Squeeze-and-Excitation Networks</strong> 主要利用attention机制来构造网络。SE-block如下图。</li>
+</ul>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRly1fx7upv1mekj30m505paa7.jpg"></center>
+
+<ul>
+<li><p>图中的<script type="math/tex">F_{tr} = \rm{X} \to \rm{U}</script>就是普通的卷积网络操作。<script type="math/tex">F_{sq}(\cdot)</script>是Global Average Pooling，也就是作者称的Squeeze过程。然后将<script type="math/tex">1\times 1 \times C</script>的vector通过<script type="math/tex">F_{ex}(\cdot,\rm{W})</script>即两级全连接层，，也就是作者称的Excitation过程。最后用sigmoid（文中提到的self-gating mechanism）限制到<code>[0,1]</code>的范围，把这个值作为scale乘到U的C个通道上。作为下一级的输入数据<script type="math/tex">\widetilde{\rm{X}}</script>。</p>
+</li>
+<li><p>简而言之，模块的核心思想就是想通过控制scale的大小，把重要特征增强，不重要的特征减弱，从而提取更好的特征。</p>
+</li>
+<li><p><script type="math/tex">F_{sq}(\cdot)</script>的实现方式有很多，论文利用如下公式：</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">z_&#123;c&#125; = \rm&#123;F&#125;_&#123;sq&#125;(u_c) = \frac&#123;1&#125;&#123;W \times H&#125; \sum_&#123;i=1&#125;^W \sum_&#123;j=1&#125;^&#123;H&#125; u_c(i,j)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>将SE-block加到inception结构和resnet结构中组成SE-Net，如下图：</li>
+</ul>
+<center><img src="http://ww1.sinaimg.cn/mw690/0061KkpRly1fx7yiv1316j30ee0o9t9r.jpg"></center>
+
+<ul>
+<li>论文中还有SE-block的很多种形式，如下：</li>
+</ul>
+<center><img src="http://ww1.sinaimg.cn/mw690/0061KkpRly1fx7ywlumq2j30tw08qjry.jpg"></center>
+
+<ul>
+<li>文中的实验也做得十分到位，干货十足，有理有据，值得学习一下。</li>
+</ul>
+<h3 id="2-10-RAN"><a href="#2-10-RAN" class="headerlink" title="2.10 RAN"></a>2.10 RAN</h3><p><a href="http://openaccess.thecvf.com/content_cvpr_2017/papers/Wang_Residual_Attention_Network_CVPR_2017_paper.pdf" target="_blank" rel="noopener">Residual Attention Network for Image Classification</a>提出了一种基于attention机制的网络，和SE-NET又有些不一样。</p>
+<ul>
+<li>提出一种可堆叠的Residual Attention Module模块，可以通过模块堆叠可以达到比较深的层次。</li>
+<li><p>提出一种基于Attention的残差学习方式，因为直接进行Attention Module的堆叠使得性能下降。</p>
+</li>
+<li><p>具体的结构通过如下图可以看得非常清楚：</p>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRly1fxq0jycyp1j30rz0f0wgx.jpg"></center>
+</li>
+<li><p>Attention Module如下图：</p>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRly1fxq0vtojuqj30dx0bw0ta.jpg"></center>
+
+<p>值得注意的是Soft Mask Branch最后的激活函数是sigmoid，其目的就是将像素值压缩在[0,1]范围，对结果比较重要的像素权重高，对结果不重要的权重低。但是注意到连续多个的Module直接相乘会导致feature map的值越来越小，使网络性能降低，所以在这里借鉴ResNet等映射方法，最终的输入为（1+M（x））*T（x）。</p>
+</li>
+<li><p>其效果如下：</p>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRly1fxq1euuyedj30t00edmzm.jpg"></center>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>Post author:  </strong>JimmyYoung</a>
+          </li>
+          <li class="post-copyright-link">
+          <strong>Post link:  </strong>
+          <a href="/2018/11/30/DL-Architecture/" target="_blank" title="CNN-Architecture">http://yoursite.com/2018/11/30/DL-Architecture/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>Copyright Notice:   </strong>
+            All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            unless stating additionally.
+          </li>
+         
+        </ul>
+<div>
+
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/08/03/he/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">My Info</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-0-Base-Knowledge"><span class="nav-number">1.</span> <span class="nav-text">1.0 Base Knowledge</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-Convolution-Kernel"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 Convolution Kernel</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-The-way-of-convolution"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 The way of convolution</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-Upsampling"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 Upsampling</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-Conclusion"><span class="nav-number">1.4.</span> <span class="nav-text">1.4 Conclusion</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-0-The-Development-of-Architecture"><span class="nav-number">2.</span> <span class="nav-text">2.0 The Development of Architecture</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-Summarize"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 Summarize</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-LeNet"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 LeNet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-AlexNet"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 AlexNet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-VGGNet"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 VGGNet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-GoogLeNet"><span class="nav-number">2.5.</span> <span class="nav-text">2.5 GoogLeNet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-6-ResNet"><span class="nav-number">2.6.</span> <span class="nav-text">2.6 ResNet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-7-Xception"><span class="nav-number">2.7.</span> <span class="nav-text">2.7 Xception</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-8-DenseNet"><span class="nav-number">2.8.</span> <span class="nav-text">2.8 DenseNet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-9-SENet"><span class="nav-number">2.9.</span> <span class="nav-text">2.9 SENet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-10-RAN"><span class="nav-number">2.10.</span> <span class="nav-text">2.10 RAN</span></a></li></ol></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2013 - 2018 JimmyYoung&#39;s Blog All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				UV : <span id="busuanzi_value_site_uv"></span> |  
+				PV : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives/" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories/" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags/" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about/" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            JimmyYoung&#39;s Blog
+          </div>
+          <div class="panel-body">
+            Copyright © 2018 JimmyYoung All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
