@@ -63,7 +63,7 @@
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fxq0jycyp1j30rz0f0wgx.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fxq0vtojuqj30dx0bw0ta.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fxq1euuyedj30t00edmzm.jpg">
-<meta property="og:updated_time" content="2018-11-30T06:31:46.152Z">
+<meta property="og:updated_time" content="2018-12-04T07:44:37.977Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CNN-Architecture">
 <meta name="twitter:description" content="1.0 Base KnowledgeCNN（Convolution Neural Network，卷积神经网络）作为一种经典的 DNN 结构，上世纪90年代就已经被提出了，却沉寂近20年。有趣的是，在2012年 AlexNet 大放异彩后，CNN 在随后几年近乎卷席了整个图像处理领域，很有点戏剧性。近些年，CNN 在语音处理、NLP 领域也发展迅速。随着时间的推移，CNN的架构不断更新迭代，本文将">
@@ -554,11 +554,11 @@ y[1,1]=x[0,0]*h[1,1]+x[1,0]*h[0,1]+x[2,0]*h[-1,1]
 <center><img src="http://ww1.sinaimg.cn/large/0061KkpRly1fx7upv1mekj30m505paa7.jpg"></center>
 
 <ul>
-<li><p>图中的<script type="math/tex">F_{tr} = \rm{X} \to \rm{U}</script>就是普通的卷积网络操作。<script type="math/tex">F_{sq}(\cdot)</script>是Global Average Pooling，也就是作者称的Squeeze过程。然后将<script type="math/tex">1\times 1 \times C</script>的vector通过<script type="math/tex">F_{ex}(\cdot,\rm{W})</script>即两级全连接层，，也就是作者称的Excitation过程。最后用sigmoid（文中提到的self-gating mechanism）限制到<code>[0,1]</code>的范围，把这个值作为scale乘到U的C个通道上。作为下一级的输入数据<script type="math/tex">\widetilde{\rm{X}}</script>。</p>
+<li><p>图中的 $F_{tr} = \rm{X} \to \rm{U}$ 就是普通的卷积网络操作。$F_{sq}(\cdot)$是Global Average Pooling，也就是作者称的Squeeze过程。然后将$1\times 1 \times C$的vector通过$F_{ex}(\cdot,\rm{W})$即两级全连接层，，也就是作者称的Excitation过程。最后用sigmoid（文中提到的self-gating mechanism）限制到$[0,1]$的范围，把这个值作为scale乘到U的C个通道上。作为下一级的输入数据$\widetilde{\rm{X}}$。</p>
 </li>
 <li><p>简而言之，模块的核心思想就是想通过控制scale的大小，把重要特征增强，不重要的特征减弱，从而提取更好的特征。</p>
 </li>
-<li><p><script type="math/tex">F_{sq}(\cdot)</script>的实现方式有很多，论文利用如下公式：</p>
+<li><p>$F_{sq}(\cdot)$的实现方式有很多，论文利用如下公式：</p>
 </li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">z_&#123;c&#125; = \rm&#123;F&#125;_&#123;sq&#125;(u_c) = \frac&#123;1&#125;&#123;W \times H&#125; \sum_&#123;i=1&#125;^W \sum_&#123;j=1&#125;^&#123;H&#125; u_c(i,j)</span><br></pre></td></tr></table></figure>
@@ -845,22 +845,7 @@ y[1,1]=x[0,0]*h[1,1]+x[1,0]*h[0,1]+x[2,0]*h[-1,1]
   <a id="rocket" href="#top" class=""></a>
   <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
   
-    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
 </html>
