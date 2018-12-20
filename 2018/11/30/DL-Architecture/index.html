@@ -64,7 +64,7 @@
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fxq0vtojuqj30dx0bw0ta.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fxq1euuyedj30t00edmzm.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1fydep4c0rvj30hv0iyjtb.jpg">
-<meta property="og:updated_time" content="2018-12-20T14:43:51.939Z">
+<meta property="og:updated_time" content="2018-12-20T14:45:41.396Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CNN-Architecture">
 <meta name="twitter:description" content="1.0 Base KnowledgeCNN（Convolution Neural Network，卷积神经网络）作为一种经典的 DNN 结构，上世纪90年代就已经被提出了，却沉寂近20年。有趣的是，在2012年 AlexNet 大放异彩后，CNN 在随后几年近乎卷席了整个图像处理领域，很有点戏剧性。近些年，CNN 在语音处理、NLP 领域也发展迅速。随着时间的推移，CNN的架构不断更新迭代，本文将">
@@ -599,8 +599,8 @@ z_{c} = \rm{F}_{sq}(u_c) = \frac{1}{W \times H} \sum_{i=1}^W \sum_{j=1}^{H} u_c(
 </blockquote>
 <ul>
 <li><p>抽象来说，可以用下面公式来表示Non-local思想。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\rm&#123;y&#125;_i = \frac&#123;1&#125;&#123;C(x)&#125;\sum_&#123;\forall j&#125;\mathcal&#123;f&#125;(x_i.x_j)\mathcal&#123;g&#125;(x_j)</span><br></pre></td></tr></table></figure>
-<p>其中$i$ 表示输出position（可以表示空间的，时间的或时空连续的）的index, $j$表示所有可能position的index。$\rm{x}$表示输入的信号（可以是图像，序列，视频，经常是featuremap）。$f$是用来计算一个scalar（用来表征position之间的关系）。$g$用来估计一个输入信号在position$j$的表示。然后对整个结果进行标准化。</p>
+<script type="math/tex; mode=display">
+\rm{y}_i = \frac{1}{C(x)}\sum_{\forall j}\mathcal{f}(x_i.x_j)\mathcal{g}(x_j)</script><p>其中$i$ 表示输出position（可以表示空间的，时间的或时空连续的）的index, $j$表示所有可能position的index。$\rm{x}$表示输入的信号（可以是图像，序列，视频，经常是featuremap）。$f$是用来计算一个scalar（用来表征position之间的关系）。$g$用来估计一个输入信号在position$j$的表示。然后对整个结果进行标准化。</p>
 </li>
 <li><p>实例化，将上面抽象的idea转化为具体的模型。</p>
 <p> 令$g(\rm{x}_j) = W_gx_j$，其中$W_g$是一个参数矩阵，例如1*1的卷积层。</p>
