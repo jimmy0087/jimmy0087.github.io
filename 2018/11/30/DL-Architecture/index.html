@@ -63,7 +63,8 @@
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fxq0jycyp1j30rz0f0wgx.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fxq0vtojuqj30dx0bw0ta.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fxq1euuyedj30t00edmzm.jpg">
-<meta property="og:updated_time" content="2018-12-04T08:08:22.733Z">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1fydep4c0rvj30hv0iyjtb.jpg">
+<meta property="og:updated_time" content="2018-12-20T14:35:00.339Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CNN-Architecture">
 <meta name="twitter:description" content="1.0 Base KnowledgeCNN（Convolution Neural Network，卷积神经网络）作为一种经典的 DNN 结构，上世纪90年代就已经被提出了，却沉寂近20年。有趣的是，在2012年 AlexNet 大放异彩后，CNN 在随后几年近乎卷席了整个图像处理领域，很有点戏剧性。近些年，CNN 在语音处理、NLP 领域也发展迅速。随着时间的推移，CNN的架构不断更新迭代，本文将">
@@ -588,6 +589,29 @@ z_{c} = \rm{F}_{sq}(u_c) = \frac{1}{W \times H} \sum_{i=1}^W \sum_{j=1}^{H} u_c(
 </li>
 <li><p>其效果如下：</p>
 <center><img src="http://ww1.sinaimg.cn/large/0061KkpRly1fxq1euuyedj30t00edmzm.jpg"></center>
+
+
+</li>
+</ul>
+<h3 id="2-11-NonLocalNet"><a href="#2-11-NonLocalNet" class="headerlink" title="2.11 NonLocalNet"></a>2.11 NonLocalNet</h3><p><a href="https://arxiv.org/abs/1711.07971" target="_blank" rel="noopener">Non-local Neural Networks</a>提出了一个新的block，可以捕获远程的依赖关系。与其说提出一个模型，不如说是基于前面工作提出的一个思路，根据这个思路可以设计出很多具体的实例模型。</p>
+<blockquote>
+<p>a non-local operation computes the response at a position<br>as a weighted sum of the features at all positions in the input<br>feature maps</p>
+</blockquote>
+<ul>
+<li><p>抽象来说，可以用下面公式来表示Non-local思想。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\rm&#123;y&#125;_i = \frac&#123;1&#125;&#123;C(x)&#125;\sum_&#123;\forall j&#125;\mathcal&#123;f&#125;(x_i.x_j)\mathcal&#123;g&#125;(x_j)</span><br></pre></td></tr></table></figure>
+<p>其中$i$ 表示输出position（可以表示空间的，时间的或时空连续的）的index, $j$表示所有可能position的index。$\rm{x}$表示输入的信号（可以是图像，序列，视频，经常是featuremap）。$f$是用来计算一个scalar（用来表征position之间的关系）。$g$用来估计一个输入信号在position$j$的表示。然后对整个结果进行标准化。</p>
+</li>
+<li><p>实例化，将上面抽象的idea转化为具体的模型。</p>
+<p> 令$g(\rm{x}_j) = W_gx_j$，其中$W_g$是一个参数矩阵，例如1*1的卷积层。</p>
+<p> $f(\rm{x}_i,\rm{x}_j) = $有很多表示方法，具体参见原文。</p>
+</li>
+<li><p>上面都是理论分析。运用到神经网络中如下图，也是论文中做实验用到的block。这样就方便将这个block运用到其他网络。</p>
+  <center><img src="http://ww1.sinaimg.cn/large/0061KkpRgy1fydep4c0rvj30hv0iyjtb.jpg"></center>
+
+<p>  其中$ z_i = W_z \rm{y}_i + x_i$，这里是用了resnet的skipconnection结构。</p>
+</li>
+<li><p>然后作者利用这个block重新build一些模型进行测试，当然效果都还不错。</p>
 </li>
 </ul>
 
@@ -656,7 +680,7 @@ z_{c} = \rm{F}_{sq}(u_c) = \frac{1}{W \times H} \sum_{i=1}^W \sum_{j=1}^{H} u_c(
     <div id="toc" class="toc-article">
     <strong class="toc-title">Contents</strong>
     
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-0-Base-Knowledge"><span class="nav-number">1.</span> <span class="nav-text">1.0 Base Knowledge</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-Convolution-Kernel"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 Convolution Kernel</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-The-way-of-convolution"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 The way of convolution</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-Upsampling"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 Upsampling</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-Conclusion"><span class="nav-number">1.4.</span> <span class="nav-text">1.4 Conclusion</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-0-The-Development-of-Architecture"><span class="nav-number">2.</span> <span class="nav-text">2.0 The Development of Architecture</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-Summarize"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 Summarize</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-LeNet"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 LeNet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-AlexNet"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 AlexNet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-VGGNet"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 VGGNet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-GoogLeNet"><span class="nav-number">2.5.</span> <span class="nav-text">2.5 GoogLeNet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-6-ResNet"><span class="nav-number">2.6.</span> <span class="nav-text">2.6 ResNet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-7-Xception"><span class="nav-number">2.7.</span> <span class="nav-text">2.7 Xception</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-8-DenseNet"><span class="nav-number">2.8.</span> <span class="nav-text">2.8 DenseNet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-9-SENet"><span class="nav-number">2.9.</span> <span class="nav-text">2.9 SENet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-10-RAN"><span class="nav-number">2.10.</span> <span class="nav-text">2.10 RAN</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-0-Base-Knowledge"><span class="nav-number">1.</span> <span class="nav-text">1.0 Base Knowledge</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-Convolution-Kernel"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 Convolution Kernel</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-The-way-of-convolution"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 The way of convolution</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-Upsampling"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 Upsampling</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-Conclusion"><span class="nav-number">1.4.</span> <span class="nav-text">1.4 Conclusion</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-0-The-Development-of-Architecture"><span class="nav-number">2.</span> <span class="nav-text">2.0 The Development of Architecture</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-Summarize"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 Summarize</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-LeNet"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 LeNet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-AlexNet"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 AlexNet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-VGGNet"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 VGGNet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-GoogLeNet"><span class="nav-number">2.5.</span> <span class="nav-text">2.5 GoogLeNet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-6-ResNet"><span class="nav-number">2.6.</span> <span class="nav-text">2.6 ResNet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-7-Xception"><span class="nav-number">2.7.</span> <span class="nav-text">2.7 Xception</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-8-DenseNet"><span class="nav-number">2.8.</span> <span class="nav-text">2.8 DenseNet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-9-SENet"><span class="nav-number">2.9.</span> <span class="nav-text">2.9 SENet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-10-RAN"><span class="nav-number">2.10.</span> <span class="nav-text">2.10 RAN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-11-NonLocalNet"><span class="nav-number">2.11.</span> <span class="nav-text">2.11 NonLocalNet</span></a></li></ol></li></ol>
     
     </div>
   </aside>
