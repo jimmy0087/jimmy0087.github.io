@@ -64,7 +64,19 @@
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fxq0vtojuqj30dx0bw0ta.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fxq1euuyedj30t00edmzm.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1fydep4c0rvj30hv0iyjtb.jpg">
-<meta property="og:updated_time" content="2018-12-20T14:45:41.396Z">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fz1qnvksjgj30m90c70to.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fz1qug0kmfj30u70mrq5a.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fz1qxfd0fij30tq0jbtcs.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fz1s0zpgedj30du0g1q51.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fz1tazixjwj30go0cr3zs.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fz1tqsk54vj30p90pajtn.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fz1tv5t15rj30hh0k40v7.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fz2f3q58qmj30rl0c9jst.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fz2f4pnkghj30rr0d9wfi.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fz2fd3h4iqj30ru0bzabz.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fz2gtlqys2j30q40fwjsz.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fz2gvp7djwj30q30ettar.jpg">
+<meta property="og:updated_time" content="2019-01-11T05:05:10.957Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CNN-Architecture">
 <meta name="twitter:description" content="1.0 Base KnowledgeCNN（Convolution Neural Network，卷积神经网络）作为一种经典的 DNN 结构，上世纪90年代就已经被提出了，却沉寂近20年。有趣的是，在2012年 AlexNet 大放异彩后，CNN 在随后几年近乎卷席了整个图像处理领域，很有点戏剧性。近些年，CNN 在语音处理、NLP 领域也发展迅速。随着时间的推移，CNN的架构不断更新迭代，本文将">
@@ -614,6 +626,85 @@ z_{c} = \rm{F}_{sq}(u_c) = \frac{1}{W \times H} \sum_{i=1}^W \sum_{j=1}^{H} u_c(
 <li><p>然后作者利用这个block重新build一些模型进行测试，当然效果都还不错。</p>
 </li>
 </ul>
+<h2 id="3-0-Model-Compression"><a href="#3-0-Model-Compression" class="headerlink" title="3.0 Model Compression"></a>3.0 Model Compression</h2><h3 id="3-1-Summarize"><a href="#3-1-Summarize" class="headerlink" title="3.1 Summarize"></a>3.1 Summarize</h3><p>模型压缩是非常有落地价值的研究方向。因为对于移动端的部署具有重要的意义，有效的降低了计算资源的消耗，使得基于深度学习的方法能够大面积运用。</p>
+<p>模型压缩大致可以分为两种思路：</p>
+<ul>
+<li>前端压缩：知识蒸馏，结构设计，剪支处理。</li>
+<li>后端压缩：低秩近似，未加限制的剪支，参数量化，二值网络。</li>
+</ul>
+<h3 id="3-2-SqueezeNet"><a href="#3-2-SqueezeNet" class="headerlink" title="3.2 SqueezeNet"></a>3.2 SqueezeNet</h3><p><a href="https://arxiv.org/abs/1602.07360" target="_blank" rel="noopener">SqueezeNet</a>这个算是比较偏早期的工作。想法也比较简单，尽可能使用1*1和3*3的卷积模块。</p>
+<ul>
+<li><p>SqueezeNet提出了fire module。如下图：</p>
+  <center><img src="http://ww1.sinaimg.cn/large/0061KkpRly1fz1qnvksjgj30m90c70to.jpg"></center>
+</li>
+<li><p>整体的网络架构基本都是由fire module组装。</p>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRly1fz1qug0kmfj30u70mrq5a.jpg"></center>
+
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRly1fz1qxfd0fij30tq0jbtcs.jpg"></center>
+
+</li>
+</ul>
+<h3 id="3-2-MobileNet"><a href="#3-2-MobileNet" class="headerlink" title="3.2 MobileNet"></a>3.2 MobileNet</h3><p><a href="https://arxiv.org/abs/1704.04861" target="_blank" rel="noopener">MobileNet</a>是google系的轻网络。</p>
+<ul>
+<li>采用深度可分离卷积（DepthWise可以在减少参数的同时提升运算速度。但是由于每个channel的feature map只被一个卷积核卷积，所以channel之间的信息无法得到交流。所以之后会有一个PointWise层（1*1卷积核的卷积层），来搭建channel之间的信息交流。</li>
+<li>采用stride=2的卷积替代pooling层。提升运算速度，这个idea还是比较work的。</li>
+<li>具体的模块见上面卷积的那一部分，图示比较清楚了。</li>
+<li><p>MobileNet的具体模型如下图。</p>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRly1fz1s0zpgedj30du0g1q51.jpg"></center>
+
+</li>
+</ul>
+<h3 id="3-3-MobileNetV2"><a href="#3-3-MobileNetV2" class="headerlink" title="3.3 MobileNetV2"></a>3.3 MobileNetV2</h3><p><a href="https://arxiv.org/abs/1801.04381v2" target="_blank" rel="noopener">MobileNetV2</a>是针对MobileNet的改进。</p>
+<ul>
+<li><p>采用inverted residuals。在resnet中，res block先经过1*1降channel的维数，然后再经过3*3的卷积层，最后经过1*1再讲channel扩张到原维数。而inverted residuals则是反其道而行，先扩张后压缩。之所以会选择这种方式，是因为MobieNet采用DW方式提取特征，特征量已经压缩，如果再压缩，信息量急剧下降，会导致结果变差。两者的比较如下图。</p>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRly1fz1tazixjwj30go0cr3zs.jpg"></center>
+</li>
+<li><p>采用linear bottlenecks。ReLu激活函数的半抑制性会一定程度的阻碍信息的流通，因此在block的最后一层会使用线性函数来保留整个特征的信息。不仅如此，还借鉴了resnet的shortcuts增加信息的流通。block对比图如下：</p>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRly1fz1tqsk54vj30p90pajtn.jpg"></center>
+</li>
+<li><p>网络的模型如下表：</p>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRly1fz1tv5t15rj30hh0k40v7.jpg"></center>
+
+</li>
+</ul>
+<h3 id="3-4-ShuffleNet-v1"><a href="#3-4-ShuffleNet-v1" class="headerlink" title="3.4 ShuffleNet-v1"></a>3.4 ShuffleNet-v1</h3><p><a href="https://arxiv.org/abs/1707.01083v2" target="_blank" rel="noopener">ShuffleNet-v1</a>是face++团队推出的基于移动端的轻量级网络。主题思路是利用group convolution。</p>
+<ul>
+<li>采用group convolution减少大量参数。但是单纯的group和DW存在信息阻塞。</li>
+<li><p>采用channel shuffle来增强信息交流。论文中也给出了实验得结果，确实能够提高性能。</p>
+<p><center><img src="http://ww1.sinaimg.cn/large/0061KkpRly1fz2f3q58qmj30rl0c9jst.jpg"><center></center></center></p>
+</li>
+<li><p>采用concat替代add的channel叠加操作。增加信息量。</p>
+<p><center><img src="http://ww1.sinaimg.cn/large/0061KkpRly1fz2f4pnkghj30rr0d9wfi.jpg"><center></center></center></p>
+</li>
+<li><p>ShuffleNet的模型如下表：</p>
+<p><img src="http://ww1.sinaimg.cn/large/0061KkpRly1fz2fd3h4iqj30ru0bzabz.jpg"></p>
+</li>
+</ul>
+<h3 id="3-4-ShuffleNet-v2"><a href="#3-4-ShuffleNet-v2" class="headerlink" title="3.4 ShuffleNet-v2"></a>3.4 ShuffleNet-v2</h3><p><a href="https://arxiv.org/abs/1807.11164v1" target="_blank" rel="noopener">ShuffleNet-v2</a>是基于ShuffleNet-v1的网络。</p>
+<ul>
+<li><p>论文提出影响神经网络速度的四个因素。</p>
+<ol>
+<li>FLOPs(FLOPs就是网络执行了多少multiply-adds操作)</li>
+<li>MAC(内存访问成本)</li>
+<li>并行度(如果网络并行度高，速度明显提升)</li>
+<li>计算平台(GPU，ARM)</li>
+</ol>
+</li>
+<li><p>基于此，提出了四种思路：</p>
+<ol>
+<li>输入输出的channel相同时，MAC最小</li>
+<li>过度的组卷积会增加MAC</li>
+<li>网络碎片化会降低并行度</li>
+<li>元素级运算不可忽视</li>
+</ol>
+</li>
+<li><p>ShuﬄeNet V2提出channel split。将输入的channel分为两部分，其中没有做任何操作的一部分与经过几层卷积操作的channel组合，之后再shuffle，见下图c。对下采样的block，见图d，少了channel split。这两个block组成了ShuﬄeNet V2。</p>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRly1fz2gtlqys2j30q40fwjsz.jpg"></center>
+</li>
+<li><p>具体的网络结构如下：</p>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRly1fz2gvp7djwj30q30ettar.jpg"></center>
+</li>
+</ul>
 
       
     </div>
@@ -680,7 +771,7 @@ z_{c} = \rm{F}_{sq}(u_c) = \frac{1}{W \times H} \sum_{i=1}^W \sum_{j=1}^{H} u_c(
     <div id="toc" class="toc-article">
     <strong class="toc-title">Contents</strong>
     
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-0-Base-Knowledge"><span class="nav-number">1.</span> <span class="nav-text">1.0 Base Knowledge</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-Convolution-Kernel"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 Convolution Kernel</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-The-way-of-convolution"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 The way of convolution</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-Upsampling"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 Upsampling</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-Conclusion"><span class="nav-number">1.4.</span> <span class="nav-text">1.4 Conclusion</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-0-The-Development-of-Architecture"><span class="nav-number">2.</span> <span class="nav-text">2.0 The Development of Architecture</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-Summarize"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 Summarize</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-LeNet"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 LeNet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-AlexNet"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 AlexNet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-VGGNet"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 VGGNet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-GoogLeNet"><span class="nav-number">2.5.</span> <span class="nav-text">2.5 GoogLeNet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-6-ResNet"><span class="nav-number">2.6.</span> <span class="nav-text">2.6 ResNet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-7-Xception"><span class="nav-number">2.7.</span> <span class="nav-text">2.7 Xception</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-8-DenseNet"><span class="nav-number">2.8.</span> <span class="nav-text">2.8 DenseNet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-9-SENet"><span class="nav-number">2.9.</span> <span class="nav-text">2.9 SENet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-10-RAN"><span class="nav-number">2.10.</span> <span class="nav-text">2.10 RAN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-11-NonLocalNet"><span class="nav-number">2.11.</span> <span class="nav-text">2.11 NonLocalNet</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-0-Base-Knowledge"><span class="nav-number">1.</span> <span class="nav-text">1.0 Base Knowledge</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-Convolution-Kernel"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 Convolution Kernel</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-The-way-of-convolution"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 The way of convolution</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-Upsampling"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 Upsampling</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-Conclusion"><span class="nav-number">1.4.</span> <span class="nav-text">1.4 Conclusion</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-0-The-Development-of-Architecture"><span class="nav-number">2.</span> <span class="nav-text">2.0 The Development of Architecture</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-Summarize"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 Summarize</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-LeNet"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 LeNet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-AlexNet"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 AlexNet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-VGGNet"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 VGGNet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-GoogLeNet"><span class="nav-number">2.5.</span> <span class="nav-text">2.5 GoogLeNet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-6-ResNet"><span class="nav-number">2.6.</span> <span class="nav-text">2.6 ResNet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-7-Xception"><span class="nav-number">2.7.</span> <span class="nav-text">2.7 Xception</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-8-DenseNet"><span class="nav-number">2.8.</span> <span class="nav-text">2.8 DenseNet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-9-SENet"><span class="nav-number">2.9.</span> <span class="nav-text">2.9 SENet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-10-RAN"><span class="nav-number">2.10.</span> <span class="nav-text">2.10 RAN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-11-NonLocalNet"><span class="nav-number">2.11.</span> <span class="nav-text">2.11 NonLocalNet</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-0-Model-Compression"><span class="nav-number">3.</span> <span class="nav-text">3.0 Model Compression</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-Summarize"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 Summarize</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-SqueezeNet"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 SqueezeNet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-MobileNet"><span class="nav-number">3.3.</span> <span class="nav-text">3.2 MobileNet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-MobileNetV2"><span class="nav-number">3.4.</span> <span class="nav-text">3.3 MobileNetV2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-ShuffleNet-v1"><span class="nav-number">3.5.</span> <span class="nav-text">3.4 ShuffleNet-v1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-ShuffleNet-v2"><span class="nav-number">3.6.</span> <span class="nav-text">3.4 ShuffleNet-v2</span></a></li></ol></li></ol>
     
     </div>
   </aside>
@@ -695,7 +786,7 @@ z_{c} = \rm{F}_{sq}(u_c) = \frac{1}{W \times H} \sum_{i=1}^W \sum_{j=1}^{H} u_c(
   <div class="container">
       	<div class="row">
 	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
-	      <p id="copyRightEn">Copyright &copy; 2013 - 2018 JimmyYoung&#39;s Blog All Rights Reserved.</p>
+	      <p id="copyRightEn">Copyright &copy; 2013 - 2019 JimmyYoung&#39;s Blog All Rights Reserved.</p>
 	      
 	      
     		<p class="busuanzi_uv">
@@ -849,7 +940,7 @@ z_{c} = \rm{F}_{sq}(u_c) = \frac{1}{W \times H} \sum_{i=1}^W \sum_{j=1}^{H} u_c(
             JimmyYoung&#39;s Blog
           </div>
           <div class="panel-body">
-            Copyright © 2018 JimmyYoung All Rights Reserved.
+            Copyright © 2019 JimmyYoung All Rights Reserved.
           </div>
         </div>
       </div>
