@@ -3,18 +3,21 @@
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
   
-  <title>JimmyYoung&#39;s Blog</title>
+  <title>facelandmarks | JimmyYoung&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
+  <meta name="keywords" content="DL" />
   
   
   
-  <meta name="description" content="Face Landmarks1.0 综述Face Landmarks 也称为 Face Alignment，人脸关键点检测。是人脸相关技术的基础工作之一，很多实际的项目中不可缺少的一部分。因此它的重要性不言而喻。因此对于它的研究也一直没有停过，从最开始的传统方法，到现在的深度学习方法，无论从精确度还是关键点数量都有了巨大的发展。 本篇文章旨在介绍一些基于深度学习的相关方法，并将不定时更新最新的相关">
+  
+  <meta name="description" content="1.0 综述Face Landmarks 也称为 Face Alignment，人脸关键点检测。是人脸相关技术的基础工作之一，很多实际的项目中不可缺少的一部分。因此它的重要性不言而喻。因此对于它的研究也一直没有停过，从最开始的传统方法，到现在的深度学习方法，无论从精确度还是关键点数量都有了巨大的发展。 本篇文章旨在介绍一些基于深度学习的相关方法，并将不定时更新最新的相关工作。  技术路线：分为2D">
+<meta name="keywords" content="DL">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JimmyYoung&#39;s Blog">
-<meta property="og:url" content="http://yoursite.com/2019/02/19/DL-FaceLandmarks/index.html">
+<meta property="og:title" content="FaceLandmarks">
+<meta property="og:url" content="http://yoursite.com/2019/01/20/DL-FaceLandmarks/index.html">
 <meta property="og:site_name" content="JimmyYoung&#39;s Blog">
-<meta property="og:description" content="Face Landmarks1.0 综述Face Landmarks 也称为 Face Alignment，人脸关键点检测。是人脸相关技术的基础工作之一，很多实际的项目中不可缺少的一部分。因此它的重要性不言而喻。因此对于它的研究也一直没有停过，从最开始的传统方法，到现在的深度学习方法，无论从精确度还是关键点数量都有了巨大的发展。 本篇文章旨在介绍一些基于深度学习的相关方法，并将不定时更新最新的相关">
+<meta property="og:description" content="1.0 综述Face Landmarks 也称为 Face Alignment，人脸关键点检测。是人脸相关技术的基础工作之一，很多实际的项目中不可缺少的一部分。因此它的重要性不言而喻。因此对于它的研究也一直没有停过，从最开始的传统方法，到现在的深度学习方法，无论从精确度还是关键点数量都有了巨大的发展。 本篇文章旨在介绍一些基于深度学习的相关方法，并将不定时更新最新的相关工作。  技术路线：分为2D">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1g09s67byd3j30q60bsdi1.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1g09seojqf2j30cs08dt9g.jpg">
@@ -30,10 +33,10 @@
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1g0c04drquij30d902nt8l.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1g0bzzdvfp6j30d701pq2t.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1g0c00aapw1j30d301c743.jpg">
-<meta property="og:updated_time" content="2019-02-19T13:14:54.474Z">
+<meta property="og:updated_time" content="2019-02-19T14:22:14.716Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JimmyYoung&#39;s Blog">
-<meta name="twitter:description" content="Face Landmarks1.0 综述Face Landmarks 也称为 Face Alignment，人脸关键点检测。是人脸相关技术的基础工作之一，很多实际的项目中不可缺少的一部分。因此它的重要性不言而喻。因此对于它的研究也一直没有停过，从最开始的传统方法，到现在的深度学习方法，无论从精确度还是关键点数量都有了巨大的发展。 本篇文章旨在介绍一些基于深度学习的相关方法，并将不定时更新最新的相关">
+<meta name="twitter:title" content="FaceLandmarks">
+<meta name="twitter:description" content="1.0 综述Face Landmarks 也称为 Face Alignment，人脸关键点检测。是人脸相关技术的基础工作之一，很多实际的项目中不可缺少的一部分。因此它的重要性不言而喻。因此对于它的研究也一直没有停过，从最开始的传统方法，到现在的深度学习方法，无论从精确度还是关键点数量都有了巨大的发展。 本篇文章旨在介绍一些基于深度学习的相关方法，并将不定时更新最新的相关工作。  技术路线：分为2D">
 <meta name="twitter:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1g09s67byd3j30q60bsdi1.jpg">
   
     <link rel="alternate" href="/atom.xml" title="JimmyYoung&#39;s Blog" type="application/atom+xml">
@@ -176,13 +179,25 @@
   <div id="articleInner" class="article-inner">
     
     
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      FaceLandmarks
+    </h1>
+  
+
+      </header>
+    
     <div class="article-meta">
       
-	<a href="/2019/02/19/DL-FaceLandmarks/" class="article-date">
-	  <time datetime="2019-02-19T14:02:26.998Z" itemprop="datePublished">2019-02-19</time>
+	<a href="/2019/01/20/DL-FaceLandmarks/" class="article-date">
+	  <time datetime="2019-01-20T06:20:00.000Z" itemprop="datePublished">2019-01-20</time>
 	</a>
 
       
+    <a class="article-category-link" href="/categories/DL/">DL</a>
+
       
 	<a class="article-views">
 	<span id="busuanzi_container_page_pv">
@@ -193,7 +208,7 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Face-Landmarks"><a href="#Face-Landmarks" class="headerlink" title="Face Landmarks"></a>Face Landmarks</h1><h2 id="1-0-综述"><a href="#1-0-综述" class="headerlink" title="1.0 综述"></a>1.0 综述</h2><p><strong>Face Landmarks</strong> 也称为 Face Alignment，人脸关键点检测。是人脸相关技术的基础工作之一，很多实际的项目中不可缺少的一部分。因此它的重要性不言而喻。因此对于它的研究也一直没有停过，从最开始的传统方法，到现在的深度学习方法，无论从精确度还是关键点数量都有了巨大的发展。</p>
+        <h2 id="1-0-综述"><a href="#1-0-综述" class="headerlink" title="1.0 综述"></a>1.0 综述</h2><p><strong>Face Landmarks</strong> 也称为 Face Alignment，人脸关键点检测。是人脸相关技术的基础工作之一，很多实际的项目中不可缺少的一部分。因此它的重要性不言而喻。因此对于它的研究也一直没有停过，从最开始的传统方法，到现在的深度学习方法，无论从精确度还是关键点数量都有了巨大的发展。</p>
 <p>本篇文章旨在介绍一些基于深度学习的相关方法，并将不定时更新最新的相关工作。</p>
 <ul>
 <li><p>技术路线：分为2D关键点检测和3D关键点检测。</p>
@@ -240,9 +255,9 @@
 
 <p>其中<strong>CONNECTION LAYERS</strong> 如下图：</p>
 <center><img src="http://ww1.sinaimg.cn/large/0061KkpRgy1g0axt6lsshj309x0evdgl.jpg"></center></li>
-<li><strong>Stage1</strong>:首先输入灰度图I,以及一个初始化的landmarks值<script type="math/tex">S_0</script>（这个值是根据训练集的groundTruth求平均值得到的，其目的就是为了减小网络的搜索空间，提高精度），<strong><em>FEED FORWARD IN</em></strong> 网络输出的是一个偏移量<script type="math/tex">\Delta S_1</script>,那么新的landmarks为<script type="math/tex">S_1 = S_0 + \Delta S_1</script>。</li>
-<li><strong>Stage2</strong>：根据stage1得到的<script type="math/tex">S_1</script>和初始化landmarks<script type="math/tex">S_0</script>,计算仿射变换的相关参数<script type="math/tex">T_2()</script>，以矫正人脸，得到矫正后的人脸<script type="math/tex">T_2(I)</script>,以及矫正后人脸的heatmap<script type="math/tex">H_1</script>和特征图<script type="math/tex">F_1</script>。这个过程就是上图所指的<strong><em>CONNECTION LAYERS</em></strong>。然后将这三个部分叠加起来输入到新的 <strong><em>FEED FORWARD IN</em></strong> 网络,得到一个新的偏移量量<script type="math/tex">\Delta S_2</script>, 最终的输出为<script type="math/tex">S_2 = T_2(S_1) + \Delta S_2</script>, 这里的<script type="math/tex">S_2</script>是相对于矫正后人脸的landmarks，所以想要得到原图像的landmarks，需要根据之前算的仿射变换的参数进行一个反变换，也就是上图的<strong><em>LANDMARK TRANSFORM</em></strong> 的过程。</li>
-<li>上面提到<strong><em>CONNECTION LAYERS</em></strong> 包含三个部分。第一，就是通过<script type="math/tex">S_1</script>和<script type="math/tex">S_0</script>之间的仿射变换关系，得到一个矫正的人脸图像，作用是让每个stage的输入能够得到比较稳定的输入，从而获得更加稳定的输出。第二，利用<script type="math/tex">S_1</script>和下面公式得到heatmap<script type="math/tex">H_1</script>，作用是抑制landmarks的偏移过大。第三，通过上一个stage的网络输出，进过几层反卷积获得一个特征图<script type="math/tex">F_1</script>，个人还不是很理解这个操作的意义。</li>
+<li><strong>Stage1</strong>:首先输入灰度图I,以及一个初始化的landmarks值$S_0$（这个值是根据训练集的groundTruth求平均值得到的，其目的就是为了减小网络的搜索空间，提高精度），<strong>FEED FORWARD IN</strong> 网络输出的是一个偏移量$\Delta S_1$,那么新的landmarks为$S_1 = S_0 + \Delta S_1$。</li>
+<li><strong>Stage2</strong>：根据stage1得到的$S_1$和初始化landmarks$S_0$,计算仿射变换的相关参数$T_2()$，以矫正人脸，得到矫正后的人脸$T_2(I)$,以及矫正后人脸的heatmap$H_1$和特征图$F_1$。这个过程就是上图所指的<strong>CONNECTION LAYERS</strong>。然后将这三个部分叠加起来输入到新的 <strong><em>FEED FORWARD IN</em></strong> 网络,得到一个新的偏移量量$\Delta S_2$, 最终的输出为$S_2 = T_2(S_1) + \Delta S_2$, 这里的$S_2$是相对于矫正后人脸的landmarks，所以想要得到原图像的landmarks，需要根据之前算的仿射变换的参数进行一个反变换，也就是上图的<strong>LANDMARK TRANSFORM</strong> 的过程。</li>
+<li>上面提到<strong>CONNECTION LAYERS</strong> 包含三个部分。第一，就是通过$S_1$和$S_0$之间的仿射变换关系，得到一个矫正的人脸图像，作用是让每个stage的输入能够得到比较稳定的输入，从而获得更加稳定的输出。第二，利用$S_1$和下面公式得到heatmap$H_1$，作用是抑制landmarks的偏移过大。第三，通过上一个stage的网络输出，进过几层反卷积获得一个特征图$F_1$，个人还不是很理解这个操作的意义。</li>
 </ul>
 <center><img src="http://ww1.sinaimg.cn/large/0061KkpRgy1fx44pd3pnuj30b101vweb.jpg"></center>
 
@@ -287,7 +302,7 @@
           </li>
           <li class="post-copyright-link">
           <strong>Post link:  </strong>
-          <a href="/2019/02/19/DL-FaceLandmarks/" target="_blank" title="">http://yoursite.com/2019/02/19/DL-FaceLandmarks/</a>
+          <a href="/2019/01/20/DL-FaceLandmarks/" target="_blank" title="FaceLandmarks">http://yoursite.com/2019/01/20/DL-FaceLandmarks/</a>
           </li>
           <li class="post-copyright-license">
             <strong>Copyright Notice:   </strong>
@@ -350,7 +365,7 @@
     <div id="toc" class="toc-article">
     <strong class="toc-title">Contents</strong>
     
-        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Face-Landmarks"><span class="nav-number">1.</span> <span class="nav-text">Face Landmarks</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-0-综述"><span class="nav-number">1.1.</span> <span class="nav-text">1.0 综述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-0-模型"><span class="nav-number">1.2.</span> <span class="nav-text">2.0 模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-DCNN"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 DCNN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-DCNN（face-）"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 DCNN（face++）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-TCDCN"><span class="nav-number">1.2.3.</span> <span class="nav-text">2.3 TCDCN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-DAN"><span class="nav-number">1.2.4.</span> <span class="nav-text">2.4 DAN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-LAB"><span class="nav-number">1.2.5.</span> <span class="nav-text">2.5 LAB</span></a></li></ol></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-0-综述"><span class="nav-number">1.</span> <span class="nav-text">1.0 综述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-0-模型"><span class="nav-number">2.</span> <span class="nav-text">2.0 模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-DCNN"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 DCNN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-DCNN（face-）"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 DCNN（face++）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-TCDCN"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 TCDCN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-DAN"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 DAN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-LAB"><span class="nav-number">2.5.</span> <span class="nav-text">2.5 LAB</span></a></li></ol></li></ol>
     
     </div>
   </aside>
