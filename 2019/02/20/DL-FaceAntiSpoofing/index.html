@@ -3,7 +3,7 @@
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
   
-  <title>facelandmarks | JimmyYoung&#39;s Blog</title>
+  <title>faceantispoofing | JimmyYoung&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
   <meta name="keywords" content="DL" />
@@ -11,33 +11,24 @@
   
   
   
-  <meta name="description" content="1.0 综述Face Landmarks 也称为 Face Alignment，人脸关键点检测。是人脸相关技术的基础工作之一，很多实际的项目中不可缺少的一部分。因此它的重要性不言而喻。因此对于它的研究也一直没有停过，从最开始的传统方法，到现在的深度学习方法，无论从精确度还是关键点数量都有了巨大的发展。 本篇文章旨在介绍一些基于深度学习的相关方法，并将不定时更新最新的相关工作。  技术路线：分为2D">
+  <meta name="description" content="1 综述Face anti-spoofing detection 就是人脸的攻击检测。  1.0 时代：早期利用传统的handcrafted特征进行检测，目标很明确，就是找到活体和非活体之间的差异，其中包括颜色纹理，非刚性运动变形，材料（皮肤，纸质，镜面），图像或者视频质量。因为这种方法不是本文重点，所以就不列举相关论文了。 1.0 时代：继CNN兴起以来，就有人开始在人脸的活体检测尝试，并取得了">
 <meta name="keywords" content="DL">
 <meta property="og:type" content="article">
-<meta property="og:title" content="FaceLandmarks">
-<meta property="og:url" content="http://yoursite.com/2019/01/20/DL-FaceLandmarks/index.html">
+<meta property="og:title" content="FaceAntiSpoofing">
+<meta property="og:url" content="http://yoursite.com/2019/02/20/DL-FaceAntiSpoofing/index.html">
 <meta property="og:site_name" content="JimmyYoung&#39;s Blog">
-<meta property="og:description" content="1.0 综述Face Landmarks 也称为 Face Alignment，人脸关键点检测。是人脸相关技术的基础工作之一，很多实际的项目中不可缺少的一部分。因此它的重要性不言而喻。因此对于它的研究也一直没有停过，从最开始的传统方法，到现在的深度学习方法，无论从精确度还是关键点数量都有了巨大的发展。 本篇文章旨在介绍一些基于深度学习的相关方法，并将不定时更新最新的相关工作。  技术路线：分为2D">
+<meta property="og:description" content="1 综述Face anti-spoofing detection 就是人脸的攻击检测。  1.0 时代：早期利用传统的handcrafted特征进行检测，目标很明确，就是找到活体和非活体之间的差异，其中包括颜色纹理，非刚性运动变形，材料（皮肤，纸质，镜面），图像或者视频质量。因为这种方法不是本文重点，所以就不列举相关论文了。 1.0 时代：继CNN兴起以来，就有人开始在人脸的活体检测尝试，并取得了">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1g09s67byd3j30q60bsdi1.jpg">
-<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1g09seojqf2j30cs08dt9g.jpg">
-<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1g0ave75l8uj30ne0c1jsr.jpg">
-<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1g0awn11wuzj30r109o763.jpg">
-<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1g0axe2g15oj30m40eaabm.jpg">
-<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1g0axt6lsshj309x0evdgl.jpg">
-<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1fx44pd3pnuj30b101vweb.jpg">
-<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1g0bjq42w5aj30s70aljtf.jpg">
-<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1g0bsvtgcpbj30di06vmxk.jpg">
-<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1g0bsvtgcpbj30di06vmxk.jpg">
-<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1g0bzxb62trj30eg0bi3zw.jpg">
-<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1g0c04drquij30d902nt8l.jpg">
-<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1g0bzzdvfp6j30d701pq2t.jpg">
-<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1g0c00aapw1j30d301c743.jpg">
-<meta property="og:updated_time" content="2019-02-19T14:22:14.716Z">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fx67pmpb5vj30kp05xt93.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/mw690/0061KkpRly1fx67u1kdu7j30e60bkdgw.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fx681agnmoj30sa07ogmu.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fx6fruyuizj30lk0c8aaw.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1g0c1xerad9j30gy0dz75y.jpg">
+<meta property="og:updated_time" content="2019-02-19T15:22:05.215Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="FaceLandmarks">
-<meta name="twitter:description" content="1.0 综述Face Landmarks 也称为 Face Alignment，人脸关键点检测。是人脸相关技术的基础工作之一，很多实际的项目中不可缺少的一部分。因此它的重要性不言而喻。因此对于它的研究也一直没有停过，从最开始的传统方法，到现在的深度学习方法，无论从精确度还是关键点数量都有了巨大的发展。 本篇文章旨在介绍一些基于深度学习的相关方法，并将不定时更新最新的相关工作。  技术路线：分为2D">
-<meta name="twitter:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1g09s67byd3j30q60bsdi1.jpg">
+<meta name="twitter:title" content="FaceAntiSpoofing">
+<meta name="twitter:description" content="1 综述Face anti-spoofing detection 就是人脸的攻击检测。  1.0 时代：早期利用传统的handcrafted特征进行检测，目标很明确，就是找到活体和非活体之间的差异，其中包括颜色纹理，非刚性运动变形，材料（皮肤，纸质，镜面），图像或者视频质量。因为这种方法不是本文重点，所以就不列举相关论文了。 1.0 时代：继CNN兴起以来，就有人开始在人脸的活体检测尝试，并取得了">
+<meta name="twitter:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fx67pmpb5vj30kp05xt93.jpg">
   
     <link rel="alternate" href="/atom.xml" title="JimmyYoung&#39;s Blog" type="application/atom+xml">
   
@@ -175,7 +166,7 @@
             
       <div id="content" class="outer">
         
-          <section id="main" style="float:none;"><article id="post-DL-FaceLandmarks" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+          <section id="main" style="float:none;"><article id="post-DL-FaceAntiSpoofing" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -183,7 +174,7 @@
         
   
     <h1 class="thumb" class="article-title" itemprop="name">
-      FaceLandmarks
+      FaceAntiSpoofing
     </h1>
   
 
@@ -191,8 +182,8 @@
     
     <div class="article-meta">
       
-	<a href="/2019/01/20/DL-FaceLandmarks/" class="article-date">
-	  <time datetime="2019-01-20T06:20:00.000Z" itemprop="datePublished">2019-01-20</time>
+	<a href="/2019/02/20/DL-FaceAntiSpoofing/" class="article-date">
+	  <time datetime="2019-02-20T06:00:00.000Z" itemprop="datePublished">2019-02-20</time>
 	</a>
 
       
@@ -208,85 +199,39 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="1-0-综述"><a href="#1-0-综述" class="headerlink" title="1.0 综述"></a>1.0 综述</h2><p><strong>Face Landmarks</strong> 也称为 Face Alignment，人脸关键点检测。是人脸相关技术的基础工作之一，很多实际的项目中不可缺少的一部分。因此它的重要性不言而喻。因此对于它的研究也一直没有停过，从最开始的传统方法，到现在的深度学习方法，无论从精确度还是关键点数量都有了巨大的发展。</p>
-<p>本篇文章旨在介绍一些基于深度学习的相关方法，并将不定时更新最新的相关工作。</p>
+        <h2 id="1-综述"><a href="#1-综述" class="headerlink" title="1 综述"></a>1 综述</h2><p>Face anti-spoofing detection 就是人脸的攻击检测。</p>
 <ul>
-<li><p>技术路线：分为2D关键点检测和3D关键点检测。</p>
-</li>
-<li><p>数据集：由于人脸关键点数目不同，因此数据集也比较杂乱，目前用的比较多的是68个2D关键点的数据集<a href="https://ibug.doc.ic.ac.uk/resources/300-W_IMAVIS/" target="_blank" rel="noopener">300W</a>，以及68个3D关键点数据集<a href="https://ibug.doc.ic.ac.uk/resources/1st-3d-face-tracking-wild-competition/" target="_blank" rel="noopener">3D-300W</a>。</p>
-</li>
+<li><strong>1.0 时代</strong>：早期利用传统的handcrafted特征进行检测，目标很明确，就是找到活体和非活体之间的差异，其中包括<strong>颜色纹理</strong>，<strong>非刚性运动变形</strong>，<strong>材料（皮肤，纸质，镜面）</strong>，<strong>图像或者视频质量</strong>。因为这种方法不是本文重点，所以就不列举相关论文了。</li>
+<li><strong>1.0 时代</strong>：继CNN兴起以来，就有人开始在人脸的活体检测尝试，并取得了越来越突出的成绩，但是笔者认为最大的瓶颈在于公开大型数据集的缺失，使得这一领域进展速度有限，也确实数据集的制作成本偏高。</li>
 </ul>
-<h2 id="2-0-模型"><a href="#2-0-模型" class="headerlink" title="2.0 模型"></a>2.0 模型</h2><h3 id="2-1-DCNN"><a href="#2-1-DCNN" class="headerlink" title="2.1 DCNN"></a>2.1 DCNN</h3><p>2013，<a href="http://openaccess.thecvf.com/content_cvpr_2013/papers/Sun_Deep_Convolutional_Network_2013_CVPR_paper.pdf" target="_blank" rel="noopener">DCNN</a>是首次提出利用CNN来找到人脸5个关键点。</p>
-<ul>
-<li><p>DCNN是一种级联的CNN，模型的pipline如下图：</p>
-<center><img src="http://ww1.sinaimg.cn/large/0061KkpRgy1g09s67byd3j30q60bsdi1.jpg"></center>
+<h2 id="2-模型"><a href="#2-模型" class="headerlink" title="2 模型"></a>2 模型</h2><h3 id="2-1-Face-anti-spoofing-using-patch-and-depth-based-CNNs"><a href="#2-1-Face-anti-spoofing-using-patch-and-depth-based-CNNs" class="headerlink" title="2.1 Face anti-spoofing using patch and depth-based CNNs"></a>2.1 <strong>Face anti-spoofing using patch and depth-based CNNs</strong></h3><center><img src="http://ww1.sinaimg.cn/large/0061KkpRly1fx67pmpb5vj30kp05xt93.jpg"></center>
 
-<p>CNN模型如下图：</p>
-<center><img src="http://ww1.sinaimg.cn/large/0061KkpRgy1g09seojqf2j30cs08dt9g.jpg"></center>
-</li>
-<li><p>level1由三个CNN组成，level2和level3由10个CNN组成。级联回归使得关键点从粗到精，最终使得效果在当时是非常不错的。</p>
-</li>
-<li>级联思想为后面提供了一种有效的思路。</li>
+<ul>
+<li>从上图就能了解论文中的方法，最大的亮点在于把人脸深度作为一个差异特征。这种思想在后续的文章中得到了进一步的运用。</li>
 </ul>
-<h3 id="2-2-DCNN（face-）"><a href="#2-2-DCNN（face-）" class="headerlink" title="2.2 DCNN（face++）"></a>2.2 DCNN（face++）</h3><p>face++在DCNN模型上的改进，实现68关键点的高精度定位</p>
-<ul>
-<li><p>模型的pipline如下图：</p>
-<center><img src="http://ww1.sinaimg.cn/large/0061KkpRgy1g0ave75l8uj30ne0c1jsr.jpg"></center>
+<h3 id="2-2-Learning-Deep-Models-for-Face-Anti-Spoofing-Binary-or-Auxiliary-Supervision"><a href="#2-2-Learning-Deep-Models-for-Face-Anti-Spoofing-Binary-or-Auxiliary-Supervision" class="headerlink" title="2.2 Learning Deep Models for Face Anti-Spoofing: Binary or Auxiliary Supervision"></a>2.2 Learning Deep Models for Face Anti-Spoofing: Binary or Auxiliary Supervision</h3><center><img src="http://ww1.sinaimg.cn/mw690/0061KkpRly1fx67u1kdu7j30e60bkdgw.jpg"></center>
 
-<ol>
-<li>整个模型分为四个级联部分，level1的主要作用是获取面部器官的边界框；level2输出51个关键点预测位置，粗定位作用；level3会将粗定位的坐标进一步精确；level4会将level3的结果矫正进一步优化。</li>
-</ol>
-</li>
-<li><p>首次利用神经网络进行68个人关键点检测，在当时300W挑战赛上获得领先成绩。</p>
-</li>
+<ul>
+<li>这篇2018CVPR的论文也利用了人脸深度信息，并结合rPPG信号和主流的CNN+RNN方法。最大的亮点在于设计了Non-rigid Registration Layer来对其各帧人脸的非刚性运动，然后通过RNN更好的学习temporal pulse信息。整体的框架如下：</li>
 </ul>
-<h3 id="2-3-TCDCN"><a href="#2-3-TCDCN" class="headerlink" title="2.3 TCDCN"></a>2.3 TCDCN</h3><p><a href="https://link.springer.com/chapter/10.1007/978-3-319-10599-4_7" target="_blank" rel="noopener">TCDCN</a>是一个多任务网络，能够分辨人脸表情。</p>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRly1fx681agnmoj30sa07ogmu.jpg"></center>
+
 <ul>
-<li><p>模型的pipline如下：</p>
-<center><img src="http://ww1.sinaimg.cn/large/0061KkpRgy1g0awn11wuzj30r109o763.jpg"></center>
-</li>
-<li><p>早期的模型都比较简单，坑占的早。但是效果其实一般般。</p>
-</li>
+<li>文章指出：过去的方法把活体检测看成是一个二分类的问题，直接让CNN去学习，这样学出来的cues不够general和discriminative。所以文章将二分类问题转化为带目标性的监督问题，即回归初rPPG的统计量和Depth map，保证网络学到的是这两种特征再进行区分。</li>
 </ul>
-<h3 id="2-4-DAN"><a href="#2-4-DAN" class="headerlink" title="2.4 DAN"></a>2.4 DAN</h3><p><a href="https://arxiv.org/abs/1706.01789" target="_blank" rel="noopener">DAN</a>模型加入更加有效监督信息的多任务级联网络，效果不错。</p>
-<ul>
-<li><p>整个模型的pipline如下图：</p>
-<center><img src="http://ww1.sinaimg.cn/large/0061KkpRgy1g0axe2g15oj30m40eaabm.jpg"></center>
-
-<p>其中<strong>CONNECTION LAYERS</strong> 如下图：</p>
-<center><img src="http://ww1.sinaimg.cn/large/0061KkpRgy1g0axt6lsshj309x0evdgl.jpg"></center></li>
-<li><strong>Stage1</strong>:首先输入灰度图I,以及一个初始化的landmarks值$S_0$（这个值是根据训练集的groundTruth求平均值得到的，其目的就是为了减小网络的搜索空间，提高精度），<strong>FEED FORWARD IN</strong> 网络输出的是一个偏移量$\Delta S_1$,那么新的landmarks为$S_1 = S_0 + \Delta S_1$。</li>
-<li><strong>Stage2</strong>：根据stage1得到的$S_1$和初始化landmarks$S_0$,计算仿射变换的相关参数$T_2()$，以矫正人脸，得到矫正后的人脸$T_2(I)$,以及矫正后人脸的heatmap$H_1$和特征图$F_1$。这个过程就是上图所指的<strong>CONNECTION LAYERS</strong>。然后将这三个部分叠加起来输入到新的 <strong><em>FEED FORWARD IN</em></strong> 网络,得到一个新的偏移量量$\Delta S_2$, 最终的输出为$S_2 = T_2(S_1) + \Delta S_2$, 这里的$S_2$是相对于矫正后人脸的landmarks，所以想要得到原图像的landmarks，需要根据之前算的仿射变换的参数进行一个反变换，也就是上图的<strong>LANDMARK TRANSFORM</strong> 的过程。</li>
-<li>上面提到<strong>CONNECTION LAYERS</strong> 包含三个部分。第一，就是通过$S_1$和$S_0$之间的仿射变换关系，得到一个矫正的人脸图像，作用是让每个stage的输入能够得到比较稳定的输入，从而获得更加稳定的输出。第二，利用$S_1$和下面公式得到heatmap$H_1$，作用是抑制landmarks的偏移过大。第三，通过上一个stage的网络输出，进过几层反卷积获得一个特征图$F_1$，个人还不是很理解这个操作的意义。</li>
+<h3 id="2-3-Face-De-Spoofing-Anti-Spoofing-via-Noise-Modeling"><a href="#2-3-Face-De-Spoofing-Anti-Spoofing-via-Noise-Modeling" class="headerlink" title="2.3 Face De-Spoofing: Anti-Spoofing via Noise Modeling"></a>2.3 Face De-Spoofing: Anti-Spoofing via Noise Modeling</h3><ul>
+<li>与上面两篇文章一样，都出自于MSU同一位作者。文章的想法源自于图像去噪(de-noise)和去抖动(de-blur)。无论是哪种都可以看成是原图上加噪声运算或者模糊运算，而去噪和去抖动就是估计噪声分布和模糊核，从而重构原图。简而言之，论文就是要利用攻击人脸的噪声来判断。整个框架如下：</li>
 </ul>
-<center><img src="http://ww1.sinaimg.cn/large/0061KkpRgy1fx44pd3pnuj30b101vweb.jpg"></center>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRly1fx6fruyuizj30lk0c8aaw.jpg"></center>
 
 <ul>
-<li>整个网络流程很清晰，网络结构也很精炼，笔者也根据源代码复现了tensorflow版本，效果也很好。其中的heatmap思想确实给landmarks检测提供了可靠的优化思路。</li>
-</ul>
-<h3 id="2-5-LAB"><a href="#2-5-LAB" class="headerlink" title="2.5 LAB"></a>2.5 LAB</h3><p><a href="https://wywu.github.io/projects/LAB/LAB.html" target="_blank" rel="noopener">LAB</a>是cvpr2018的一篇paper。其核心思想就是利用人脸边界的辅助信息，帮助CNN网络回归出更精确的位置信息。</p>
-<ul>
-<li><p>模型的pipline如下图：</p>
-<center><img src="http://ww1.sinaimg.cn/large/0061KkpRgy1g0bjq42w5aj30s70aljtf.jpg"></center>
-
-<p><img src="http://ww1.sinaimg.cn/large/0061KkpRgy1g0bsvtgcpbj30di06vmxk.jpg"></p>
-<ol>
-<li>模型分为三个部分：<strong>Boundary-Aware Landmark Regressor</strong>（回归关键点坐标）, <strong>Boundary Heatmap Estimator</strong>（预测人脸的物理边界热图） and <strong>Landmark-Based Boundary Effectiveness Discriminator</strong>（边界热度图的监督信息）。</li>
-<li>其中FMF如下图：<br><img src="http://ww1.sinaimg.cn/large/0061KkpRgy1g0bsvtgcpbj30di06vmxk.jpg"></li>
-</ol>
+<li>不得不说，作者整个模型架构设计得相当<strong>精妙</strong>。整个框架分为3个部分<strong><em>DS-NET</em></strong> (De-Spoof Network), <strong><em>VQ-NET</em></strong> (Visual Quality Net), <strong><em>DQ-NET</em></strong>(Discriminative Quality Net)。其中DS是核心，利用encoder-decoder来得到 Spoof noise N， 然后为了是N最大限度的贴近真实，利用VQ和DQ进行有效的监督。VQ相当于一个GAN模型的判别器，DQ就是利用去噪图像<script type="math/tex">\hat{I}</script>获得一个深度图，跟上一篇的思想接近。</li>
+<li><p>在训练过程中，loss函数的项目也比较多，因为约束的东西比较多。具体还请看论文，也比较容易理解。</p>
 </li>
-<li><strong>Boundary Heatmap Estimator</strong>:文中提到BHE这种<em>stacked hourglass</em> 结构模式以前有很多工作用来预测heatmap（图像分割也很多用这种结构），但是作用也提到结构过深导致边界模糊，因此作者提出message passing layers来加强信息的流通（跟resnet的思路类似）。</li>
-<li><p><strong>Landmark-Based Boundary Effectiveness Discriminator</strong>：这个部分主要是为了收敛模型的损失函数，如下图：</p>
-<center><img src="http://ww1.sinaimg.cn/large/0061KkpRgy1g0bzxb62trj30eg0bi3zw.jpg"></center>
-
-<p>其中</p>
-<center><img src="http://ww1.sinaimg.cn/large/0061KkpRgy1g0c04drquij30d902nt8l.jpg"></center>
-
-<center><img src="http://ww1.sinaimg.cn/large/0061KkpRgy1g0bzzdvfp6j30d701pq2t.jpg"></center>
-
-<center><img src="http://ww1.sinaimg.cn/large/0061KkpRgy1g0c00aapw1j30d301c743.jpg"></center>
+<li><p>可视化如下图</p>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRgy1g0c1xerad9j30gy0dz75y.jpg"></center>
 </li>
-<li><p>大致的思路和attention很像，细节还是得看源码。</p>
+<li><p>总体来说，文章的idea还是不错的。但是笔者认为这个在工业上效果也许不是很好，因为工业上因为传输等问题，图像不会有那么好的效果。</p>
 </li>
 </ul>
 
@@ -302,7 +247,7 @@
           </li>
           <li class="post-copyright-link">
           <strong>Post link:  </strong>
-          <a href="/2019/01/20/DL-FaceLandmarks/" target="_blank" title="FaceLandmarks">http://yoursite.com/2019/01/20/DL-FaceLandmarks/</a>
+          <a href="/2019/02/20/DL-FaceAntiSpoofing/" target="_blank" title="FaceAntiSpoofing">http://yoursite.com/2019/02/20/DL-FaceAntiSpoofing/</a>
           </li>
           <li class="post-copyright-license">
             <strong>Copyright Notice:   </strong>
@@ -348,19 +293,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2019/02/20/DL-FaceAntiSpoofing/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          FaceAntiSpoofing
-        
-      </div>
-    </a>
   
-  
-    <a href="/2018/11/30/DL-Architecture/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2019/01/20/DL-FaceLandmarks/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">CNN-Architecture</div>
+      <div class="article-nav-title">FaceLandmarks</div>
     </a>
   
 </nav>
@@ -374,7 +310,7 @@
     <div id="toc" class="toc-article">
     <strong class="toc-title">Contents</strong>
     
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-0-综述"><span class="nav-number">1.</span> <span class="nav-text">1.0 综述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-0-模型"><span class="nav-number">2.</span> <span class="nav-text">2.0 模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-DCNN"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 DCNN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-DCNN（face-）"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 DCNN（face++）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-TCDCN"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 TCDCN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-DAN"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 DAN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-LAB"><span class="nav-number">2.5.</span> <span class="nav-text">2.5 LAB</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-综述"><span class="nav-number">1.</span> <span class="nav-text">1 综述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-模型"><span class="nav-number">2.</span> <span class="nav-text">2 模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-Face-anti-spoofing-using-patch-and-depth-based-CNNs"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 Face anti-spoofing using patch and depth-based CNNs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-Learning-Deep-Models-for-Face-Anti-Spoofing-Binary-or-Auxiliary-Supervision"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 Learning Deep Models for Face Anti-Spoofing: Binary or Auxiliary Supervision</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-Face-De-Spoofing-Anti-Spoofing-via-Noise-Modeling"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 Face De-Spoofing: Anti-Spoofing via Noise Modeling</span></a></li></ol></li></ol>
     
     </div>
   </aside>

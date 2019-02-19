@@ -3,7 +3,7 @@
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
   
-  <title>JimmyYoung&#39;s Blog</title>
+  <title>archives: 2019/2 | JimmyYoung&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
   
@@ -11,7 +11,7 @@
   
   <meta property="og:type" content="website">
 <meta property="og:title" content="JimmyYoung&#39;s Blog">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta property="og:url" content="http://yoursite.com/archives/2019/02/index.html">
 <meta property="og:site_name" content="JimmyYoung&#39;s Blog">
 <meta property="og:locale" content="default">
 <meta name="twitter:card" content="summary">
@@ -44,13 +44,17 @@
   <link rel="stylesheet" href="/css/bootstrap.css" >
 
   
-    <link rel="stylesheet" href="/css/home.css" ><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    <link rel="stylesheet" href="/css/dialog.css">
   
 
   
 
   
+    <link rel="stylesheet" href="/css/header-post.css" >
+  
 
+  
+    <link rel="stylesheet" href="/css/archive.css" ><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
   
   
@@ -63,295 +67,271 @@
 
 
   
-    <!-- hexo-inject:begin --><!-- hexo-inject:end --><header id="header">
-
-	<!-- 背景图模式 -->
-	
-
-    
-      <div id="intrologo" class="intro-logo">
-    
- 
-
-
-    <canvas width="100%" height="100%"></canvas>
-    <script>
-      var c = document.getElementsByTagName('canvas')[0],
-          x = c.getContext('2d'),
-          w = window.innerWidth,
-          h = window.innerHeight,
-          pr = window.devicePixelRatio || 1,
-          f = 90,
-          q,
-          m = Math,
-          r = 0,
-          u = m.PI*2,
-          v = m.cos,
-          z = m.random
-      c.width = w*pr
-      c.height = h*pr
-      x.scale(pr, pr)
-      x.globalAlpha = 0.6
-
-      <!-- 折线Polyline背景 -->
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
       
-        function i(){
-            x.clearRect(0,0,w,h)
-            q=[{x:0,y:h*.7+f},{x:0,y:h*.7-f}]
-            while(q[1].x<w+f) d(q[0], q[1])
-        }
-        function d(i,j){   
-            x.beginPath()
-            x.moveTo(i.x, i.y)
-            x.lineTo(j.x, j.y)
-            var k = j.x + (z()*2-0.25)*f,
-                n = y(j.y)
-            x.lineTo(k, n)
-            x.closePath()
-            r-=u/-50
-            x.fillStyle = '#'+(v(r)*127+128<<16 | v(r+u/3)*127+128<<8 | v(r+u/3*2)*127+128).toString(16)
-            x.fill()
-            q[0] = q[1]
-            q[1] = {x:k,y:n}
-        }
-        function y(p){
-            var t = p + (z()*2-1.1)*f
-            return (t>h||t<0) ? y(p) : t
-        }
-        document.getElementById("intrologo").onclick = i
-        document.getElementById("intrologo").ontouchstart = i
-        i()
+        <header>
 
-      <!-- 多边形trianglify背景 -->
-      
-    </script>
-    
-
-    
-      <div id="homelogo" class="homelogo"> 
-    
-
-        
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
           
-            <img id="homelogoimg" src="/css/images/homelogo3.jpg" style="border-style: solid; border-color: rgba(24,24,21,0.1); border-width: 8px;">
-          
-        
-    
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                 >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo3.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">Home</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives/">Archives</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories/">Categories</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags/">Tags</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about/">About</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
     </div>
-  </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
 
-  <!-- 自适应主页背景大图 -->
-  
-
- <!-- home_logo_image居中 -->
- 
-    <script>
-        var img = new Image();
-        var homelogodiv = document.getElementById("homelogo");
-        img.src = document.getElementById("homelogoimg").src;
-        img.onload=function(){
-          if (img.width > document.body.clientWidth) {
-            document.getElementById("homelogoimg").style.width = document.body.clientWidth + "px";
-            homelogodiv.style.marginLeft = document.body.clientWidth * -0.5 + "px";
-          } else {
-            homelogodiv.style.marginLeft = img.width * -0.5 + "px";
-          }
-        };
-    </script>
-  
-
-  <div class="intro-navigate">
-      <p class="navigater-list">
-        
-          <a id="beautifont" class="main-nav-link" href="/">Home</a>
-        
-          <a id="beautifont" class="main-nav-link" href="/archives/">Archives</a>
-        
-          <a id="beautifont" class="main-nav-link" href="/categories/">Categories</a>
-        
-          <a id="beautifont" class="main-nav-link" href="/tags/">Tags</a>
-        
-          <a id="beautifont" class="main-nav-link" href="/about/">About</a>
-        
-      </p>
-  </div>
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
 
 </header>
-  
-  <div id="container">
-    <div id="wrap">
+
+
+
       
             
       <div id="content" class="outer">
         
-          <section id="main" style="float:none;">
-  
-    <article id="post-DL-FaceAntiSpoofing"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2019/02/20/DL-FaceAntiSpoofing/">FaceAntiSpoofing</a>
-    </h1>
-  
+          <section id="main">
+  <div class="archives-tags-wrap"><blockquote><span>There are 3 posts in total till now.</span></blockquote>
 
-      </header>
-    
-    <div class="article-meta">
+
+<!-- 分页显示 -->
+
+	
+	
+		
+		
+		  
+		  
+		  <section class="archives-wrap">
+		    <div class="archive-year-wrap">
+		      <h1><a href="/archives/2019" class="archive-year">2019</a></h1>
+		    </div>
+		    <div class="archives">
+		
+		<article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
       
-	<a href="/2019/02/20/DL-FaceAntiSpoofing/" class="article-date">
+	<a href="/2019/02/20/DL-FaceAntiSpoofing/" class="archive-article-date">
 	  <time datetime="2019-02-20T06:00:00.000Z" itemprop="datePublished">2019-02-20</time>
 	</a>
 
       
-    <a class="article-category-link" href="/categories/DL/">DL</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p class="article-excerpt-content">
-          1 综述Face anti-spoofing detection 就是人脸的攻击检测。
-
-1.0 时代：早期利用传统的handcrafted特征进行检测，目标很明确，就是找到活体和非活体之间的差异，其中包括颜色纹理，非刚性运动变形，材料（皮肤，纸质，镜面），图像或者视频质量。因为这种方法不是本文重点，所以就不列举相关论文了。
-1.0 时代：继CNN兴起以来，就有人开始在人脸的活体检测尝试，并取得了越来越突出的成绩，但是笔者认为最大的瓶颈在于公开大型数据集的缺失，使得这一领域进展速度有限，也...
-        </p>
-        <p class="article-more-link">
-          <a href="/2019/02/20/DL-FaceAntiSpoofing/#more">Read More</a>
-        </p>
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-DL-FaceLandmarks"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2019/01/20/DL-FaceLandmarks/">FaceLandmarks</a>
+      <a class="archive-article-title" href="/2019/02/20/DL-FaceAntiSpoofing/">FaceAntiSpoofing</a>
     </h1>
   
 
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2019/01/20/DL-FaceLandmarks/" class="article-date">
-	  <time datetime="2019-01-20T06:20:00.000Z" itemprop="datePublished">2019-01-20</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/DL/">DL</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p class="article-excerpt-content">
-          1.0 综述Face Landmarks 也称为 Face Alignment，人脸关键点检测。是人脸相关技术的基础工作之一，很多实际的项目中不可缺少的一部分。因此它的重要性不言而喻。因此对于它的研究也一直没有停过，从最开始的传统方法，到现在的深度学习方法，无论从精确度还是关键点数量都有了巨大的发展。
-本篇文章旨在介绍一些基于深度学习的相关方法，并将不定时更新最新的相关工作。
-
-技术路线：分为2D关键点检测和3D关键点检测。
-
-数据集：由于人脸关键点数目不同，因此数据集也比较杂乱，目前用的...
-        </p>
-        <p class="article-more-link">
-          <a href="/2019/01/20/DL-FaceLandmarks/#more">Read More</a>
-        </p>
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-
-    </footer>
+    </header>
   </div>
-  
 </article>
+	
+	
+		</div></section>
+	
 
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-DL-Architecture"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/11/30/DL-Architecture/">CNN-Architecture</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/11/30/DL-Architecture/" class="article-date">
-	  <time datetime="2018-11-30T06:20:00.000Z" itemprop="datePublished">2018-11-30</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/DL/">DL</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p class="article-excerpt-content">
-          1.0 Base KnowledgeCNN（Convolution Neural Network，卷积神经网络）作为一种经典的 DNN 结构，上世纪90年代就已经被提出了，却沉寂近20年。有趣的是，在2012年 AlexNet 大放异彩后，CNN 在随后几年近乎卷席了整个图像处理领域，很有点戏剧性。近些年，CNN 在语音处理、NLP 领域也发展迅速。随着时间的推移，CNN的架构不断更新迭代，本文将详细介绍CNN相关发展历程。
-CNN其实可以看作DNN的一种特殊形式。它跟传统DNN标志性的区...
-        </p>
-        <p class="article-more-link">
-          <a href="/2018/11/30/DL-Architecture/#more">Read More</a>
-        </p>
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
+	<!-- 页数指示器 -->
+	
 
 
-  
 
 
 </section>
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Connect</h3>
+    <div class="widget widget_athemes_social_icons">
+
+    	<ul class="clearfix widget-social-icons">   
+    	
+          
+     			  <li><a href="https://github.com/jimmy0087" title="Github"><i class="fa fa-github" aria-hidden="true"></i></a></li> 
+          
+   		
+          
+     			  <li><a href="http://www.yoursite.com" title="//Weibo"><i class="fa fa-//weibo" aria-hidden="true"></i></a></li> 
+          
+   		
+          
+     			  <li><a href="" title="//Twitter"><i class="fa fa-//twitter" aria-hidden="true"></i></a></li> 
+          
+   		
+          
+     			  <li><a href="" title="//Facebook"><i class="fa fa-//facebook" aria-hidden="true"></i></a></li> 
+          
+   		
+          
+     			  <li><a href="" title="//Google-plus"><i class="fa fa-//google-plus" aria-hidden="true"></i></a></li> 
+          
+   		
+          
+     			  <li><a href="" title="//Instagram"><i class="fa fa-//instagram" aria-hidden="true"></i></a></li> 
+          
+   		
+          
+     			  <li><a href="" title="//Pinterest"><i class="fa fa-//pinterest" aria-hidden="true"></i></a></li> 
+          
+   		
+          
+     			  <li><a href="" title="//Flickr"><i class="fa fa-//flickr" aria-hidden="true"></i></a></li> 
+          
+   		
+          
+            <li><a href="mailto:yc281121638@gmail.com?subject=请联系我&body=我能帮你什么" title="email"><i class="fa fa-envelope" aria-hidden="true"></i></a></li> 
+          
+   		
+   		</ul>
+
+
+   		<!--
+   		<ul class="clearfix widget-social-icons">   		
+   		<li class="widget-si-twitter"><a href="http://twitter.com" title="Twitter"><i class="ico-twitter"></i></a></li> 
+		<li class="widget-si-facebook"><a href="http://facebook.com" title="Facebook"><i class="ico-facebook"></i></a></li>
+			<li class="widget-si-gplus"><a href="http://plus.google.com" title="Google+"><i class="ico-gplus"></i></a></li>
+			<li class="widget-si-pinterest"><a href="http://pinterest.com" title="Pinterest"><i class="ico-pinterest"></i></a></li>
+			<li class="widget-si-flickr"><a href="http://flickr.com" title="Flickr"><i class="ico-flickr"></i></a></li>
+			<li class="widget-si-instagram"><a href="http://instagram.com" title="Instagram"><i class="ico-instagram"></i></a></li>
+		</ul> -->
+
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/DL/">DL</a><span class="category-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/DL/">DL</a><span class="tag-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/DL/" style="font-size: 10px;">DL</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/02/20/DL-FaceAntiSpoofing/">FaceAntiSpoofing</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/20/DL-FaceLandmarks/">FaceLandmarks</a>
+          </li>
+        
+          <li>
+            <a href="/2018/11/30/DL-Architecture/">CNN-Architecture</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
         
       </div>
-      
-        <div align="center" style="margin-top: 30px;"><hr class="hr" style="margin:0px; height:3px;"></div>
       
       <footer id="footer">
   
@@ -442,8 +422,6 @@ CNN其实可以看作DNN的一种特殊形式。它跟传统DNN标志性的区..
 
 <script src="/js/scripts.js"></script>
 
-
-  <script src="/js/home.js"></script>
 
 
 
