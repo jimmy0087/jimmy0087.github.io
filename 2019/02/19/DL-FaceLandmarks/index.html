@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>JimmyYoung&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  
+  
+  
+  <meta name="description" content="Face Landmarks1.0 综述Face Landmarks 也称为 Face Alignment，人脸关键点检测。是人脸相关技术的基础工作之一，很多实际的项目中不可缺少的一部分。因此它的重要性不言而喻。因此对于它的研究也一直没有停过，从最开始的传统方法，到现在的深度学习方法，无论从精确度还是关键点数量都有了巨大的发展。 本篇文章旨在介绍一些基于深度学习的相关方法，并将不定时更新最新的相关">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JimmyYoung&#39;s Blog">
+<meta property="og:url" content="http://yoursite.com/2019/02/19/DL-FaceLandmarks/index.html">
+<meta property="og:site_name" content="JimmyYoung&#39;s Blog">
+<meta property="og:description" content="Face Landmarks1.0 综述Face Landmarks 也称为 Face Alignment，人脸关键点检测。是人脸相关技术的基础工作之一，很多实际的项目中不可缺少的一部分。因此它的重要性不言而喻。因此对于它的研究也一直没有停过，从最开始的传统方法，到现在的深度学习方法，无论从精确度还是关键点数量都有了巨大的发展。 本篇文章旨在介绍一些基于深度学习的相关方法，并将不定时更新最新的相关">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1g09s67byd3j30q60bsdi1.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1g09seojqf2j30cs08dt9g.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1g0ave75l8uj30ne0c1jsr.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1g0awn11wuzj30r109o763.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1g0axe2g15oj30m40eaabm.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1g0axt6lsshj309x0evdgl.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1fx44pd3pnuj30b101vweb.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1g0bjq42w5aj30s70aljtf.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1g0bsvtgcpbj30di06vmxk.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1g0bsvtgcpbj30di06vmxk.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1g0bzxb62trj30eg0bi3zw.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1g0c04drquij30d902nt8l.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1g0bzzdvfp6j30d701pq2t.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1g0c00aapw1j30d301c743.jpg">
+<meta property="og:updated_time" content="2019-02-19T13:14:54.474Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JimmyYoung&#39;s Blog">
+<meta name="twitter:description" content="Face Landmarks1.0 综述Face Landmarks 也称为 Face Alignment，人脸关键点检测。是人脸相关技术的基础工作之一，很多实际的项目中不可缺少的一部分。因此它的重要性不言而喻。因此对于它的研究也一直没有停过，从最开始的传统方法，到现在的深度学习方法，无论从精确度还是关键点数量都有了巨大的发展。 本篇文章旨在介绍一些基于深度学习的相关方法，并将不定时更新最新的相关">
+<meta name="twitter:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1g09s67byd3j30q60bsdi1.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="JimmyYoung&#39;s Blog" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo3.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo3.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css" ><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+  
+  
+  
+
+</head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo3.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">Home</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives/">Archives</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories/">Categories</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags/">Tags</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about/">About</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-DL-FaceLandmarks" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+    <div class="article-meta">
+      
+	<a href="/2019/02/19/DL-FaceLandmarks/" class="article-date">
+	  <time datetime="2019-02-19T14:02:26.998Z" itemprop="datePublished">2019-02-19</time>
+	</a>
+
+      
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		PV:<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Face-Landmarks"><a href="#Face-Landmarks" class="headerlink" title="Face Landmarks"></a>Face Landmarks</h1><h2 id="1-0-综述"><a href="#1-0-综述" class="headerlink" title="1.0 综述"></a>1.0 综述</h2><p><strong>Face Landmarks</strong> 也称为 Face Alignment，人脸关键点检测。是人脸相关技术的基础工作之一，很多实际的项目中不可缺少的一部分。因此它的重要性不言而喻。因此对于它的研究也一直没有停过，从最开始的传统方法，到现在的深度学习方法，无论从精确度还是关键点数量都有了巨大的发展。</p>
+<p>本篇文章旨在介绍一些基于深度学习的相关方法，并将不定时更新最新的相关工作。</p>
+<ul>
+<li><p>技术路线：分为2D关键点检测和3D关键点检测。</p>
+</li>
+<li><p>数据集：由于人脸关键点数目不同，因此数据集也比较杂乱，目前用的比较多的是68个2D关键点的数据集<a href="https://ibug.doc.ic.ac.uk/resources/300-W_IMAVIS/" target="_blank" rel="noopener">300W</a>，以及68个3D关键点数据集<a href="https://ibug.doc.ic.ac.uk/resources/1st-3d-face-tracking-wild-competition/" target="_blank" rel="noopener">3D-300W</a>。</p>
+</li>
+</ul>
+<h2 id="2-0-模型"><a href="#2-0-模型" class="headerlink" title="2.0 模型"></a>2.0 模型</h2><h3 id="2-1-DCNN"><a href="#2-1-DCNN" class="headerlink" title="2.1 DCNN"></a>2.1 DCNN</h3><p>2013，<a href="http://openaccess.thecvf.com/content_cvpr_2013/papers/Sun_Deep_Convolutional_Network_2013_CVPR_paper.pdf" target="_blank" rel="noopener">DCNN</a>是首次提出利用CNN来找到人脸5个关键点。</p>
+<ul>
+<li><p>DCNN是一种级联的CNN，模型的pipline如下图：</p>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRgy1g09s67byd3j30q60bsdi1.jpg"></center>
+
+<p>CNN模型如下图：</p>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRgy1g09seojqf2j30cs08dt9g.jpg"></center>
+</li>
+<li><p>level1由三个CNN组成，level2和level3由10个CNN组成。级联回归使得关键点从粗到精，最终使得效果在当时是非常不错的。</p>
+</li>
+<li>级联思想为后面提供了一种有效的思路。</li>
+</ul>
+<h3 id="2-2-DCNN（face-）"><a href="#2-2-DCNN（face-）" class="headerlink" title="2.2 DCNN（face++）"></a>2.2 DCNN（face++）</h3><p>face++在DCNN模型上的改进，实现68关键点的高精度定位</p>
+<ul>
+<li><p>模型的pipline如下图：</p>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRgy1g0ave75l8uj30ne0c1jsr.jpg"></center>
+
+<ol>
+<li>整个模型分为四个级联部分，level1的主要作用是获取面部器官的边界框；level2输出51个关键点预测位置，粗定位作用；level3会将粗定位的坐标进一步精确；level4会将level3的结果矫正进一步优化。</li>
+</ol>
+</li>
+<li><p>首次利用神经网络进行68个人关键点检测，在当时300W挑战赛上获得领先成绩。</p>
+</li>
+</ul>
+<h3 id="2-3-TCDCN"><a href="#2-3-TCDCN" class="headerlink" title="2.3 TCDCN"></a>2.3 TCDCN</h3><p><a href="https://link.springer.com/chapter/10.1007/978-3-319-10599-4_7" target="_blank" rel="noopener">TCDCN</a>是一个多任务网络，能够分辨人脸表情。</p>
+<ul>
+<li><p>模型的pipline如下：</p>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRgy1g0awn11wuzj30r109o763.jpg"></center>
+</li>
+<li><p>早期的模型都比较简单，坑占的早。但是效果其实一般般。</p>
+</li>
+</ul>
+<h3 id="2-4-DAN"><a href="#2-4-DAN" class="headerlink" title="2.4 DAN"></a>2.4 DAN</h3><p><a href="https://arxiv.org/abs/1706.01789" target="_blank" rel="noopener">DAN</a>模型加入更加有效监督信息的多任务级联网络，效果不错。</p>
+<ul>
+<li><p>整个模型的pipline如下图：</p>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRgy1g0axe2g15oj30m40eaabm.jpg"></center>
+
+<p>其中<strong>CONNECTION LAYERS</strong> 如下图：</p>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRgy1g0axt6lsshj309x0evdgl.jpg"></center></li>
+<li><strong>Stage1</strong>:首先输入灰度图I,以及一个初始化的landmarks值<script type="math/tex">S_0</script>（这个值是根据训练集的groundTruth求平均值得到的，其目的就是为了减小网络的搜索空间，提高精度），<strong><em>FEED FORWARD IN</em></strong> 网络输出的是一个偏移量<script type="math/tex">\Delta S_1</script>,那么新的landmarks为<script type="math/tex">S_1 = S_0 + \Delta S_1</script>。</li>
+<li><strong>Stage2</strong>：根据stage1得到的<script type="math/tex">S_1</script>和初始化landmarks<script type="math/tex">S_0</script>,计算仿射变换的相关参数<script type="math/tex">T_2()</script>，以矫正人脸，得到矫正后的人脸<script type="math/tex">T_2(I)</script>,以及矫正后人脸的heatmap<script type="math/tex">H_1</script>和特征图<script type="math/tex">F_1</script>。这个过程就是上图所指的<strong><em>CONNECTION LAYERS</em></strong>。然后将这三个部分叠加起来输入到新的 <strong><em>FEED FORWARD IN</em></strong> 网络,得到一个新的偏移量量<script type="math/tex">\Delta S_2</script>, 最终的输出为<script type="math/tex">S_2 = T_2(S_1) + \Delta S_2</script>, 这里的<script type="math/tex">S_2</script>是相对于矫正后人脸的landmarks，所以想要得到原图像的landmarks，需要根据之前算的仿射变换的参数进行一个反变换，也就是上图的<strong><em>LANDMARK TRANSFORM</em></strong> 的过程。</li>
+<li>上面提到<strong><em>CONNECTION LAYERS</em></strong> 包含三个部分。第一，就是通过<script type="math/tex">S_1</script>和<script type="math/tex">S_0</script>之间的仿射变换关系，得到一个矫正的人脸图像，作用是让每个stage的输入能够得到比较稳定的输入，从而获得更加稳定的输出。第二，利用<script type="math/tex">S_1</script>和下面公式得到heatmap<script type="math/tex">H_1</script>，作用是抑制landmarks的偏移过大。第三，通过上一个stage的网络输出，进过几层反卷积获得一个特征图<script type="math/tex">F_1</script>，个人还不是很理解这个操作的意义。</li>
+</ul>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRgy1fx44pd3pnuj30b101vweb.jpg"></center>
+
+<ul>
+<li>整个网络流程很清晰，网络结构也很精炼，笔者也根据源代码复现了tensorflow版本，效果也很好。其中的heatmap思想确实给landmarks检测提供了可靠的优化思路。</li>
+</ul>
+<h3 id="2-5-LAB"><a href="#2-5-LAB" class="headerlink" title="2.5 LAB"></a>2.5 LAB</h3><p><a href="https://wywu.github.io/projects/LAB/LAB.html" target="_blank" rel="noopener">LAB</a>是cvpr2018的一篇paper。其核心思想就是利用人脸边界的辅助信息，帮助CNN网络回归出更精确的位置信息。</p>
+<ul>
+<li><p>模型的pipline如下图：</p>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRgy1g0bjq42w5aj30s70aljtf.jpg"></center>
+
+<p><img src="http://ww1.sinaimg.cn/large/0061KkpRgy1g0bsvtgcpbj30di06vmxk.jpg"></p>
+<ol>
+<li>模型分为三个部分：<strong>Boundary-Aware Landmark Regressor</strong>（回归关键点坐标）, <strong>Boundary Heatmap Estimator</strong>（预测人脸的物理边界热图） and <strong>Landmark-Based Boundary Effectiveness Discriminator</strong>（边界热度图的监督信息）。</li>
+<li>其中FMF如下图：<br><img src="http://ww1.sinaimg.cn/large/0061KkpRgy1g0bsvtgcpbj30di06vmxk.jpg"></li>
+</ol>
+</li>
+<li><strong>Boundary Heatmap Estimator</strong>:文中提到BHE这种<em>stacked hourglass</em> 结构模式以前有很多工作用来预测heatmap（图像分割也很多用这种结构），但是作用也提到结构过深导致边界模糊，因此作者提出message passing layers来加强信息的流通（跟resnet的思路类似）。</li>
+<li><p><strong>Landmark-Based Boundary Effectiveness Discriminator</strong>：这个部分主要是为了收敛模型的损失函数，如下图：</p>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRgy1g0bzxb62trj30eg0bi3zw.jpg"></center>
+
+<p>其中</p>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRgy1g0c04drquij30d902nt8l.jpg"></center>
+
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRgy1g0bzzdvfp6j30d701pq2t.jpg"></center>
+
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRgy1g0c00aapw1j30d301c743.jpg"></center>
+</li>
+<li><p>大致的思路和attention很像，细节还是得看源码。</p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>Post author:  </strong>JimmyYoung</a>
+          </li>
+          <li class="post-copyright-link">
+          <strong>Post link:  </strong>
+          <a href="/2019/02/19/DL-FaceLandmarks/" target="_blank" title="">http://yoursite.com/2019/02/19/DL-FaceLandmarks/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>Copyright Notice:   </strong>
+            All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            unless stating additionally.
+          </li>
+         
+        </ul>
+<div>
+
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/11/30/DL-Architecture/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">CNN-Architecture</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Face-Landmarks"><span class="nav-number">1.</span> <span class="nav-text">Face Landmarks</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-0-综述"><span class="nav-number">1.1.</span> <span class="nav-text">1.0 综述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-0-模型"><span class="nav-number">1.2.</span> <span class="nav-text">2.0 模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-DCNN"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 DCNN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-DCNN（face-）"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 DCNN（face++）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-TCDCN"><span class="nav-number">1.2.3.</span> <span class="nav-text">2.3 TCDCN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-DAN"><span class="nav-number">1.2.4.</span> <span class="nav-text">2.4 DAN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-LAB"><span class="nav-number">1.2.5.</span> <span class="nav-text">2.5 LAB</span></a></li></ol></li></ol></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2013 - 2019 JimmyYoung&#39;s Blog All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				UV : <span id="busuanzi_value_site_uv"></span> |  
+				PV : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives/" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories/" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags/" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about/" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            JimmyYoung&#39;s Blog
+          </div>
+          <div class="panel-body">
+            Copyright © 2019 JimmyYoung All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
