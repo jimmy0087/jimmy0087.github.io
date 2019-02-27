@@ -3,16 +3,19 @@
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
   
-  <title>JimmyYoung&#39;s Blog</title>
+  <title>cnn-facedetection | JimmyYoung&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="DL" />
   
   
   
   
   <meta name="description" content="Face Detection1.0 综述人脸检测任务是目前为止落地最好的AI技术之一。人脸检测任务是通用目标检测的运用之一，所以像主流的faster-rcnn系列模型，YOLO模型等用到人脸检测，没有太大问题。但是人脸任务有很多其不一样的情况，例如人脸的bbox一般为正方形，人脸有很多侧脸、遮挡等问题，基于种种涌现出了一大批解决这些问题的特殊模型，这些模型大多是DL模型。本文也是将对这些SOTA模">
+<meta name="keywords" content="DL">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JimmyYoung&#39;s Blog">
-<meta property="og:url" content="http://yoursite.com/2019/02/27/DL_FaceDetection/index.html">
+<meta property="og:title" content="CNN-FaceDetection">
+<meta property="og:url" content="http://yoursite.com/2019/02/20/DL_FaceDetection/index.html">
 <meta property="og:site_name" content="JimmyYoung&#39;s Blog">
 <meta property="og:description" content="Face Detection1.0 综述人脸检测任务是目前为止落地最好的AI技术之一。人脸检测任务是通用目标检测的运用之一，所以像主流的faster-rcnn系列模型，YOLO模型等用到人脸检测，没有太大问题。但是人脸任务有很多其不一样的情况，例如人脸的bbox一般为正方形，人脸有很多侧脸、遮挡等问题，基于种种涌现出了一大批解决这些问题的特殊模型，这些模型大多是DL模型。本文也是将对这些SOTA模">
 <meta property="og:locale" content="default">
@@ -58,9 +61,9 @@
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1fzj4mjjgxgj30sq0eq75s.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1fzjuwoisb4j30m90fwwgg.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1g01jzc55jej30lk14v47e.jpg">
-<meta property="og:updated_time" content="2019-02-15T07:58:03.841Z">
+<meta property="og:updated_time" content="2019-02-27T09:04:32.639Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JimmyYoung&#39;s Blog">
+<meta name="twitter:title" content="CNN-FaceDetection">
 <meta name="twitter:description" content="Face Detection1.0 综述人脸检测任务是目前为止落地最好的AI技术之一。人脸检测任务是通用目标检测的运用之一，所以像主流的faster-rcnn系列模型，YOLO模型等用到人脸检测，没有太大问题。但是人脸任务有很多其不一样的情况，例如人脸的bbox一般为正方形，人脸有很多侧脸、遮挡等问题，基于种种涌现出了一大批解决这些问题的特殊模型，这些模型大多是DL模型。本文也是将对这些SOTA模">
 <meta name="twitter:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fz79zgqk1dj30se0c1408.jpg">
   
@@ -204,13 +207,25 @@
   <div id="articleInner" class="article-inner">
     
     
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      CNN-FaceDetection
+    </h1>
+  
+
+      </header>
+    
     <div class="article-meta">
       
-	<a href="/2019/02/27/DL_FaceDetection/" class="article-date">
-	  <time datetime="2019-02-27T08:49:55.986Z" itemprop="datePublished">2019-02-27</time>
+	<a href="/2019/02/20/DL_FaceDetection/" class="article-date">
+	  <time datetime="2019-02-20T06:00:00.000Z" itemprop="datePublished">2019-02-20</time>
 	</a>
 
       
+    <a class="article-category-link" href="/categories/DL/">DL</a>
+
       
 	<a class="article-views">
 	<span id="busuanzi_container_page_pv">
@@ -450,20 +465,19 @@
 <ol>
 <li>(a)(b)表示一般的anchor匹配策略的结果，(c)依照EMO score的匹配方案，可以匹配更贴近的anchor，比单独基于IOU的方案更好。</li>
 <li>EMO依照人脸gt bbox的位置分布，通过计算人脸与所有anchor的期望最大IOU，来提升anchor匹配人脸gt的能力，提高召回率。</li>
-<li>IOU定义为<script type="math/tex">max_{a\in A}\frac{|B_f \cap B_a|}{|B_f \cup B_a|}</script></li>
+<li>IOU定义为$max_{a\in A}\frac{|B_f \cap B_a|}{|B_f \cup B_a|}$</li>
 </ol>
 </li>
 <li><p><strong>Computing the EMO Score：</strong></p>
 <ol>
-<li>人脸可能随机出现在图像中任意位置。如fig2(c)假设人脸gt bbox中心位置坐标为(x,y)，如绿色”x”所示，定义p(x,y)为图像上人脸位置分布的概率密度函数，然后就有<script type="math/tex">\int_{0}^{H}\int_{0}^{W}p(x,y)dxdy = 1</script>,H,W表示图像的高宽，那么依照上面IOU的公式EMO公式可以定义为：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">EMO = \int_&#123;0&#125;^&#123;H&#125;\int_&#123;0&#125;^&#123;W&#125;p(x,y)max_&#123;a\in A&#125;\frac&#123;|B_f \cap B_a|&#125;&#123;|B_f \cup B_a|&#125;dxdy</span><br></pre></td></tr></table></figure>
-</li>
+<li>人脸可能随机出现在图像中任意位置。如fig2(c)假设人脸gt bbox中心位置坐标为(x,y)，如绿色”x”所示，定义p(x,y)为图像上人脸位置分布的概率密度函数，然后就有$\int_{0}^{H}\int_{0}^{W}p(x,y)dxdy = 1$,H,W表示图像的高宽，那么依照上面IOU的公式EMO公式可以定义为：<script type="math/tex; mode=display">
+EMO = \int_{0}^{H}\int_{0}^{W}p(x,y)max_{a\in A}\frac{|B_f \cap B_a|}{|B_f \cup B_a|}dxdy</script></li>
 </ol>
 <p>在widerface中，设置anchor尺度合集S为：{16，32，64，128，256，512},并且长宽比为1（人脸多数为方形）。因此在fig2中的每个’+’对应6个anchor，我们假设每个人脸在任何位置的概率都是一样的，也就是说gt bbox的中心位置(x,y)符合平均分布。<code>x~U(0,W)</code>和<code>y~U(0,H)</code>。</p>
 <ol>
-<li>假设人脸bbox中心在四个相邻anchor中心区域内，如下图：<center><img src="http://ww1.sinaimg.cn/large/0061KkpRly1fzc458avknj30dx08bq38.jpg"></center>如果想得到最大的IOU，那么gt bbox（绿框）与anchor（红框）中心完全重合。gt bbox中心点与匹配anchor中心点的相对位置为：<script type="math/tex">(x^{'},y^{'})</script>,很显然也是服从均匀分布的。再继续假设人脸尺度与anchor尺度一致，那么<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">IoU = \frac&#123;(l-x^&#123;&apos;&#125;)(l-y^&#123;&apos;&#125;)&#125;&#123;2l^2 - (l-x^&#123;&apos;&#125;)(l-y^&#123;&apos;&#125;)&#125;</span><br></pre></td></tr></table></figure>
-</li>
+<li>假设人脸bbox中心在四个相邻anchor中心区域内，如下图：<center><img src="http://ww1.sinaimg.cn/large/0061KkpRly1fzc458avknj30dx08bq38.jpg"></center>如果想得到最大的IOU，那么gt bbox（绿框）与anchor（红框）中心完全重合。gt bbox中心点与匹配anchor中心点的相对位置为：$(x^{‘},y^{‘})$,很显然也是服从均匀分布的。再继续假设人脸尺度与anchor尺度一致，那么<script type="math/tex; mode=display">
+IoU = \frac{(l-x^{'})(l-y^{'})}{2l^2 - (l-x^{'})(l-y^{'})}</script>带入到EMO公式中得到新的计算公式：</li>
 </ol>
-<p>带入到EMO公式中得到新的计算公式：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">EMO = \int_&#123;0&#125;^&#123;\frac&#123;s_A&#125;&#123;2&#125;&#125;\int_&#123;0&#125;^&#123;\frac&#123;s_A&#125;&#123;2&#125;&#125;(\frac&#123;2&#125;&#123;s_A&#125;)^2\frac&#123;(l-x^&#123;&apos;&#125;)(l-y^&#123;&apos;&#125;)&#125;&#123;2l^2 - (l-x^&#123;&apos;&#125;)(l-y^&#123;&apos;&#125;)&#125;dxdy</span><br></pre></td></tr></table></figure>
 <ol>
 <li>fig4展示了不同人脸尺度和anchor步长数据家的EMO score。<center><img src="http://ww1.sinaimg.cn/large/0061KkpRly1fzc4hm4vtwj30de07vjro.jpg"></center>对一个固定尺寸的人脸，Sa（步长stride）越小，EMO越大。</li>
@@ -617,7 +631,7 @@
           </li>
           <li class="post-copyright-link">
           <strong>Post link:  </strong>
-          <a href="/2019/02/27/DL_FaceDetection/" target="_blank" title="">http://yoursite.com/2019/02/27/DL_FaceDetection/</a>
+          <a href="/2019/02/20/DL_FaceDetection/" target="_blank" title="CNN-FaceDetection">http://yoursite.com/2019/02/20/DL_FaceDetection/</a>
           </li>
           <li class="post-copyright-license">
             <strong>Copyright Notice:   </strong>
@@ -663,10 +677,19 @@
     
 <nav id="article-nav">
   
+    <a href="/2019/02/20/DL-FaceAntiSpoofing/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          FaceAntiSpoofing
+        
+      </div>
+    </a>
   
-    <a href="/2019/02/20/DL-FaceAntiSpoofing/" id="article-nav-older" class="article-nav-link-wrap">
+  
+    <a href="/2019/01/20/DL-FaceLandmarks/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">FaceAntiSpoofing</div>
+      <div class="article-nav-title">FaceLandmarks</div>
     </a>
   
 </nav>
