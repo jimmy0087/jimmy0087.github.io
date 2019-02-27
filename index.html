@@ -214,8 +214,8 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p class="article-excerpt-content">
-          Face Detection1.0 综述人脸检测任务是目前为止落地最好的AI技术之一。人脸检测任务是通用目标检测的运用之一，所以像主流的faster-rcnn系列模型，YOLO模型等用到人脸检测，没有太大问题。但是人脸任务有很多其不一样的情况，例如人脸的bbox一般为正方形，人脸有很多侧脸、遮挡等问题，基于种种涌现出了一大批解决这些问题的特殊模型，这些模型大多是DL模型。本文也是将对这些SOTA模型进行一个综述。
-人脸检测相关的工作每年都有很多，不可能每一个工作都介绍，所以这里讲到的工作基...
+          1.0 综述人脸检测任务是目前为止落地最好的AI技术之一。人脸检测任务是通用目标检测的运用之一，所以像主流的faster-rcnn系列模型，YOLO模型等用到人脸检测，没有太大问题。但是人脸任务有很多其不一样的情况，例如人脸的bbox一般为正方形，人脸有很多侧脸、遮挡等问题，基于种种涌现出了一大批解决这些问题的特殊模型，这些模型大多是DL模型。本文也是将对这些SOTA模型进行一个综述。
+人脸检测相关的工作每年都有很多，不可能每一个工作都介绍，所以这里讲到的工作基于WIDERFACE数据集的...
         </p>
         <p class="article-more-link">
           <a href="/2019/02/20/DL_FaceDetection/#more">Read More</a>
@@ -580,7 +580,22 @@ CNN其实可以看作DNN的一种特殊形式。它跟传统DNN标志性的区..
 </div>
   
   <a id="rocket" href="#top" class=""></a>
-  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
   
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
 </html>

@@ -11,13 +11,13 @@
   
   
   
-  <meta name="description" content="Face Detection1.0 综述人脸检测任务是目前为止落地最好的AI技术之一。人脸检测任务是通用目标检测的运用之一，所以像主流的faster-rcnn系列模型，YOLO模型等用到人脸检测，没有太大问题。但是人脸任务有很多其不一样的情况，例如人脸的bbox一般为正方形，人脸有很多侧脸、遮挡等问题，基于种种涌现出了一大批解决这些问题的特殊模型，这些模型大多是DL模型。本文也是将对这些SOTA模">
+  <meta name="description" content="1.0 综述人脸检测任务是目前为止落地最好的AI技术之一。人脸检测任务是通用目标检测的运用之一，所以像主流的faster-rcnn系列模型，YOLO模型等用到人脸检测，没有太大问题。但是人脸任务有很多其不一样的情况，例如人脸的bbox一般为正方形，人脸有很多侧脸、遮挡等问题，基于种种涌现出了一大批解决这些问题的特殊模型，这些模型大多是DL模型。本文也是将对这些SOTA模型进行一个综述。 人脸检测相">
 <meta name="keywords" content="DL">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CNN-FaceDetection">
 <meta property="og:url" content="http://yoursite.com/2019/02/20/DL_FaceDetection/index.html">
 <meta property="og:site_name" content="JimmyYoung&#39;s Blog">
-<meta property="og:description" content="Face Detection1.0 综述人脸检测任务是目前为止落地最好的AI技术之一。人脸检测任务是通用目标检测的运用之一，所以像主流的faster-rcnn系列模型，YOLO模型等用到人脸检测，没有太大问题。但是人脸任务有很多其不一样的情况，例如人脸的bbox一般为正方形，人脸有很多侧脸、遮挡等问题，基于种种涌现出了一大批解决这些问题的特殊模型，这些模型大多是DL模型。本文也是将对这些SOTA模">
+<meta property="og:description" content="1.0 综述人脸检测任务是目前为止落地最好的AI技术之一。人脸检测任务是通用目标检测的运用之一，所以像主流的faster-rcnn系列模型，YOLO模型等用到人脸检测，没有太大问题。但是人脸任务有很多其不一样的情况，例如人脸的bbox一般为正方形，人脸有很多侧脸、遮挡等问题，基于种种涌现出了一大批解决这些问题的特殊模型，这些模型大多是DL模型。本文也是将对这些SOTA模型进行一个综述。 人脸检测相">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fz79zgqk1dj30se0c1408.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fz7b6c6kzpj30ku089q39.jpg">
@@ -61,10 +61,10 @@
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1fzj4mjjgxgj30sq0eq75s.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1fzjuwoisb4j30m90fwwgg.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1g01jzc55jej30lk14v47e.jpg">
-<meta property="og:updated_time" content="2019-02-27T14:16:57.401Z">
+<meta property="og:updated_time" content="2019-02-27T14:18:09.385Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CNN-FaceDetection">
-<meta name="twitter:description" content="Face Detection1.0 综述人脸检测任务是目前为止落地最好的AI技术之一。人脸检测任务是通用目标检测的运用之一，所以像主流的faster-rcnn系列模型，YOLO模型等用到人脸检测，没有太大问题。但是人脸任务有很多其不一样的情况，例如人脸的bbox一般为正方形，人脸有很多侧脸、遮挡等问题，基于种种涌现出了一大批解决这些问题的特殊模型，这些模型大多是DL模型。本文也是将对这些SOTA模">
+<meta name="twitter:description" content="1.0 综述人脸检测任务是目前为止落地最好的AI技术之一。人脸检测任务是通用目标检测的运用之一，所以像主流的faster-rcnn系列模型，YOLO模型等用到人脸检测，没有太大问题。但是人脸任务有很多其不一样的情况，例如人脸的bbox一般为正方形，人脸有很多侧脸、遮挡等问题，基于种种涌现出了一大批解决这些问题的特殊模型，这些模型大多是DL模型。本文也是将对这些SOTA模型进行一个综述。 人脸检测相">
 <meta name="twitter:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fz79zgqk1dj30se0c1408.jpg">
   
     <link rel="alternate" href="/atom.xml" title="JimmyYoung&#39;s Blog" type="application/atom+xml">
@@ -236,7 +236,7 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Face-Detection"><a href="#Face-Detection" class="headerlink" title="Face Detection"></a>Face Detection</h1><h2 id="1-0-综述"><a href="#1-0-综述" class="headerlink" title="1.0 综述"></a>1.0 综述</h2><p>人脸检测任务是目前为止落地最好的AI技术之一。人脸检测任务是通用目标检测的运用之一，所以像主流的faster-rcnn系列模型，YOLO模型等用到人脸检测，没有太大问题。但是人脸任务有很多其不一样的情况，例如人脸的bbox一般为正方形，人脸有很多侧脸、遮挡等问题，基于种种涌现出了一大批解决这些问题的特殊模型，这些模型大多是DL模型。本文也是将对这些SOTA模型进行一个综述。</p>
+        <h2 id="1-0-综述"><a href="#1-0-综述" class="headerlink" title="1.0 综述"></a>1.0 综述</h2><p>人脸检测任务是目前为止落地最好的AI技术之一。人脸检测任务是通用目标检测的运用之一，所以像主流的faster-rcnn系列模型，YOLO模型等用到人脸检测，没有太大问题。但是人脸任务有很多其不一样的情况，例如人脸的bbox一般为正方形，人脸有很多侧脸、遮挡等问题，基于种种涌现出了一大批解决这些问题的特殊模型，这些模型大多是DL模型。本文也是将对这些SOTA模型进行一个综述。</p>
 <p>人脸检测相关的工作每年都有很多，不可能每一个工作都介绍，所以这里讲到的工作基于<a href="http://mmlab.ie.cuhk.edu.hk/projects/WIDERFace/WiderFace_Results.html" target="_blank" rel="noopener">WIDERFACE</a>数据集的SOTA。</p>
 <h2 id="2-0-模型"><a href="#2-0-模型" class="headerlink" title="2.0 模型"></a>2.0 模型</h2><h3 id="2-1-MTCNN"><a href="#2-1-MTCNN" class="headerlink" title="2.1 MTCNN"></a>2.1 MTCNN</h3><p><a href="https://arxiv.org/abs/1604.02878" target="_blank" rel="noopener">MTCNN</a>是2016年提出，不算最早提出用CNN结构去检测人脸的工作，但是在工业上运用很多的早期经典方法。</p>
 <ul>
@@ -694,7 +694,7 @@ IoU = \frac{(l-x^{'})(l-y^{'})}{2l^2 - (l-x^{'})(l-y^{'})}</script>带入到EMO�
     <div id="toc" class="toc-article">
     <strong class="toc-title">Contents</strong>
     
-        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Face-Detection"><span class="nav-number">1.</span> <span class="nav-text">Face Detection</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-0-综述"><span class="nav-number">1.1.</span> <span class="nav-text">1.0 综述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-0-模型"><span class="nav-number">1.2.</span> <span class="nav-text">2.0 模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-MTCNN"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 MTCNN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-CMS-RCNN"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 CMS-RCNN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-HR"><span class="nav-number">1.2.3.</span> <span class="nav-text">2.3 HR</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-Face-R-CNN"><span class="nav-number">1.2.4.</span> <span class="nav-text">2.4 Face R-CNN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-MSCNN"><span class="nav-number">1.2.5.</span> <span class="nav-text">2.5 MSCNN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-6-ScaleFace"><span class="nav-number">1.2.6.</span> <span class="nav-text">2.6 ScaleFace</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-7-SSH"><span class="nav-number">1.2.7.</span> <span class="nav-text">2.7 SSH</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-8-S3FD"><span class="nav-number">1.2.8.</span> <span class="nav-text">2.8 S3FD</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-9-Face-R-FCN"><span class="nav-number">1.2.9.</span> <span class="nav-text">2.9 Face R-FCN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-10-FAN-Face-Attention-Network"><span class="nav-number">1.2.10.</span> <span class="nav-text">2.10 FAN(Face Attention Network)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-11-ZCC"><span class="nav-number">1.2.11.</span> <span class="nav-text">2.11 ZCC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-12-PyramidBox"><span class="nav-number">1.2.12.</span> <span class="nav-text">2.12 PyramidBox</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-13-FDNet"><span class="nav-number">1.2.13.</span> <span class="nav-text">2.13 FDNet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-14-SRN"><span class="nav-number">1.2.14.</span> <span class="nav-text">2.14 SRN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-15-FANet-Feature-Agglomeration-Networks-for-Single-Stage-Face-Detection"><span class="nav-number">1.2.15.</span> <span class="nav-text">2.15 FANet(Feature Agglomeration Networks for Single Stage Face Detection)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-16-DSFD"><span class="nav-number">1.2.16.</span> <span class="nav-text">2.16 DSFD</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-17-DFS"><span class="nav-number">1.2.17.</span> <span class="nav-text">2.17 DFS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-17-VIM-FD"><span class="nav-number">1.2.18.</span> <span class="nav-text">2.17 VIM-FD</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-18-ISRN"><span class="nav-number">1.2.19.</span> <span class="nav-text">2.18 ISRN</span></a></li></ol></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-0-综述"><span class="nav-number">1.</span> <span class="nav-text">1.0 综述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-0-模型"><span class="nav-number">2.</span> <span class="nav-text">2.0 模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-MTCNN"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 MTCNN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-CMS-RCNN"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 CMS-RCNN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-HR"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 HR</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-Face-R-CNN"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 Face R-CNN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-MSCNN"><span class="nav-number">2.5.</span> <span class="nav-text">2.5 MSCNN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-6-ScaleFace"><span class="nav-number">2.6.</span> <span class="nav-text">2.6 ScaleFace</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-7-SSH"><span class="nav-number">2.7.</span> <span class="nav-text">2.7 SSH</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-8-S3FD"><span class="nav-number">2.8.</span> <span class="nav-text">2.8 S3FD</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-9-Face-R-FCN"><span class="nav-number">2.9.</span> <span class="nav-text">2.9 Face R-FCN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-10-FAN-Face-Attention-Network"><span class="nav-number">2.10.</span> <span class="nav-text">2.10 FAN(Face Attention Network)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-11-ZCC"><span class="nav-number">2.11.</span> <span class="nav-text">2.11 ZCC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-12-PyramidBox"><span class="nav-number">2.12.</span> <span class="nav-text">2.12 PyramidBox</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-13-FDNet"><span class="nav-number">2.13.</span> <span class="nav-text">2.13 FDNet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-14-SRN"><span class="nav-number">2.14.</span> <span class="nav-text">2.14 SRN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-15-FANet-Feature-Agglomeration-Networks-for-Single-Stage-Face-Detection"><span class="nav-number">2.15.</span> <span class="nav-text">2.15 FANet(Feature Agglomeration Networks for Single Stage Face Detection)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-16-DSFD"><span class="nav-number">2.16.</span> <span class="nav-text">2.16 DSFD</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-17-DFS"><span class="nav-number">2.17.</span> <span class="nav-text">2.17 DFS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-17-VIM-FD"><span class="nav-number">2.18.</span> <span class="nav-text">2.17 VIM-FD</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-18-ISRN"><span class="nav-number">2.19.</span> <span class="nav-text">2.18 ISRN</span></a></li></ol></li></ol>
     
     </div>
   </aside>
@@ -881,7 +881,22 @@ IoU = \frac{(l-x^{'})(l-y^{'})}{2l^2 - (l-x^{'})(l-y^{'})}</script>带入到EMO�
   <a id="rocket" href="#top" class=""></a>
   <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
   
-    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
   
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
 </html>
