@@ -61,7 +61,7 @@
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1fzj4mjjgxgj30sq0eq75s.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1fzjuwoisb4j30m90fwwgg.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1g01jzc55jej30lk14v47e.jpg">
-<meta property="og:updated_time" content="2019-02-27T09:04:32.639Z">
+<meta property="og:updated_time" content="2019-02-27T14:16:57.401Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CNN-FaceDetection">
 <meta name="twitter:description" content="Face Detection1.0 综述人脸检测任务是目前为止落地最好的AI技术之一。人脸检测任务是通用目标检测的运用之一，所以像主流的faster-rcnn系列模型，YOLO模型等用到人脸检测，没有太大问题。但是人脸任务有很多其不一样的情况，例如人脸的bbox一般为正方形，人脸有很多侧脸、遮挡等问题，基于种种涌现出了一大批解决这些问题的特殊模型，这些模型大多是DL模型。本文也是将对这些SOTA模">
@@ -317,7 +317,7 @@
 <center><img src="http://ww1.sinaimg.cn/large/0061KkpRly1fzaq6ewb43j30vk0d4gn0.jpg"></center>
 
 <ol>
-<li>(a) 训练一个<strong>单尺度分类器</strong>（即paper中的model template），但是输入多尺度图像金字塔。优点：这样的单尺度分类器也可以检测到各种尺度的目标。缺点：但是可想而知，重复的输入模型检测韩飞大量的计算资源。</li>
+<li>(a) 训练一个<strong>单尺度分类器</strong>（即paper中的model template），但是输入多尺度图像金字塔。优点：这样的单尺度分类器也可以检测到各种尺度的目标。缺点：但是可想而知，重复的输入模型将会浪费大量的计算资源。</li>
 <li>(b) 训练一个<strong>标准多尺度分类器</strong>，只输入单尺度图像。优点：只需要输入单尺度图像，一次前向操作。缺点：需要多尺度分类器能够cover所有尺度目标，所以难度很大，导致检测性能一般。</li>
 <li>(c)是上面两种方式的折中，输入不那么多的图像金字塔，然后不那么多尺度的分类器。</li>
 <li>(d)中使用特征近似，输入不那么多的图像金字塔，但是在feature map中使用特征差值方式generate其他尺度的<strong>特征金字塔</strong>。</li>
@@ -677,19 +677,10 @@ IoU = \frac{(l-x^{'})(l-y^{'})}{2l^2 - (l-x^{'})(l-y^{'})}</script>带入到EMO�
     
 <nav id="article-nav">
   
-    <a href="/2019/02/20/DL-FaceAntiSpoofing/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          FaceAntiSpoofing
-        
-      </div>
-    </a>
   
-  
-    <a href="/2019/01/20/DL-FaceLandmarks/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2019/02/20/DL-FaceAntiSpoofing/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">FaceLandmarks</div>
+      <div class="article-nav-title">FaceAntiSpoofing</div>
     </a>
   
 </nav>
@@ -890,22 +881,7 @@ IoU = \frac{(l-x^{'})(l-y^{'})}{2l^2 - (l-x^{'})(l-y^{'})}</script>带入到EMO�
   <a id="rocket" href="#top" class=""></a>
   <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
   
-    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
 </html>
