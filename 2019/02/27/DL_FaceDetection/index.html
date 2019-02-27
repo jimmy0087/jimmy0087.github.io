@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>JimmyYoung&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  
+  
+  
+  <meta name="description" content="Face Detection1.0 综述人脸检测任务是目前为止落地最好的AI技术之一。人脸检测任务是通用目标检测的运用之一，所以像主流的faster-rcnn系列模型，YOLO模型等用到人脸检测，没有太大问题。但是人脸任务有很多其不一样的情况，例如人脸的bbox一般为正方形，人脸有很多侧脸、遮挡等问题，基于种种涌现出了一大批解决这些问题的特殊模型，这些模型大多是DL模型。本文也是将对这些SOTA模">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JimmyYoung&#39;s Blog">
+<meta property="og:url" content="http://yoursite.com/2019/02/27/DL_FaceDetection/index.html">
+<meta property="og:site_name" content="JimmyYoung&#39;s Blog">
+<meta property="og:description" content="Face Detection1.0 综述人脸检测任务是目前为止落地最好的AI技术之一。人脸检测任务是通用目标检测的运用之一，所以像主流的faster-rcnn系列模型，YOLO模型等用到人脸检测，没有太大问题。但是人脸任务有很多其不一样的情况，例如人脸的bbox一般为正方形，人脸有很多侧脸、遮挡等问题，基于种种涌现出了一大批解决这些问题的特殊模型，这些模型大多是DL模型。本文也是将对这些SOTA模">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fz79zgqk1dj30se0c1408.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fz7b6c6kzpj30ku089q39.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1fz7d238pswj30dh0k8765.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fz7k8803poj30r50a740o.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fz7kfxoboqj30dj0gtjtc.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fz7kdub3hmj30rg0hpdiy.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1fz7m3ymgy0j30mw0axgml.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fzaq6ewb43j30vk0d4gn0.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fzar5h6387j30wg0be75o.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fzargtkfpjj30nx0dv0ts.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fzarpxaq1uj30o40atq3u.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fz8f7npuckj30tf0cjmzg.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fz8g69hqh0j30e904taai.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1fz8gn19mdsj30ev0dht9t.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fz8i3iga9uj30lc0aodgk.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fz8if1lr7wj30a609e3yu.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fz8qa88h1kj30r70gomz9.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fz8rhnguwbj30fz0a3756.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fzahhjdfh9j30tg0b93zk.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fzassirvpcj30qe0gy3zy.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fzat1ayieaj30h10cgdgd.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fzat6wamdsj31490gg41d.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fzatttlicoj30j80gxgng.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fzbvu9si73j30id0oiwhw.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fzbz7znfhjj30rq09vmzb.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fzc458avknj30dx08bq38.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fzc4hm4vtwj30de07vjro.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fzc582nbbhj30uq08yjsg.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fzc5ee0ttcj30fw07s74s.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fzc6470xeqj30gh0b9754.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1fzglgoc25uj30j40gimyz.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1fzgmlrvawgj30ug0dqmya.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1fzhhc07yvcj30k20c1755.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1fzhj2mck11j30r60f50up.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1fzhk345g17j309t0c3t8y.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1fzitsvzmu8j30na0g4mym.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1fziu2nvybkj30hy0aegmc.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1fziwhul6nyj30uf0extb1.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1fziwxnkcvmj30er08y0te.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1fzj4mjjgxgj30sq0eq75s.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1fzjuwoisb4j30m90fwwgg.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1g01jzc55jej30lk14v47e.jpg">
+<meta property="og:updated_time" content="2019-02-15T07:58:03.841Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JimmyYoung&#39;s Blog">
+<meta name="twitter:description" content="Face Detection1.0 综述人脸检测任务是目前为止落地最好的AI技术之一。人脸检测任务是通用目标检测的运用之一，所以像主流的faster-rcnn系列模型，YOLO模型等用到人脸检测，没有太大问题。但是人脸任务有很多其不一样的情况，例如人脸的bbox一般为正方形，人脸有很多侧脸、遮挡等问题，基于种种涌现出了一大批解决这些问题的特殊模型，这些模型大多是DL模型。本文也是将对这些SOTA模">
+<meta name="twitter:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fz79zgqk1dj30se0c1408.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="JimmyYoung&#39;s Blog" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo3.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo3.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css" ><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+  
+  
+  
+
+</head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo3.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">Home</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives/">Archives</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories/">Categories</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags/">Tags</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about/">About</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-DL_FaceDetection" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+    <div class="article-meta">
+      
+	<a href="/2019/02/27/DL_FaceDetection/" class="article-date">
+	  <time datetime="2019-02-27T08:49:55.986Z" itemprop="datePublished">2019-02-27</time>
+	</a>
+
+      
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		PV:<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Face-Detection"><a href="#Face-Detection" class="headerlink" title="Face Detection"></a>Face Detection</h1><h2 id="1-0-综述"><a href="#1-0-综述" class="headerlink" title="1.0 综述"></a>1.0 综述</h2><p>人脸检测任务是目前为止落地最好的AI技术之一。人脸检测任务是通用目标检测的运用之一，所以像主流的faster-rcnn系列模型，YOLO模型等用到人脸检测，没有太大问题。但是人脸任务有很多其不一样的情况，例如人脸的bbox一般为正方形，人脸有很多侧脸、遮挡等问题，基于种种涌现出了一大批解决这些问题的特殊模型，这些模型大多是DL模型。本文也是将对这些SOTA模型进行一个综述。</p>
+<p>人脸检测相关的工作每年都有很多，不可能每一个工作都介绍，所以这里讲到的工作基于<a href="http://mmlab.ie.cuhk.edu.hk/projects/WIDERFace/WiderFace_Results.html" target="_blank" rel="noopener">WIDERFACE</a>数据集的SOTA。</p>
+<h2 id="2-0-模型"><a href="#2-0-模型" class="headerlink" title="2.0 模型"></a>2.0 模型</h2><h3 id="2-1-MTCNN"><a href="#2-1-MTCNN" class="headerlink" title="2.1 MTCNN"></a>2.1 MTCNN</h3><p><a href="https://arxiv.org/abs/1604.02878" target="_blank" rel="noopener">MTCNN</a>是2016年提出，不算最早提出用CNN结构去检测人脸的工作，但是在工业上运用很多的早期经典方法。</p>
+<ul>
+<li><p>采用一种<strong>级联</strong>的方式进行人脸检测。整个模型有三个网络，分别是P-Net，R-Net和O-Net。训练的时候，首先训练P-Net，然后挑选出无法检测的人脸输入到R-Net训练，以此类推训练O-Net。所以整个训练过程不是端到端，需要训练三个网络，且每个网络训练的data都不一样。</p>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRly1fz79zgqk1dj30se0c1408.jpg"></center>
+</li>
+<li><p>在每个网络中有三个loss约束。分别是face classification,bounding box regression 以及 facial landmark localization。</p>
+</li>
+<li><p>值得注意的是，网络中没有一般目标检测任务的anchor，也就是说没有proposal bbox。那么网络是怎么样锁定人脸的初始位置的呢？玄机在P-Net中。仔细观察上图的P-Net部分，最终的输出是都是张量，并不是向量。因此将整张图片输入到P-Net网络中时，最终的输出对应的是每一个原图12*12尺寸图像的输出信息。这种做法的好处就是效率高，速度快，这也是工业上运用比较广泛的原因之一。如下图示意：</p>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRly1fz7b6c6kzpj30ku089q39.jpg"></center>
+</li>
+<li><p>文章中还提到一个trick，Online-Hard-Samole-Mining。原理就是选取一个batch中loss靠前的值当做最终的loss，这样对于已经训练很好的那一部分可以忽略。</p>
+</li>
+</ul>
+<h3 id="2-2-CMS-RCNN"><a href="#2-2-CMS-RCNN" class="headerlink" title="2.2 CMS-RCNN"></a>2.2 CMS-RCNN</h3><p>在WIDERFACE数据集已公开，就立刻有人用faster-RCNN（<a href="https://arxiv.org/pdf/1606.03473.pdf" target="_blank" rel="noopener"><em>Face Detection with the Faster R-CNN</em></a>）的模型尝试了一下，就刷到了当时的SOTA。<a href="https://arxiv.org/pdf/1606.05413.pdf" target="_blank" rel="noopener">CMS-RCNN</a>就是基于faster-rcnn。</p>
+<ul>
+<li>这个工作与之前最大的不同在于将多尺度（multi-scale information）融入到RPN部分，解决小人脸检测问题。</li>
+<li>将body的信息融入模型，辅助人脸检测。克服人脸遮挡问题。</li>
+<li><p>CMS-RCNN分为两个部分</p>
+<ol>
+<li>MS-RPN：用于生成人脸proposal regions。</li>
+<li>CMS-CNN，结合上下文信息的人脸检测，在每个candidate上都会计算confidence score + bbox regression，类似于frcnn，最后就是NMS得到最后结果。</li>
+</ol>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRgy1fz7d238pswj30dh0k8765.jpg"></center>
+
+<p>我们发现这两部分都融合了不同level的feature map。低层feature map 感受野小，细节特征丰富，适合小尺寸目标的定位和检测；而高层feature map 的感受野大，语义信息丰富，适合大尺度目标检测，这样就能取长补短，搞定所有尺度的目标检测了。</p>
+</li>
+<li><p>在特征融合的时候，不能简单地将conv3，conv4，conv5上proposals对应的特征pooling到相同尺度后直接concate，因为分布不太一样，在concat之前必须进行normolize。</p>
+</li>
+<li><p>在information fusion阶段有两种策略：</p>
+<ol>
+<li>late fusion：人脸的feature和body的上下文信息独立操作，在网络最后阶段两个特征再cancat。</li>
+<li>early fusion：在ROI pooling+Normalization之后，将information concat，再进行后续操作。</li>
+</ol>
+<p>以上两种都是信息融合，作者选择前者（late），因为作者希望网络能在更好的语义空间上对人脸检测做出高质量的决策，因此late fusion可以获得独立的语义信息，获得相关联的信息，再去做相关的决策。</p>
+</li>
+<li><p>性能在当时SOTA，但是笔者认为这种方式速度很慢，不太适合实时性要求比较高的场合。</p>
+</li>
+</ul>
+<h3 id="2-3-HR"><a href="#2-3-HR" class="headerlink" title="2.3 HR"></a>2.3 HR</h3><p><a href="https://www.cs.cmu.edu/~peiyunh/tiny/" target="_blank" rel="noopener">HR</a>解决的问题依旧是小人脸问题，因为在WIDERFACE数据集中，大人脸比较容易检测，关键就在于如何提升小人脸检测的性能。</p>
+<ul>
+<li><p>解决的方法仍然是利用多尺度。</p>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRly1fz7k8803poj30r50a740o.jpg"></center>
+</li>
+<li><p>利用context。周围的信息对于小人脸的检测很有帮助。</p>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRly1fz7kfxoboqj30dj0gtjtc.jpg"></center>
+</li>
+<li><p>整个模型的pipline。</p>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRly1fz7kdub3hmj30rg0hpdiy.jpg"></center>
+
+<ol>
+<li>首先是图像金字塔。</li>
+<li>每层图像都输入到HR做人脸检测，使用FCN+ResNet，输出feature map，feature map上每个特征点表示该位置是否包含人脸，人脸的尺度需要结合图像金字塔上预定义的检测模板尺度，</li>
+<li>在得到feature map的时候用到中心描述符（图2e）。</li>
+</ol>
+</li>
+<li><p>整个paper讲故事讲得非常多，究其根本就是更好的利用多尺度，很多作者新提出的概念。说得很玄乎，其实很简单。速度也是非常慢。</p>
+</li>
+</ul>
+<h3 id="2-4-Face-R-CNN"><a href="#2-4-Face-R-CNN" class="headerlink" title="2.4 Face R-CNN"></a>2.4 Face R-CNN</h3><p><a href="https://arxiv.org/abs/1706.01061" target="_blank" rel="noopener">Face R-CNN</a>是腾讯AI提出的人脸检测方法。基于frcnn的一种方法。</p>
+<ul>
+<li>加入center-loss来约束整个模型，提高类内的差异。</li>
+<li>online hard example mining（OHEM）</li>
+<li>多尺度训练/测试</li>
+<li><p>整个模型的pipline</p>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRgy1fz7m3ymgy0j30mw0axgml.jpg"></center></li>
+<li>创新不是特别大，比较工程一点。</li>
+</ul>
+<h3 id="2-5-MSCNN"><a href="#2-5-MSCNN" class="headerlink" title="2.5 MSCNN"></a>2.5 MSCNN</h3><p><a href="https://arxiv.org/pdf/1607.07155.pdf" target="_blank" rel="noopener">MSCNN（ECCV2016）</a>其实是一个通用的目标检测方法。后续的很多人脸检测都是基于这篇paper给出的思路。</p>
+<ul>
+<li>MSCNN跟SSD思想相似，但是又迈进一步：<ol>
+<li>SSD各个分支上anchor与gt bbox的匹配是很粗放的，一个gt bbox可能与多个分支上的anchor匹配；</li>
+<li>MSCNN在每个分支有特定的anchor进行匹配，某一层的feature map上的anchor仅用于匹配特定尺寸范围的gt bbox。</li>
+<li>在预测的时候，每个分支预测特定范围类的尺寸目标，相当于三个专家系统。</li>
+</ol>
+</li>
+<li><p><strong>目标检测中能覆盖到多尺度目标是一个巨大的挑战</strong>。如果预设的anchor尺寸能够和目标尺寸能完美匹配，那么会有更高的检测率。paper给出了解决这一问题的一般方法，如下图：</p>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRly1fzaq6ewb43j30vk0d4gn0.jpg"></center>
+
+<ol>
+<li>(a) 训练一个<strong>单尺度分类器</strong>（即paper中的model template），但是输入多尺度图像金字塔。优点：这样的单尺度分类器也可以检测到各种尺度的目标。缺点：但是可想而知，重复的输入模型检测韩飞大量的计算资源。</li>
+<li>(b) 训练一个<strong>标准多尺度分类器</strong>，只输入单尺度图像。优点：只需要输入单尺度图像，一次前向操作。缺点：需要多尺度分类器能够cover所有尺度目标，所以难度很大，导致检测性能一般。</li>
+<li>(c)是上面两种方式的折中，输入不那么多的图像金字塔，然后不那么多尺度的分类器。</li>
+<li>(d)中使用特征近似，输入不那么多的图像金字塔，但是在feature map中使用特征差值方式generate其他尺度的<strong>特征金字塔</strong>。</li>
+<li>(e)跟RCNN中方式类似。(a)中是整张图像的缩放，(e)是把proposal区域的特征固定到一个尺度。分类器保持单一不变。</li>
+<li>(f)与(b)类似。单尺度图像输入，但尺度的feature map上得到proposal，目标的多尺度来自于预定义的多尺度anchors。但是所有多尺度的anchor都将通过roi pooling固定到相同尺寸，再通过多个固定尺寸的分类器检测。但是有个不可忽视的问题就是目标尺寸和模板尺寸的不匹配。如下图，假设RPN中的感受野为228*228，与图中大小尺度的目标（640*640，、32*32）并不匹配。<center><img src="http://ww1.sinaimg.cn/large/0061KkpRly1fzar5h6387j30wg0be75o.jpg"></center></li>
+<li>受(b)(c)启发，paper提出<strong>MSCNN</strong>。<strong>输入只需要单尺度的图像，在特征金字塔的不同分支上利用多尺度模板检测多尺度目标</strong>。具体实现类似SSD，在各个检测分支上，预定义特定的anchors，专门用于检测特定尺度范围类的目标。这个思路有很深远的影响。</li>
+</ol>
+</li>
+<li><p>模型的pipline</p>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRly1fzargtkfpjj30nx0dv0ts.jpg"></center>
+
+<p>其中检测那一部分的模型如下图：</p>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRly1fzarpxaq1uj30o40atq3u.jpg"></center>
+</li>
+<li><p>然后加上一些tricks在一些通用检测的任务上取得了SOTA。当然在人脸上也取得不错效果，最主要是对小人脸检测提供了非常work的思路。</p>
+</li>
+</ul>
+<h3 id="2-6-ScaleFace"><a href="#2-6-ScaleFace" class="headerlink" title="2.6 ScaleFace"></a>2.6 ScaleFace</h3><p><a href="https://arxiv.org/pdf/1706.02863.pdf" target="_blank" rel="noopener">ScaleFace</a>看名字就知道是针对人脸多尺度改进的模型。</p>
+<ul>
+<li><p>整个网络的pipline。看起来很简洁，这篇paper提出的网络架构在当时应该算是较新颖的，paper也对如何选择最佳尺度做了很详细的分析和实验。</p>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRly1fz8f7npuckj30tf0cjmzg.jpg"></center>
+
+<p>整个模型的backbone共享参数，branch还是走的frcnn的路数。有三个尺度可变的检测分支，且每个分支只用属于特定尺度范围内的人脸gt做训练，每个分支也只预测特定尺度大小的人脸bbox。作者认为这是和SSD的本质区别，另一个区别就是<strong>特征融合</strong>。左上角虚线框可知，每个branch检测人脸的尺度不太一样（samll，medium，large），每个分支预定义的anchor尺度也从小到大排列。值得注意的是，相邻分支存在交集。</p>
+</li>
+<li><p>Finding a network for specific scale range</p>
+<ol>
+<li>结论很简单：<strong>就是本文模型提出的多分支分别预测不同尺度的目标。</strong></li>
+<li>低层feature map用于预测小目标的检测，因为感受野较小，细节丰富。前面的模型提到过这个结论。高层feature map只用于预测大尺度目标。</li>
+<li><strong>每个尺度的人脸目标也分别在不同检测分支上做预测才能有最好的性能</strong>。主要是因为目标尺度与模板尺度一致。<center><img src="http://ww1.sinaimg.cn/large/0061KkpRly1fz8g69hqh0j30e904taai.jpg"></center></li>
+<li>在frcnn中的roi pooling层是7*7。其实并不是每个模型都必须这个尺寸，本文用的是5*5。从下图可以看到，30x25的人脸在stride=8时，即降采样到4*4的尺度时，与roi pooling层的网格5*5最接近，所以在这个尺度上做人脸检测，可以获得最佳性能。同理，下面大人脸在降采样到7*5时，能获得最佳性能。这也就解释了为什么要在不同的feature map层去做对应尺度人脸的检测才能获得最佳性能。<center><img src="http://ww1.sinaimg.cn/large/0061KkpRgy1fz8gn19mdsj30ev0dht9t.jpg"></center>
+</li>
+</ol>
+</li>
+<li><p>How many scalevariant detectors?</p>
+<ol>
+<li>上面说了检测要多尺度，但是尺度该怎么样去划分，在这里直接贴结果。正如pipline中那样，分三个branch（三个尺度）去检测效果最好。</li>
+<li>但并不是每种任务都是性能最佳的，需要根据实际情况考虑目标的尺度与网络结构本身的stride尺度。</li>
+</ol>
+</li>
+<li><p>How to combine the scale variant detectors?<br>共享backbone，减少参数，减少计算量，联合优化，多任务优化。</p>
+</li>
+<li><p>很多实现细节可以参看原文。</p>
+</li>
+</ul>
+<h3 id="2-7-SSH"><a href="#2-7-SSH" class="headerlink" title="2.7 SSH"></a>2.7 SSH</h3><p><a href="https://arxiv.org/pdf/1708.03979.pdf" target="_blank" rel="noopener">SSH（ICCV2017）</a>也是类似于SSD架构的模型。和上面讲的ScaleFace更是有异曲同工之妙。只不过用的<strong>one-stage</strong>的检测方式，速度更快。</p>
+<ul>
+<li><p>整个模型的pipline如下图，思路与ScaleFace一样，在不同feature map层检测不同尺度的人脸。</p>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRly1fz8i3iga9uj30lc0aodgk.jpg"></center>
+</li>
+<li><p>detection module分别预测是否为人脸和anchor bbox的回归值。</p>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRly1fz8if1lr7wj30a609e3yu.jpg"></center>
+</li>
+<li><p>训练方式是三个分支独立训练。每个检测分支匹配特定尺度范围的anchor，那么这些被分配到不同分支的anchor，其得到的loss也仅仅用于更新其所处分支的参数。</p>
+</li>
+</ul>
+<h3 id="2-8-S3FD"><a href="#2-8-S3FD" class="headerlink" title="2.8 S3FD"></a>2.8 S3FD</h3><p><a href="https://arxiv.org/pdf/1708.05237.pdf" target="_blank" rel="noopener">S3FD</a>仍然是解决小人脸检测问题，方法依旧是在多尺度上下功夫。</p>
+<ul>
+<li><p>贡献有三点：</p>
+<ol>
+<li>提出尺度均等（scale-equitable的人脸框架，采用<strong>EPIP</strong>（equal proportion interval principle）确保多层feature map上anchor的采样密度一致，以处理不同尺度的人脸。很熟悉的味道，跟上面ScaleFace很相似。</li>
+<li>通过<strong>SCAMS</strong>(scale compensation anchor matching strategy)提升了对小人脸的召回率。作者认为anchor的预定义尺寸是离散的，与图像中连续分布的人脸不会完美匹配（有一些人脸找不到合适的预定义anchor），通过SCAMS，课提升对于小人脸，处于离散的、anchor预定义尺度范围外的人脸召回率。</li>
+<li>使用<strong>MBL</strong>（max-out background label）降低了小人脸false positive rate。</li>
+</ol>
+</li>
+<li><p>整个模型的pipline如下图:</p>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRly1fz8qa88h1kj30r70gomz9.jpg"></center>
+
+<ol>
+<li>利用VGG当做backbone，将fc layers改成cnv layer</li>
+<li>多层feature map的检测机制，以实现文中所说的Scale equitable framework，strde尺度从4-128。眼熟眼熟眼熟！</li>
+<li>作者认为多层间的激活尺度不同，对每个channel做一个element-wise的L2正则化，利于训练。</li>
+<li>predicted convolutional layer预测anchor的4个坐标偏移量以及一个2分类的结果。</li>
+<li>多任务的loss</li>
+<li>为anchor预定义合适的尺寸。anchor的长宽比1：1，人脸一般是接近方形。每层stride和RF的大小固定，stride是anchor size的1/4。RF根据卷积核算出来的。每层feature map上设置的anchor scale只有唯一一个。<center><img src="http://ww1.sinaimg.cn/large/0061KkpRly1fz8rhnguwbj30fz0a3756.jpg"></center></li>
+</ol>
+</li>
+<li><p>作者认为自然图像中，人脸的尺度时连续的，但是预定义的anchor尺寸离散，这样导致对小尺度人脸和部分离群尺度的人脸 gt bbox，没有足够的anchor与它们匹配，进而影响召回率。为了克服这一现象，提出SCAMS。就是降低IOU，找到更多的备选框。</p>
+</li>
+<li><p>在检测小人脸的过程中，因为anchor尺寸太小，但是大部分的anchor都是负样本，会造成大量误判。所以作者通过MBL为每个anchor输出N个bg标签得分，但是只选择最大的score作为输出，再与fg score组成两个标签输出计算softmax。</p>
+</li>
+<li><p>充满tricks的模型。大的思路没有变，在anchor的选取，尺度等做了大量的尝试。</p>
+</li>
+</ul>
+<h3 id="2-9-Face-R-FCN"><a href="#2-9-Face-R-FCN" class="headerlink" title="2.9 Face R-FCN"></a>2.9 Face R-FCN</h3><p><a href="https://arxiv.org/pdf/1709.05256.pdf" target="_blank" rel="noopener">Face R-FCN</a>基于R-FCN，OHEM，使用虫洞卷积，更小的pooling尺度，小尺度anchor，多尺度训练与测试的策略。</p>
+<ul>
+<li><p>模型的pipline</p>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRly1fzahhjdfh9j30tg0b93zk.jpg"></center>
+
+<ol>
+<li>基于全卷积的R-FCN</li>
+<li>基于全卷积的resnet101作为backbone</li>
+<li>若干tricks（ps average pooling，多尺度训练，OHEM）</li>
+</ol>
+</li>
+<li>R-FCN Based Architecture：使用更多小的anchor配合小尺寸人脸；在position roi pooling中用更小的pooling尺度去降噪，抑制干扰信息，然后替换掉原来的roi pooling；在resnet最后一层使用虫洞卷积，增加感受野。</li>
+<li>Position-Sensitive Average Pooling：paper的精髓在此处。作者认为人脸不同的区域，对检测的贡献权重不同，因此paper对roi的不同区域给予不同的权重。</li>
+<li>工程性十足。具体细节看原文。</li>
+</ul>
+<h3 id="2-10-FAN-Face-Attention-Network"><a href="#2-10-FAN-Face-Attention-Network" class="headerlink" title="2.10 FAN(Face Attention Network)"></a>2.10 FAN(Face Attention Network)</h3><p><a href="https://arxiv.org/pdf/1711.07246.pdf" target="_blank" rel="noopener">FAN</a>是一种基于attention机制的人脸检测模型，其他思路跟上面的模型差不多。有效克服小人脸，人脸遮挡。</p>
+<ul>
+<li><p>三个spotlight：</p>
+<ol>
+<li>anchor-level attention：突出人脸区域的特征。</li>
+<li>anchor分配策略</li>
+<li>为克服人脸遮挡的数据增强</li>
+</ol>
+</li>
+<li><p>模型的pipline</p>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRly1fzassirvpcj30qe0gy3zy.jpg"></center>
+
+<ol>
+<li>特征金字塔，就是借鉴的FPN。</li>
+<li>Attention Network找到人脸部分强化特征，抑制非人脸区域。（就是对整个feature map点乘一个权重矩阵）</li>
+<li>Anchor Assign Strategy：统计一下人脸的像素尺寸，针对性的设计anchor尺寸。如下图<center><img src="http://ww1.sinaimg.cn/large/0061KkpRly1fzat1ayieaj30h10cgdgd.jpg"></center></li>
+</ol>
+</li>
+<li><p>Attention Function，重点来了，看下图：</p>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRly1fzat6wamdsj31490gg41d.jpg"></center>
+
+<p>上图可以很清楚看到模型的attention机制做了什么事情。</p>
+<ol>
+<li><strong>attention分支的监督信息怎么来的</strong>？attention最后的部分用一个sigmoid激活函数，将feature mpa的值限制在0-1之间，值越大表示人脸特征越明显。</li>
+<li>特征金字塔中的anchor与各个gt如何匹配？<center><img src="http://ww1.sinaimg.cn/large/0061KkpRly1fzatttlicoj30j80gxgng.jpg"></center>可以看得相当清楚，人脸的gt bbox分配给不同的feature map层，彼此不产生交集。anchor与每一层所对应尺寸的gt bbox匹配，iou&gt;0.5就是正样本。</li>
+<li>作者认为，对于遮挡的人脸，例如口罩等，对检测没有帮助，通过attention机制，抑制这些区域的特征，进而突出非遮挡部分。</li>
+</ol>
+</li>
+<li><p>遮挡人脸的数据很少，不够训练。因此paper提出随机crop做增强，crop到的图像，在边缘就会类似于遮挡。笔者感觉比较鸡肋的操作。</p>
+</li>
+<li>总体来看，融合各种技术的人脸检测方法，最后效果还是很不错的。</li>
+</ul>
+<h3 id="2-11-ZCC"><a href="#2-11-ZCC" class="headerlink" title="2.11 ZCC"></a>2.11 ZCC</h3><p><a href="https://arxiv.org/pdf/1802.09058v1.pdf" target="_blank" rel="noopener">ZCC（Seeing Small Faces from Robust Anchor’s Perspective）</a>从anchor角度出发，设计一系列小人脸检测问题的解决方案。对anchor设计非常具有指导性的工作，建议结合原文看。</p>
+<ul>
+<li><strong>Abstract:</strong> 提出<strong>EMO</strong>(Expected Max Overlapping) score，可以从理论上解释低overlapping问题。并基于此理论，提出<strong>ASR</strong>(anchor stride reduction with new network architectures)、<strong>ESA</strong>(extra shifted anchors)、<strong>FSJ</strong>(stochastic Face Shift Jittering)、<strong>HFC</strong>(Hard Face Compensation)。</li>
+<li><p><strong>Introduction:</strong> </p>
+<ol>
+<li>anchor-based检测器将图像上处于空间连续分布的人脸bbox，量化为离散空间中预定义的离散尺度anchor bbox；并通过IOU来评估anchor与人脸gt bbox的相似性（划分正负样本）。</li>
+<li><strong>训练阶段：</strong> 每个人脸gt box与一个或多个anhcor匹配（高IOU就作为正样本），这些匹配上的gt bbox，用于训练分类器、bbox回归器。</li>
+<li><strong>测试阶段：</strong> 通过图像上预定义的离散anchor，提取anchor内特征，用于人脸分类和bbox回归。</li>
+<li>尽管anchor-based检测器能处理形状、外观的不变形，但是尺度不变形效果却很一般，因为图像中的人脸可能处于任意尺寸，这将导致对小尺度人脸的检测非常具有挑战。看下图：<center><img src="http://ww1.sinaimg.cn/large/0061KkpRly1fzbvu9si73j30id0oiwhw.jpg"></center>从(a)中可以看出，anchor-based检测器对大尺度人脸可以保持高召回，但是对小人脸尺度的性能却急剧下降，换句话说，做完分类+bbox回归的高置信度anchor并没有足够覆盖小尺度人脸。</li>
+<li>我们进一步分析训练开始时，初始anchor与gt bbox的匹配情况：对每一个人脸的gt bbox，我们计算与之最高IOU的anchor，然后基于gt bbox的尺度划分为不同组，在每个尺度组类就散这些最高IOUdefender平均值，如(b)，各个尺度上人脸的召回率与其平均IOU得分正相关，因此，小尺度人脸gt bbox与anchor的低IOU得分，将导致很难利用回归器将anchor回归至gt bbox，并最终造成小尺度人脸的低召回。</li>
+<li>所以paper提出新的anchor策略，提升anchor-based检测器处理尺度不变性的能力。在新设计的网络框架上降低anchor的采样stride；在预定义的anchor中心位置附近设置更加密集的anchor采样；对图像上人脸的gt bbox做随机扰动，以进一步提升gt bbox与anchor的IOU；对低IOU的gt bbox做进一步补偿，以提升其IOU的匹配数目。</li>
+</ol>
+</li>
+<li><p><strong>Anchor Setup and Matching：</strong><center><img src="http://ww1.sinaimg.cn/large/0061KkpRly1fzbz7znfhjj30rq09vmzb.jpg"></center></p>
+<ol>
+<li>(a)(b)表示一般的anchor匹配策略的结果，(c)依照EMO score的匹配方案，可以匹配更贴近的anchor，比单独基于IOU的方案更好。</li>
+<li>EMO依照人脸gt bbox的位置分布，通过计算人脸与所有anchor的期望最大IOU，来提升anchor匹配人脸gt的能力，提高召回率。</li>
+<li>IOU定义为<script type="math/tex">max_{a\in A}\frac{|B_f \cap B_a|}{|B_f \cup B_a|}</script></li>
+</ol>
+</li>
+<li><p><strong>Computing the EMO Score：</strong></p>
+<ol>
+<li>人脸可能随机出现在图像中任意位置。如fig2(c)假设人脸gt bbox中心位置坐标为(x,y)，如绿色”x”所示，定义p(x,y)为图像上人脸位置分布的概率密度函数，然后就有<script type="math/tex">\int_{0}^{H}\int_{0}^{W}p(x,y)dxdy = 1</script>,H,W表示图像的高宽，那么依照上面IOU的公式EMO公式可以定义为：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">EMO = \int_&#123;0&#125;^&#123;H&#125;\int_&#123;0&#125;^&#123;W&#125;p(x,y)max_&#123;a\in A&#125;\frac&#123;|B_f \cap B_a|&#125;&#123;|B_f \cup B_a|&#125;dxdy</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>在widerface中，设置anchor尺度合集S为：{16，32，64，128，256，512},并且长宽比为1（人脸多数为方形）。因此在fig2中的每个’+’对应6个anchor，我们假设每个人脸在任何位置的概率都是一样的，也就是说gt bbox的中心位置(x,y)符合平均分布。<code>x~U(0,W)</code>和<code>y~U(0,H)</code>。</p>
+<ol>
+<li>假设人脸bbox中心在四个相邻anchor中心区域内，如下图：<center><img src="http://ww1.sinaimg.cn/large/0061KkpRly1fzc458avknj30dx08bq38.jpg"></center>如果想得到最大的IOU，那么gt bbox（绿框）与anchor（红框）中心完全重合。gt bbox中心点与匹配anchor中心点的相对位置为：<script type="math/tex">(x^{'},y^{'})</script>,很显然也是服从均匀分布的。再继续假设人脸尺度与anchor尺度一致，那么<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">IoU = \frac&#123;(l-x^&#123;&apos;&#125;)(l-y^&#123;&apos;&#125;)&#125;&#123;2l^2 - (l-x^&#123;&apos;&#125;)(l-y^&#123;&apos;&#125;)&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>带入到EMO公式中得到新的计算公式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">EMO = \int_&#123;0&#125;^&#123;\frac&#123;s_A&#125;&#123;2&#125;&#125;\int_&#123;0&#125;^&#123;\frac&#123;s_A&#125;&#123;2&#125;&#125;(\frac&#123;2&#125;&#123;s_A&#125;)^2\frac&#123;(l-x^&#123;&apos;&#125;)(l-y^&#123;&apos;&#125;)&#125;&#123;2l^2 - (l-x^&#123;&apos;&#125;)(l-y^&#123;&apos;&#125;)&#125;dxdy</span><br></pre></td></tr></table></figure>
+<ol>
+<li>fig4展示了不同人脸尺度和anchor步长数据家的EMO score。<center><img src="http://ww1.sinaimg.cn/large/0061KkpRly1fzc4hm4vtwj30de07vjro.jpg"></center>对一个固定尺寸的人脸，Sa（步长stride）越小，EMO越大。</li>
+<li>总结一下：anchor的步长越小，人脸检测性能越好。（很显而易见的结论，但是paper运用严密的数学公式量化证明了一下-.-）</li>
+</ol>
+</li>
+<li><p><strong>Strategies of New Anchor Design：</strong></p>
+<p>基于以上证明，提升IOU score的方法从以下两方面设计。</p>
+<ol>
+<li>降低anchor的stride。<strong>ASR</strong>和<strong>ESA</strong></li>
+<li>降低anchor与人脸gt box中心点的距离。<strong>FSJ</strong></li>
+</ol>
+</li>
+<li><strong>ASR</strong>：如下图<center><img src="http://ww1.sinaimg.cn/large/0061KkpRly1fzc582nbbhj30uq08yjsg.jpg"></center><br>增加feature map的尺寸来降低anchor的stride，相当于降低感受野，是anchor的密度增大。</li>
+<li><strong>ESA</strong>：在原图每个预定义anchor的采样中心位置附近，增加额外偏移的anchor。<center><img src="http://ww1.sinaimg.cn/large/0061KkpRly1fzc5ee0ttcj30fw07s74s.jpg"></center>非常好理解，增加anchor密度而已。paper提到只需要对小尺寸的anchor需要这么操作。从下图也可以看到，对大尺寸也没有太多的提升。<center><img src="http://ww1.sinaimg.cn/large/0061KkpRly1fzc6470xeqj30gh0b9754.jpg"></center></li>
+<li><strong>FSJ</strong>:在训练过程中，增加一个图像的随机抖动，综合上面EMO的分析，可以增加匹配的概率，提高匹配anchor的IOU得分。</li>
+<li><p><strong>HFC</strong>：从fig7看出，即使用了众多的tricks，小尺度人脸的平均IOU得分还是低于大尺度人脸。paper提出导致这样结果的原因是因为真实人脸的位置和尺度时连续的，但是anchor的位置和尺度时离散的，有些道理。因此提出和S3FD几乎一模一样的策略。</p>
+<ol>
+<li>首先选择anchor与gt bbox的IOU大于一定阈值的作为正样本</li>
+<li>如果一个gt bbox与之匹配的anchor，其最大IOU还小于这个阈值，那么这就是一个hard face，将其anchor按IOU降序排列，选择topN的anchors作为与之匹配的正样本。</li>
+</ol>
+</li>
+<li><p>总结一下，对anchor的一些问题做了细致的描述和证明，并提出了一些有效的方法。用dl做检测的话这些tricks还是非常有必要了解一下。</p>
+</li>
+</ul>
+<h3 id="2-12-PyramidBox"><a href="#2-12-PyramidBox" class="headerlink" title="2.12 PyramidBox"></a>2.12 PyramidBox</h3><p><a href="https://arxiv.org/pdf/1803.07737.pdf" target="_blank" rel="noopener">PyramidBox</a>来自工业界的一篇文章。所以创新性不足，工业味十足，都是在已有方法上的进一步优化。话说回来。能做到这样也需要对任务相关工作和背景有很深刻的认识才行。</p>
+<ul>
+<li><p>模型的pipline如下图</p>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRgy1fzglgoc25uj30j40gimyz.jpg"></center>
+
+<ol>
+<li>依然是利用特征金字塔,backbone是VGG16</li>
+<li>LFPN用于feature map的特征融合。融合方法如下图a<center><img src="http://ww1.sinaimg.cn/large/0061KkpRgy1fzgmlrvawgj30ug0dqmya.jpg"></center></li>
+<li>CPM（Context-sensitive Predict Module）如上图b，能够让预测分支更加的wider和deeper。最后在人脸的输出上也使用S3FD的max-out策略，来降低小人脸的false-positive。</li>
+<li>Context-reinforced PyramidAnchors充分利用了上下文的信息。利用一种半监督的方式（基于人脸bbox来预测head和body的bbox）获取近似的上下文特征。</li>
+<li>在向前运算时仅用人脸检测分支，不使用人头，人体的分支，因此没有额外的计算开销。</li>
+</ol>
+</li>
+<li>在训练过程中，为了增加相对应尺寸人脸的数据（一般来说，小人脸比较少），采用一种Data-anchor-sampling的方式（将原图片根据人脸尺寸的缩放尺度来进行resize）。</li>
+</ul>
+<h3 id="2-13-FDNet"><a href="#2-13-FDNet" class="headerlink" title="2.13 FDNet"></a>2.13 FDNet</h3><p><a href="https://arxiv.org/ftp/arxiv/papers/1802/1802.02142.pdf" target="_blank" rel="noopener">FDNet</a>菊厂一篇工作，很多工程技巧。</p>
+<ul>
+<li>模型pipline<center><img src="http://ww1.sinaimg.cn/large/0061KkpRgy1fzhhc07yvcj30k20c1755.jpg"></center><ol>
+<li>ResNet-101作为backbone</li>
+<li>在roi pooling前，使用large kernrl-based deformable layer（<a href="http://openaccess.thecvf.com/content_ICCV_2017/papers/Dai_Deformable_Convolutional_Networks_ICCV_2017_paper.pdf" target="_blank" rel="noopener">Deformable Convolutional Networks</a>）建立更加轻量级的feature map。</li>
+<li>anchor设计3个长宽比，6个scale，在训练和测试阶段保留所有小尺度的proposals（&lt;16 pixels）</li>
+</ol>
+</li>
+<li><p>多尺度的训练和测试</p>
+<ol>
+<li>训练阶段使用水平翻转和图像增强，图像短边尺寸做5个尺度的的缩放，再多尺度训练</li>
+<li>多尺度图像测试过程中，每个单独尺寸的图像，不做NMS过滤；得到了每个尺度上检测的proposals之后，再在所有的proposals上使用voted-based NMS。</li>
+</ol>
+</li>
+<li><p>工程十足，源码中肯定还有更多细节，但是没有公开。</p>
+</li>
+</ul>
+<h3 id="2-14-SRN"><a href="#2-14-SRN" class="headerlink" title="2.14 SRN"></a>2.14 SRN</h3><p><a href="https://arxiv.org/pdf/1809.02693.pdf" target="_blank" rel="noopener">SRN</a>基于RetinaNet的sigle-shot的人脸检测方案，并加入focal loss。</p>
+<ul>
+<li><p>整个模型的pipline<center><img src="http://ww1.sinaimg.cn/large/0061KkpRgy1fzhj2mck11j30r60f50up.jpg"></center></p>
+<ol>
+<li>使用ResNet-50的backbone，包含6层特征金字塔结构。细节参照paper。</li>
+<li><strong>STC</strong>(Selective Two-step Classification)通过C2、C3、C4（1st-step）和P2、P3、P4（2nd-step）完成2-stage的分类。1st-step通过阈值过滤掉大部分易分的样本，减少2nd-step分类器所需要的样本量（想到MTCNN）。STC作用于浅层feature map的原因在于细节丰富，对小人脸保持高的召回率，和上面讲的很多工作的思想类似。</li>
+<li><strong>STR</strong>(Selective Two-step Regression)通过C5、C6、C7（1st-step）和P5、P6、P7（2nd-step）完成2-stage的回归。浅层的feature map更专注于分类任务，深层的feature map语义信息更加丰富，更加适合bbox的回归（有点强行植入思想的感觉）。</li>
+<li>总结一下就是<strong>1st-step</strong>操作对应于fig2上半部分的箭头流程，其中包含anchor的第一次cls+reg；<strong>2st-step</strong>操作对应fig 2的下半部分流程，包含对anchor的第二次cls+reg。</li>
+<li>loss使用focal loss + smooth L1 loss，是模型更专注hard training examples。</li>
+</ol>
+</li>
+<li><p>Receptive Field Enhancement：作者提出，在widerface训练集中，有相当一部分的人脸长宽比在1:2附近，所以提出RFE module加入多样化的感受野（有一些道理）</p>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRgy1fzhk345g17j309t0c3t8y.jpg"></center>
+</li>
+<li><p>当然，也做了一些数据增强，实现细节参看paper。</p>
+</li>
+<li><p>为设计的模型讲了一个很好的故事，最终结果不差，所以故事也还能说得通。</p>
+</li>
+</ul>
+<h3 id="2-15-FANet-Feature-Agglomeration-Networks-for-Single-Stage-Face-Detection"><a href="#2-15-FANet-Feature-Agglomeration-Networks-for-Single-Stage-Face-Detection" class="headerlink" title="2.15 FANet(Feature Agglomeration Networks for Single Stage Face Detection)"></a>2.15 FANet(Feature Agglomeration Networks for Single Stage Face Detection)</h3><p><a href="https://arxiv.org/pdf/1712.00721.pdf" target="_blank" rel="noopener">FANet</a>和FAN名字有点撞车，但是思路完全不一样，FAN倾向于mask attention操作，FANet强调层次化聚集的single stage。</p>
+<ul>
+<li><p>本文的pipline</p>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRgy1fzitsvzmu8j30na0g4mym.jpg"></center>
+
+<ol>
+<li>FANet是三层层次化结构。HL作用于三层feature map上，最终的检测进作用于最后一层feature map。模型通过构建top-down层次化金字塔，让参与检测的每个分支都享受高层语意带来的好处。</li>
+<li>三个level的金字塔通过A-block聚集特征，如下图<center><img src="http://ww1.sinaimg.cn/large/0061KkpRgy1fziu2nvybkj30hy0aegmc.jpg"></center></li>
+<li>输入A-block的高低层feature map的通道数比例为1:8,占比均衡，使得高层信息与低层信息融合得较为合理。</li>
+<li><strong>HL</strong>(Hierarchical Loss)因为分支众多，所以每一个level都添加一个监督信息，能更好的收敛</li>
+</ol>
+</li>
+<li><p>最终实验结果显示，不仅检测效果好，速度也挺快。</p>
+</li>
+</ul>
+<h3 id="2-16-DSFD"><a href="#2-16-DSFD" class="headerlink" title="2.16 DSFD"></a>2.16 DSFD</h3><p><a href="https://arxiv.org/pdf/1712.00721.pdf" target="_blank" rel="noopener">DSFD</a>是一个single stage dual shot人脸检测算法。dual shot看起来很玄乎，其实就是做了两个层次化的特征金字塔检测分支。</p>
+<ul>
+<li><p>模型pipline如下图：</p>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRgy1fziwhul6nyj30uf0extb1.jpg"></center>
+
+<ol>
+<li>与前面很多工作类似，特别是FANet。DSFD有两个level的分支，第二个分支通过FEM(Feature Enhance Module)产生。</li>
+<li>FEM跟FANet的A-block非常相似，不难理解，如下图<img src="http://ww1.sinaimg.cn/large/0061KkpRgy1fziwxnkcvmj30er08y0te.jpg"></li>
+<li>loss就是简单的相加，只不过first shot中anchor的尺度为second shot中anchor尺度的一半，作者解释说source feature map更适合小尺度人脸的检测，因为分类的语义少，其实就是信息损失没有那么大。</li>
+</ol>
+</li>
+<li><p>总结下来，没有特别有创新的idea。优化已有的tricks得到了不错的效果。</p>
+</li>
+</ul>
+<h3 id="2-17-DFS"><a href="#2-17-DFS" class="headerlink" title="2.17 DFS"></a>2.17 DFS</h3><p><a href="https://arxiv.org/pdf/1811.08557.pdf" target="_blank" rel="noopener">DFS</a>本来不太想列在这里，因为和上面的工作确实有很多的相似，但是为了保持对<a href="http://mmlab.ie.cuhk.edu.hk/projects/WIDERFace/WiderFace_Results.html" target="_blank" rel="noopener">wider face</a>官网列出文章的完整性，还是决定简单讲一下。</p>
+<ul>
+<li><p>pipline如下<br><center><img src="http://ww1.sinaimg.cn/large/0061KkpRgy1fzj4mjjgxgj30sq0eq75s.jpg"></center></p>
+<ol>
+<li>backbone的模型和FANet的金字塔结构有‘同曲同工之妙’。</li>
+<li>最后的loss加入了segmentation的监督信号</li>
+</ol>
+</li>
+<li><p>最后的结果不算太差。</p>
+</li>
+</ul>
+<h3 id="2-17-VIM-FD"><a href="#2-17-VIM-FD" class="headerlink" title="2.17 VIM-FD"></a>2.17 VIM-FD</h3><p><a href="https://arxiv.org/pdf/1901.02350.pdf" target="_blank" rel="noopener">VIM-FD</a>融合了SRN,PyramidBox（data-anchor-sampling）,S3FD(max-in-out lable + anchor matching strategy)中的思路，并引入FAN中的attention机制，使用DenseNet-121作为backbone，实现SOTA。</p>
+<ul>
+<li><p>模型的pipline如下图，参照了SRN和FAN的思路：</p>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRgy1fzjuwoisb4j30m90fwwgg.jpg"></center>
+
+<ol>
+<li>在S3FD中使用了max-out bg label操作，用于浅层feature map上减少目标尺度的FP，PyramidBox在征服样本上都使用了类似的操作。在VIM-FD的cls网络中，也用到了这个策略，召回更多的小尺度人脸，并同时减少false positive。</li>
+<li>借鉴S3FD中的思路，等比例anchor采样策略+基于尺度补偿的anchor匹配策略。</li>
+<li>类似与PyramidBox中的data augmentation。</li>
+</ol>
+</li>
+<li><p>融合多种算法的精髓，组成新的模型，效果卓越，复现工作还是不容易啊。</p>
+</li>
+</ul>
+<h3 id="2-18-ISRN"><a href="#2-18-ISRN" class="headerlink" title="2.18 ISRN"></a>2.18 ISRN</h3><p><a href="https://arxiv.org/pdf/1901.06651.pdf" target="_blank" rel="noopener">Improved SRN</a>是AAAI2019的一篇工作，相比之前的模型提高了一点点，widerface感觉都已经刷爆了，需要新的数据集。</p>
+<ul>
+<li>本工作是是在SRN基础上，增加各种tricks，最终达到SOTA。包括：数据增强，性能更加出众的bacbone，COCO预训练，SENet中的SE-Block，分割分支的额外监督信息，分离分类模块等。</li>
+<li><p>模型如下:</p>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRgy1g01jzc55jej30lk14v47e.jpg"></center>
+</li>
+<li><p>上图模型c不在imagenet预训练，而是在coco上预训练，再在widerface上训练</p>
+</li>
+<li>本文创新型不是很足，工程tricks支撑它的结果，对以前的工作有很好的认识。更多细节看paper吧，不难理解，就不赘述了。</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>Post author:  </strong>JimmyYoung</a>
+          </li>
+          <li class="post-copyright-link">
+          <strong>Post link:  </strong>
+          <a href="/2019/02/27/DL_FaceDetection/" target="_blank" title="">http://yoursite.com/2019/02/27/DL_FaceDetection/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>Copyright Notice:   </strong>
+            All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            unless stating additionally.
+          </li>
+         
+        </ul>
+<div>
+
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/02/20/DL-FaceAntiSpoofing/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">FaceAntiSpoofing</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Face-Detection"><span class="nav-number">1.</span> <span class="nav-text">Face Detection</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-0-综述"><span class="nav-number">1.1.</span> <span class="nav-text">1.0 综述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-0-模型"><span class="nav-number">1.2.</span> <span class="nav-text">2.0 模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-MTCNN"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 MTCNN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-CMS-RCNN"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 CMS-RCNN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-HR"><span class="nav-number">1.2.3.</span> <span class="nav-text">2.3 HR</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-Face-R-CNN"><span class="nav-number">1.2.4.</span> <span class="nav-text">2.4 Face R-CNN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-MSCNN"><span class="nav-number">1.2.5.</span> <span class="nav-text">2.5 MSCNN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-6-ScaleFace"><span class="nav-number">1.2.6.</span> <span class="nav-text">2.6 ScaleFace</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-7-SSH"><span class="nav-number">1.2.7.</span> <span class="nav-text">2.7 SSH</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-8-S3FD"><span class="nav-number">1.2.8.</span> <span class="nav-text">2.8 S3FD</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-9-Face-R-FCN"><span class="nav-number">1.2.9.</span> <span class="nav-text">2.9 Face R-FCN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-10-FAN-Face-Attention-Network"><span class="nav-number">1.2.10.</span> <span class="nav-text">2.10 FAN(Face Attention Network)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-11-ZCC"><span class="nav-number">1.2.11.</span> <span class="nav-text">2.11 ZCC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-12-PyramidBox"><span class="nav-number">1.2.12.</span> <span class="nav-text">2.12 PyramidBox</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-13-FDNet"><span class="nav-number">1.2.13.</span> <span class="nav-text">2.13 FDNet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-14-SRN"><span class="nav-number">1.2.14.</span> <span class="nav-text">2.14 SRN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-15-FANet-Feature-Agglomeration-Networks-for-Single-Stage-Face-Detection"><span class="nav-number">1.2.15.</span> <span class="nav-text">2.15 FANet(Feature Agglomeration Networks for Single Stage Face Detection)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-16-DSFD"><span class="nav-number">1.2.16.</span> <span class="nav-text">2.16 DSFD</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-17-DFS"><span class="nav-number">1.2.17.</span> <span class="nav-text">2.17 DFS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-17-VIM-FD"><span class="nav-number">1.2.18.</span> <span class="nav-text">2.17 VIM-FD</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-18-ISRN"><span class="nav-number">1.2.19.</span> <span class="nav-text">2.18 ISRN</span></a></li></ol></li></ol></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2013 - 2019 JimmyYoung&#39;s Blog All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				UV : <span id="busuanzi_value_site_uv"></span> |  
+				PV : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives/" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories/" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags/" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about/" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            JimmyYoung&#39;s Blog
+          </div>
+          <div class="panel-body">
+            Copyright © 2019 JimmyYoung All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
