@@ -186,7 +186,7 @@
         
           <section id="main" style="float:none;">
   
-    <article id="post-DL-FaceAntiSpoofing"  class="article article-type-post" itemscope itemprop="blogPost" >
+    <article id="post-Tools-DockerCUDAGuide"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -194,7 +194,7 @@
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2019/02/20/DL-FaceAntiSpoofing/">FaceAntiSpoofing</a>
+      <a class="article-title" href="/2019/02/28/Tools-DockerCUDAGuide/">Docker-CUDA</a>
     </h1>
   
 
@@ -202,25 +202,29 @@
     
     <div class="article-meta">
       
-	<a href="/2019/02/20/DL-FaceAntiSpoofing/" class="article-date">
-	  <time datetime="2019-02-20T06:00:00.000Z" itemprop="datePublished">2019-02-20</time>
+	<a href="/2019/02/28/Tools-DockerCUDAGuide/" class="article-date">
+	  <time datetime="2019-02-28T08:09:00.000Z" itemprop="datePublished">2019-02-28</time>
 	</a>
 
       
-    <a class="article-category-link" href="/categories/DL/">DL</a>
+    <a class="article-category-link" href="/categories/Tools/">Tools</a>
 
       
     </div>
     <div class="article-entry" itemprop="articleBody">
       
         <p class="article-excerpt-content">
-          1 综述Face anti-spoofing detection 就是人脸的攻击检测。
+          环境
+操作系统：Linux（Ubuntu 16.0.4）
 
-1.0 时代：早期利用传统的handcrafted特征进行检测，目标很明确，就是找到活体和非活体之间的差异，其中包括颜色纹理，非刚性运动变形，材料（皮肤，纸质，镜面），图像或者视频质量。因为这种方法不是本文重点，所以就不列举相关论文了。
-1.0 时代：继CNN兴起以来，就有人开始在人脸的活体检测尝试，并取得了越来越突出的成绩，但是笔者认为最大的瓶颈在于公开大型数据集的缺失，使得这一领域进展速度有限，也...
+Docker安装
+对于Mac用户，参考Get started with Docker Desktop for Mac; 对于Win用户,参考Get started with Docker for Windows，对于Linux用户,参考Get Docker CE for Ubuntu。
+
+以Ubuntu为例
+12345678# 在Ubuntu系统中安装较为简单，官方提供了脚本供我们进行安装。sudo apt install cur...
         </p>
         <p class="article-more-link">
-          <a href="/2019/02/20/DL-FaceAntiSpoofing/#more">Read More</a>
+          <a href="/2019/02/28/Tools-DockerCUDAGuide/#more">Read More</a>
         </p>
       
     </div>
@@ -272,6 +276,59 @@
         </p>
         <p class="article-more-link">
           <a href="/2019/02/20/DL-FaceDetection/#more">Read More</a>
+        </p>
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+      
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-DL-FaceAntiSpoofing"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2019/02/20/DL-FaceAntiSpoofing/">FaceAntiSpoofing</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2019/02/20/DL-FaceAntiSpoofing/" class="article-date">
+	  <time datetime="2019-02-20T06:00:00.000Z" itemprop="datePublished">2019-02-20</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/DL/">DL</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p class="article-excerpt-content">
+          1 综述Face anti-spoofing detection 就是人脸的攻击检测。
+
+1.0 时代：早期利用传统的handcrafted特征进行检测，目标很明确，就是找到活体和非活体之间的差异，其中包括颜色纹理，非刚性运动变形，材料（皮肤，纸质，镜面），图像或者视频质量。因为这种方法不是本文重点，所以就不列举相关论文了。
+1.0 时代：继CNN兴起以来，就有人开始在人脸的活体检测尝试，并取得了越来越突出的成绩，但是笔者认为最大的瓶颈在于公开大型数据集的缺失，使得这一领域进展速度有限，也...
+        </p>
+        <p class="article-more-link">
+          <a href="/2019/02/20/DL-FaceAntiSpoofing/#more">Read More</a>
         </p>
       
     </div>
@@ -378,51 +435,6 @@ CNN其实可以看作DNN的一种特殊形式。它跟传统DNN标志性的区..
         </p>
         <p class="article-more-link">
           <a href="/2018/11/30/DL-Architecture/#more">Read More</a>
-        </p>
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-Tools-DockerCUDAGuide"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-    <div class="article-meta">
-      
-	<a href="/2019/02/28/Tools-DockerCUDAGuide/" class="article-date">
-	  <time datetime="2019-02-28T08:02:19.231Z" itemprop="datePublished">2019-02-28</time>
-	</a>
-
-      
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p class="article-excerpt-content">
-          Docker-CUDA1.0
-操作系统：Linux（Ubuntu 16.0.4）
-
-2.0 Docker安装
-对于Mac用户，参考Get started with Docker Desktop for Mac; 对于Win用户,参考Get started with Docker for Windows，对于Linux用户,参考Get Docker CE for Ubuntu。
-
-以Ubuntu为例
-12345678# 在Ubuntu系统中安装较为简单，官方提供了脚本供我们进行安装。sudo...
-        </p>
-        <p class="article-more-link">
-          <a href="/2019/02/28/Tools-DockerCUDAGuide/#more">Read More</a>
         </p>
       
     </div>

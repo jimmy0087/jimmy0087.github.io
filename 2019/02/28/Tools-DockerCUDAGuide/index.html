@@ -3,26 +3,29 @@
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
   
-  <title>JimmyYoung&#39;s Blog</title>
+  <title>docker-cuda | JimmyYoung&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
+  <meta name="keywords" content="Docker" />
   
   
   
-  <meta name="description" content="Docker-CUDA1.0 操作系统：Linux（Ubuntu 16.0.4）  2.0 Docker安装 对于Mac用户，参考Get started with Docker Desktop for Mac; 对于Win用户,参考Get started with Docker for Windows，对于Linux用户,参考Get Docker CE for Ubuntu。  以Ubuntu为例">
+  
+  <meta name="description" content="环境 操作系统：Linux（Ubuntu 16.0.4）  Docker安装 对于Mac用户，参考Get started with Docker Desktop for Mac; 对于Win用户,参考Get started with Docker for Windows，对于Linux用户,参考Get Docker CE for Ubuntu。  以Ubuntu为例 12345678# 在Ubun">
+<meta name="keywords" content="Docker">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JimmyYoung&#39;s Blog">
+<meta property="og:title" content="Docker-CUDA">
 <meta property="og:url" content="http://yoursite.com/2019/02/28/Tools-DockerCUDAGuide/index.html">
 <meta property="og:site_name" content="JimmyYoung&#39;s Blog">
-<meta property="og:description" content="Docker-CUDA1.0 操作系统：Linux（Ubuntu 16.0.4）  2.0 Docker安装 对于Mac用户，参考Get started with Docker Desktop for Mac; 对于Win用户,参考Get started with Docker for Windows，对于Linux用户,参考Get Docker CE for Ubuntu。  以Ubuntu为例">
+<meta property="og:description" content="环境 操作系统：Linux（Ubuntu 16.0.4）  Docker安装 对于Mac用户，参考Get started with Docker Desktop for Mac; 对于Win用户,参考Get started with Docker for Windows，对于Linux用户,参考Get Docker CE for Ubuntu。  以Ubuntu为例 12345678# 在Ubun">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1g0m3a7j724j31gq018dg3.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1g0m2nsmbvij30tm01rt8r.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1g0m3708700j308u00r0sk.jpg">
-<meta property="og:updated_time" content="2019-02-28T07:54:55.401Z">
+<meta property="og:updated_time" content="2019-02-28T08:09:58.553Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JimmyYoung&#39;s Blog">
-<meta name="twitter:description" content="Docker-CUDA1.0 操作系统：Linux（Ubuntu 16.0.4）  2.0 Docker安装 对于Mac用户，参考Get started with Docker Desktop for Mac; 对于Win用户,参考Get started with Docker for Windows，对于Linux用户,参考Get Docker CE for Ubuntu。  以Ubuntu为例">
+<meta name="twitter:title" content="Docker-CUDA">
+<meta name="twitter:description" content="环境 操作系统：Linux（Ubuntu 16.0.4）  Docker安装 对于Mac用户，参考Get started with Docker Desktop for Mac; 对于Win用户,参考Get started with Docker for Windows，对于Linux用户,参考Get Docker CE for Ubuntu。  以Ubuntu为例 12345678# 在Ubun">
 <meta name="twitter:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1g0m3a7j724j31gq018dg3.jpg">
   
     <link rel="alternate" href="/atom.xml" title="JimmyYoung&#39;s Blog" type="application/atom+xml">
@@ -165,13 +168,25 @@
   <div id="articleInner" class="article-inner">
     
     
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      Docker-CUDA
+    </h1>
+  
+
+      </header>
+    
     <div class="article-meta">
       
 	<a href="/2019/02/28/Tools-DockerCUDAGuide/" class="article-date">
-	  <time datetime="2019-02-28T08:02:19.231Z" itemprop="datePublished">2019-02-28</time>
+	  <time datetime="2019-02-28T08:09:00.000Z" itemprop="datePublished">2019-02-28</time>
 	</a>
 
       
+    <a class="article-category-link" href="/categories/Tools/">Tools</a>
+
       
 	<a class="article-views">
 	<span id="busuanzi_container_page_pv">
@@ -182,10 +197,10 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Docker-CUDA"><a href="#Docker-CUDA" class="headerlink" title="Docker-CUDA"></a>Docker-CUDA</h1><h2 id="1-0"><a href="#1-0" class="headerlink" title="1.0"></a>1.0</h2><ul>
+        <h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><ul>
 <li>操作系统：Linux（Ubuntu 16.0.4）</li>
 </ul>
-<h2 id="2-0-Docker安装"><a href="#2-0-Docker安装" class="headerlink" title="2.0 Docker安装"></a>2.0 Docker安装</h2><ul>
+<h2 id="Docker安装"><a href="#Docker安装" class="headerlink" title="Docker安装"></a>Docker安装</h2><ul>
 <li><p>对于<strong>Mac</strong>用户，参考<a href="https://docs.docker.com/docker-for-mac/" target="_blank" rel="noopener">Get started with Docker Desktop for Mac</a>; 对于<strong>Win</strong>用户,参考<a href="https://docs.docker.com/docker-for-windows/" target="_blank" rel="noopener">Get started with Docker for Windows</a>，对于<strong>Linux</strong>用户,参考<a href="https://docs.docker.com/install/linux/docker-ce/ubuntu/" target="_blank" rel="noopener">Get Docker CE for Ubuntu</a>。</p>
 </li>
 <li><p>以Ubuntu为例</p>
@@ -267,7 +282,7 @@
           </li>
           <li class="post-copyright-link">
           <strong>Post link:  </strong>
-          <a href="/2019/02/28/Tools-DockerCUDAGuide/" target="_blank" title="">http://yoursite.com/2019/02/28/Tools-DockerCUDAGuide/</a>
+          <a href="/2019/02/28/Tools-DockerCUDAGuide/" target="_blank" title="Docker-CUDA">http://yoursite.com/2019/02/28/Tools-DockerCUDAGuide/</a>
           </li>
           <li class="post-copyright-license">
             <strong>Copyright Notice:   </strong>
@@ -314,9 +329,9 @@
 <nav id="article-nav">
   
   
-    <a href="/2019/02/20/DL-FaceAntiSpoofing/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2019/02/20/DL-FaceDetection/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">FaceAntiSpoofing</div>
+      <div class="article-nav-title">CNN-FaceDetection</div>
     </a>
   
 </nav>
@@ -330,7 +345,7 @@
     <div id="toc" class="toc-article">
     <strong class="toc-title">Contents</strong>
     
-        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker-CUDA"><span class="nav-number">1.</span> <span class="nav-text">Docker-CUDA</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-0"><span class="nav-number">1.1.</span> <span class="nav-text">1.0</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-0-Docker安装"><span class="nav-number">1.2.</span> <span class="nav-text">2.0 Docker安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Nvidia-Docker安装"><span class="nav-number">1.3.</span> <span class="nav-text">Nvidia-Docker安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker镜像"><span class="nav-number">1.4.</span> <span class="nav-text">Docker镜像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker容器"><span class="nav-number">1.5.</span> <span class="nav-text">Docker容器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SSH连接容器"><span class="nav-number">1.6.</span> <span class="nav-text">SSH连接容器</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#环境"><span class="nav-number">1.</span> <span class="nav-text">环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker安装"><span class="nav-number">2.</span> <span class="nav-text">Docker安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Nvidia-Docker安装"><span class="nav-number">3.</span> <span class="nav-text">Nvidia-Docker安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker镜像"><span class="nav-number">4.</span> <span class="nav-text">Docker镜像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker容器"><span class="nav-number">5.</span> <span class="nav-text">Docker容器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SSH连接容器"><span class="nav-number">6.</span> <span class="nav-text">SSH连接容器</span></a></li></ol>
     
     </div>
   </aside>
