@@ -61,7 +61,7 @@
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1fzj4mjjgxgj30sq0eq75s.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1fzjuwoisb4j30m90fwwgg.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1g01jzc55jej30lk14v47e.jpg">
-<meta property="og:updated_time" content="2019-02-27T14:18:09.385Z">
+<meta property="og:updated_time" content="2019-02-28T09:22:58.361Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CNN-FaceDetection">
 <meta name="twitter:description" content="1.0 综述人脸检测任务是目前为止落地最好的AI技术之一。人脸检测任务是通用目标检测的运用之一，所以像主流的faster-rcnn系列模型，YOLO模型等用到人脸检测，没有太大问题。但是人脸任务有很多其不一样的情况，例如人脸的bbox一般为正方形，人脸有很多侧脸、遮挡等问题，基于种种涌现出了一大批解决这些问题的特殊模型，这些模型大多是DL模型。本文也是将对这些SOTA模型进行一个综述。 人脸检测相">
@@ -396,6 +396,13 @@
 </li>
 <li><p>作者认为自然图像中，人脸的尺度时连续的，但是预定义的anchor尺寸离散，这样导致对小尺度人脸和部分离群尺度的人脸 gt bbox，没有足够的anchor与它们匹配，进而影响召回率。为了克服这一现象，提出SCAMS。就是降低IOU，找到更多的备选框。</p>
 </li>
+<li><p>SCAMS(scale compensation anchor matching strategy):</p>
+<ol>
+<li>使用常规的fast rcnn的anchor与gt box的jaccard overlap匹配策略，但降低iou阈值至0.35，这样可以提升每个gt bbox匹配的anchor数目N；</li>
+<li>将anchor与gt bbox的iou阈值降低至0.1，降序选取top N匹配的anchor作为与该gt bbox匹配的anchor；N为step1中的N；注：0.35~0.1 thres的降序排序；</li>
+</ol>
+<p>这个地方有点含糊，不是很理解。（需看源码）</p>
+</li>
 <li><p>在检测小人脸的过程中，因为anchor尺寸太小，但是大部分的anchor都是负样本，会造成大量误判。所以作者通过MBL为每个anchor输出N个bg标签得分，但是只选择最大的score作为输出，再与fg score组成两个标签输出计算softmax。</p>
 </li>
 <li><p>充满tricks的模型。大的思路没有变，在anchor的选取，尺度等做了大量的尝试。</p>
@@ -677,19 +684,19 @@ IoU = \frac{(l-x^{'})(l-y^{'})}{2l^2 - (l-x^{'})(l-y^{'})}</script>带入到EMO�
     
 <nav id="article-nav">
   
-    <a href="/2019/02/28/Tools-DockerCUDAGuide/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2019/02/20/DL-FaceAntiSpoofing/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          Docker-CUDA
+          FaceAntiSpoofing
         
       </div>
     </a>
   
   
-    <a href="/2019/02/20/DL-FaceAntiSpoofing/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2019/01/20/DL-FaceLandmarks/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">FaceAntiSpoofing</div>
+      <div class="article-nav-title">FaceLandmarks</div>
     </a>
   
 </nav>
