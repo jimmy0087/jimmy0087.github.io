@@ -64,6 +64,10 @@
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fxq0vtojuqj30dx0bw0ta.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fxq1euuyedj30t00edmzm.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1fydep4c0rvj30hv0iyjtb.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRgy1g01b2x241nj319s0hp0vt.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1g0tbk4wex3j30rd0ey768.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1g19arzlx9kj30ga08haai.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1g19aszdf6uj30ga0cut9i.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fz1qnvksjgj30m90c70to.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fz1qug0kmfj30u70mrq5a.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fz1qxfd0fij30tq0jbtcs.jpg">
@@ -76,7 +80,7 @@
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fz2fd3h4iqj30ru0bzabz.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fz2gtlqys2j30q40fwjsz.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/0061KkpRly1fz2gvp7djwj30q30ettar.jpg">
-<meta property="og:updated_time" content="2019-01-11T05:05:10.957Z">
+<meta property="og:updated_time" content="2019-03-20T07:50:04.259Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CNN-Architecture">
 <meta name="twitter:description" content="1.0 Base KnowledgeCNN（Convolution Neural Network，卷积神经网络）作为一种经典的 DNN 结构，上世纪90年代就已经被提出了，却沉寂近20年。有趣的是，在2012年 AlexNet 大放异彩后，CNN 在随后几年近乎卷席了整个图像处理领域，很有点戏剧性。近些年，CNN 在语音处理、NLP 领域也发展迅速。随着时间的推移，CNN的架构不断更新迭代，本文将">
@@ -626,6 +630,54 @@ z_{c} = \rm{F}_{sq}(u_c) = \frac{1}{W \times H} \sum_{i=1}^W \sum_{j=1}^{H} u_c(
 <li><p>然后作者利用这个block重新build一些模型进行测试，当然效果都还不错。</p>
 </li>
 </ul>
+<h3 id="2-12-WCD"><a href="#2-12-WCD" class="headerlink" title="2.12 WCD"></a>2.12 WCD</h3><p><a href="http://home.ustc.edu.cn/~saihui/papers/aaai2019_weighted.pdf" target="_blank" rel="noopener">WCD</a>是AAAI2019的一篇关于神经网络结构的工作。思路和attention机制有些类似。</p>
+<ul>
+<li><p>WCD主要思想如下：</p>
+<ol>
+<li>首先对前一层输出的通道进行评级，为每一个通道进行打分。打分通过全局平均池化得到的。</li>
+<li>然后，生成一个mask，抑制部分节点，保留部分节点。</li>
+<li>最后，使用一个额外的随机数生成器来进一步为下一层过滤通道。<center><img src="http://ww1.sinaimg.cn/large/0061KkpRgy1g01b2x241nj319s0hp0vt.jpg"></center>
+</li>
+</ol>
+</li>
+<li><p>WCD不依赖任何参数，仅用少量的计算成本就可以添加到训练阶段的网络</p>
+</li>
+<li>WCD仅作用于训练阶段，不影响inference。</li>
+<li>和SENet非常类似，只不过WCD只不过当作训练阶段的小插件。</li>
+</ul>
+<h3 id="2-13-BagNet"><a href="#2-13-BagNet" class="headerlink" title="2.13 BagNet"></a>2.13 BagNet</h3><p><a href="https://openreview.net/pdf?id=SkfMWhAqYQ" target="_blank" rel="noopener">BagNet</a>是ICLR2019的一篇关于CNN可视化的工作，关注度比较高。作者发现基于小型局部图像特征分类的简单模型可以在ImageNet上实现惊人的高准确率。论文作者认为，这表明过去几年DNN的进步大部分是通过调参取得的。</p>
+<ul>
+<li><p>下面是整个模型的pipline：</p>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRly1g0tbk4wex3j30rd0ey768.jpg"></center>
+
+<ol>
+<li>将输入图像截取为33*33像素的图像块；</li>
+<li>在每一个截取的图像块上使用深度网络（1*1卷积）获得类别向量；</li>
+<li>按空间对所有输出的类别向量进行求和（所有截取的图像块）；</li>
+<li>通过类别向量最大的元素预测类别。</li>
+</ol>
+</li>
+<li><p>BagNet 在使用 33×33 像素的图像块时效果好于 17×17 的图像块（80%）。所以深度网络确实抽取了有用的空间信息（9x9 vs. 17x17 vs. 33x33），但可能不是我们以前想像的全局空间范围（例如 112×112 或 224×224）.</p>
+</li>
+<li><p>BagNet 模型的空间敏感特征并不会超出 bagging 步骤，这就引出了一个问题：深度网络最强大的能力是否还仅来自于对局部特征的处理。深度网络仅仅和这种不考虑全局空间信息的 BagNet 相同吗？如果是的话，那么深度卷积网络还有很长的路要走。</p>
+</li>
+<li><p>论文给出的模型细节不是很具体，源码也没有给出如何训练出来模型的，难以复现，但是大致的思路就是把一整张图像分成局部进行分类，忽视掉空间信息。和CNN的思想有些背道而驰的意思。</p>
+</li>
+</ul>
+<h3 id="2-13-SBNet-2019-03-20"><a href="#2-13-SBNet-2019-03-20" class="headerlink" title="2.13 SBNet(2019.03.20)"></a>2.13 SBNet(2019.03.20)</h3><p><a href="http://openaccess.thecvf.com/content_cvpr_2018/papers/Ren_SBNet_Sparse_Blocks_CVPR_2018_paper.pdf" target="_blank" rel="noopener">SBNet</a>是cvpr2018的一个工作，主要目的为了推理加速，更加适应于移动端部署，思路和上面的bagnet有些相似之处，都是将目标分割成几个部分做判断。</p>
+  <center><img src="http://ww1.sinaimg.cn/large/0061KkpRly1g19arzlx9kj30ga08haai.jpg"></center>
+
+<ul>
+<li><p>思路主要是根据已知或者预测的binary mask（attention），对feature map进行blockwise 分解，生成稀疏块以及对应的 tile indices。</p>
+<center><img src="http://ww1.sinaimg.cn/large/0061KkpRly1g19aszdf6uj30ga0cut9i.jpg"></center>
+
+<p>将这些稀疏块聚集在一起形成新的tensor，通过卷积操作后将结果分散回原先的位置，并更新原始tensor</p>
+</li>
+<li><p>可以看到，只对mask对应的稀疏块进行卷积，大大提高了系统的运行效率。</p>
+</li>
+<li>作者拿出自动驾驶的3D场景数据进行了mask分析。个人觉得在2d部分同样也应该work。</li>
+<li>idea非常有趣，但是需要更进一步的验证和运用。相信在工业上的运用应该会很广泛。</li>
+</ul>
 <h2 id="3-0-Model-Compression"><a href="#3-0-Model-Compression" class="headerlink" title="3.0 Model Compression"></a>3.0 Model Compression</h2><h3 id="3-1-Summarize"><a href="#3-1-Summarize" class="headerlink" title="3.1 Summarize"></a>3.1 Summarize</h3><p>模型压缩是非常有落地价值的研究方向。因为对于移动端的部署具有重要的意义，有效的降低了计算资源的消耗，使得基于深度学习的方法能够大面积运用。</p>
 <p>模型压缩大致可以分为两种思路：</p>
 <ul>
@@ -785,7 +837,7 @@ z_{c} = \rm{F}_{sq}(u_c) = \frac{1}{W \times H} \sum_{i=1}^W \sum_{j=1}^{H} u_c(
     <div id="toc" class="toc-article">
     <strong class="toc-title">Contents</strong>
     
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-0-Base-Knowledge"><span class="nav-number">1.</span> <span class="nav-text">1.0 Base Knowledge</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-Convolution-Kernel"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 Convolution Kernel</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-The-way-of-convolution"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 The way of convolution</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-Upsampling"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 Upsampling</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-Conclusion"><span class="nav-number">1.4.</span> <span class="nav-text">1.4 Conclusion</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-0-The-Development-of-Architecture"><span class="nav-number">2.</span> <span class="nav-text">2.0 The Development of Architecture</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-Summarize"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 Summarize</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-LeNet"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 LeNet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-AlexNet"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 AlexNet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-VGGNet"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 VGGNet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-GoogLeNet"><span class="nav-number">2.5.</span> <span class="nav-text">2.5 GoogLeNet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-6-ResNet"><span class="nav-number">2.6.</span> <span class="nav-text">2.6 ResNet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-7-Xception"><span class="nav-number">2.7.</span> <span class="nav-text">2.7 Xception</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-8-DenseNet"><span class="nav-number">2.8.</span> <span class="nav-text">2.8 DenseNet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-9-SENet"><span class="nav-number">2.9.</span> <span class="nav-text">2.9 SENet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-10-RAN"><span class="nav-number">2.10.</span> <span class="nav-text">2.10 RAN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-11-NonLocalNet"><span class="nav-number">2.11.</span> <span class="nav-text">2.11 NonLocalNet</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-0-Model-Compression"><span class="nav-number">3.</span> <span class="nav-text">3.0 Model Compression</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-Summarize"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 Summarize</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-SqueezeNet"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 SqueezeNet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-MobileNet"><span class="nav-number">3.3.</span> <span class="nav-text">3.2 MobileNet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-MobileNetV2"><span class="nav-number">3.4.</span> <span class="nav-text">3.3 MobileNetV2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-ShuffleNet-v1"><span class="nav-number">3.5.</span> <span class="nav-text">3.4 ShuffleNet-v1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-ShuffleNet-v2"><span class="nav-number">3.6.</span> <span class="nav-text">3.4 ShuffleNet-v2</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-0-Base-Knowledge"><span class="nav-number">1.</span> <span class="nav-text">1.0 Base Knowledge</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-Convolution-Kernel"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 Convolution Kernel</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-The-way-of-convolution"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 The way of convolution</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-Upsampling"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 Upsampling</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-Conclusion"><span class="nav-number">1.4.</span> <span class="nav-text">1.4 Conclusion</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-0-The-Development-of-Architecture"><span class="nav-number">2.</span> <span class="nav-text">2.0 The Development of Architecture</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-Summarize"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 Summarize</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-LeNet"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 LeNet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-AlexNet"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 AlexNet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-VGGNet"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 VGGNet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-GoogLeNet"><span class="nav-number">2.5.</span> <span class="nav-text">2.5 GoogLeNet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-6-ResNet"><span class="nav-number">2.6.</span> <span class="nav-text">2.6 ResNet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-7-Xception"><span class="nav-number">2.7.</span> <span class="nav-text">2.7 Xception</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-8-DenseNet"><span class="nav-number">2.8.</span> <span class="nav-text">2.8 DenseNet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-9-SENet"><span class="nav-number">2.9.</span> <span class="nav-text">2.9 SENet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-10-RAN"><span class="nav-number">2.10.</span> <span class="nav-text">2.10 RAN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-11-NonLocalNet"><span class="nav-number">2.11.</span> <span class="nav-text">2.11 NonLocalNet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-12-WCD"><span class="nav-number">2.12.</span> <span class="nav-text">2.12 WCD</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-13-BagNet"><span class="nav-number">2.13.</span> <span class="nav-text">2.13 BagNet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-13-SBNet-2019-03-20"><span class="nav-number">2.14.</span> <span class="nav-text">2.13 SBNet(2019.03.20)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-0-Model-Compression"><span class="nav-number">3.</span> <span class="nav-text">3.0 Model Compression</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-Summarize"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 Summarize</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-SqueezeNet"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 SqueezeNet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-MobileNet"><span class="nav-number">3.3.</span> <span class="nav-text">3.2 MobileNet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-MobileNetV2"><span class="nav-number">3.4.</span> <span class="nav-text">3.3 MobileNetV2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-ShuffleNet-v1"><span class="nav-number">3.5.</span> <span class="nav-text">3.4 ShuffleNet-v1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-ShuffleNet-v2"><span class="nav-number">3.6.</span> <span class="nav-text">3.4 ShuffleNet-v2</span></a></li></ol></li></ol>
     
     </div>
   </aside>
